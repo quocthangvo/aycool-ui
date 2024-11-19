@@ -1,0 +1,143 @@
+<p-confirmDialog />
+<div class="table">
+  <p-table
+    [value]="productList"
+    responsiveLayout="stack"
+    [breakpoint]="'960px'"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="caption">
+      <div class="caption">
+        <h1>Sản phẩm</h1>
+        <p-button severity="contrast" routerLink="/create-product">
+          <i
+            class="pi pi-plus"
+            style="font-size: 1rem; margin-right: 0.5rem"
+          ></i>
+          Thêm sản phẩm
+        </p-button>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Id</th>
+        <th>Ảnh</th>
+        <th>Tên sản phẩm</th>
+        <th>Mã SKU</th>
+        <th>Tên danh mục</th>
+        <th>Chất vải</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-products let-i="rowIndex">
+      <tr>
+        <td>{{ i + 1 }}</td>
+        <td>
+          <p-image
+            *ngIf="
+              products.product_images && products.product_images[0]?.imageUrl;
+              else noImage
+            "
+            [src]="
+              'http://localhost:8080/uploads/' +
+              products.product_images[0]?.imageUrl
+            "
+            alt="Ảnh sản phẩm"
+            width="50px"
+          ></p-image>
+          <ng-template #noImage>
+            <p-image
+              src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
+              alt="Ảnh"
+              width="50px"
+            />
+          </ng-template>
+        </td>
+
+        <td (click)="openDialog(products.id)" style="cursor: pointer">
+          {{ products.sub_category_name + " " + products.name }}
+        </td>
+        <td>{{ products.sku }}</td>
+        <td>{{ products.sub_category_name }}</td>
+        <td>{{ products.material_name }}</td>
+
+        <td>
+          <div class="actions">
+            <i
+              class="pi pi-trash"
+              style="font-size: 1.5rem; color: red"
+              (click)="onDelete(products.id, $event)"
+            >
+            </i>
+
+            <i
+              class="pi pi-user-edit"
+              style="font-size: 1.5rem; color: blue"
+              (click)="onModelUpdate(products.id)"
+            >
+            </i>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <app-product-detail-list
+    [display]="showProductDialog"
+    [productId]="selectedProductId"
+    (close)="showProductDialog = false"
+  ></app-product-detail-list>
+
+  <!-- <p-dialog
+    header="Cập nhật sản phẩm"
+    [(visible)]="displayUpdateDialog"
+    [modal]="true"
+    [closable]="false"
+  >
+    <div class="p-fluid">
+      <div class="p-field">
+        <p>Tên danh muc</p>
+        <input pInputText [(ngModel)]="selectedProduct.sub_category_name" />
+      </div>
+      <div class="p-field">
+        <p>Mã SKU</p>
+        <input pInputText [(ngModel)]="selectedProduct.sku" />
+      </div>
+      <div class="p-field">
+        <p>Tên sản phẩm</p>
+        <input pInputText [(ngModel)]="selectedProduct.name" />
+      </div>
+      <div class="p-field">
+        <p>Chất liệu</p>
+        <input pInputText [(ngModel)]="selectedProduct.material_name" />
+      </div>
+      <div class="p-field">
+        <p>Images</p>
+        <p-fileUpload
+          mode="basic"
+          chooseLabel="Choose"
+          chooseIcon="pi pi-upload"
+          accept="image/*"
+          maxFileSize="1000000"
+        />
+      </div>
+    </div>
+    <p-footer>
+      <button
+        pButton
+        label="Cancel"
+        icon="pi pi-times"
+        class="p-button-text"
+        (click)="cancelUpdate()"
+      ></button>
+      <button
+        pButton
+        label="Save"
+        icon="pi pi-check"
+        class="p-button-primary"
+        (click)="saveProduct()"
+      ></button>
+    </p-footer>
+  </p-dialog> -->
+</div>

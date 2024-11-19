@@ -1,0 +1,98 @@
+<p-confirmDialog />
+<div class="table">
+  <p-table
+    [value]="priceList"
+    responsiveLayout="stack"
+    [breakpoint]="'960px'"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="caption">
+      <div class="caption">
+        <h1>Giá</h1>
+        <p-button severity="contrast" routerLink="/create-price">
+          <i
+            class="pi pi-plus"
+            style="font-size: 1rem; margin-right: 0.5rem"
+          ></i>
+          Thêm giá
+        </p-button>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Id</th>
+        <th>Tên</th>
+        <th>Giá bán</th>
+        <th>Giá khuyến mãi</th>
+        <th>Ngày bắt đầu</th>
+        <th>Ngày kết thúc</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-prices let-i="rowIndex">
+      <tr>
+        <td>{{ i + 1 }}</td>
+        <td>
+          {{ prices.product_detail_name }}_{{ prices.color }}_{{ prices.size }}
+        </td>
+        <td>{{ prices.selling_price }}</td>
+        <td>{{ prices.promotion_price }}</td>
+        <td>{{ prices.start_date }}</td>
+        <td>{{ prices.end_date }}</td>
+
+        <!-- <td>
+          <div class="actions">
+            <i
+              class="pi pi-trash"
+              style="font-size: 1.5rem; color: red"
+              (click)="onDelete(prices.id, $event)"
+            >
+            </i>
+
+            <i
+              class="pi pi-user-edit"
+              style="font-size: 1.5rem; color: blue"
+              (click)="onModelUpdate(colors)"
+            >
+            </i>
+          </div>
+        </td> -->
+      </tr>
+    </ng-template>
+  </p-table>
+  <!-- <p-dialog
+    header="Cập nhật màu sắc"
+    [(visible)]="displayUpdateDialog"
+    [modal]="true"
+    [closable]="false"
+  >
+    <div class="p-fluid">
+      <div class="p-field">
+        <p>Tên</p>
+        <input pInputText [(ngModel)]="selectedColor.name" />
+      </div>
+    </div>
+
+    <p-footer>
+      <button
+        pButton
+        label="Hủy"
+        icon="pi pi-times"
+        class="p-button-text"
+        (click)="cancelUpdate()"
+      ></button>
+      <button
+        pButton
+        label="Lưu"
+        icon="pi pi-check"
+        class="p-button-primary"
+        (click)="save()"
+      ></button>
+    </p-footer>
+  </p-dialog> -->
+  <!-- <app-create-price
+    [display]="displayDialog"
+    (close)="handleDialogClose()"
+  ></app-create-price> -->
+</div>

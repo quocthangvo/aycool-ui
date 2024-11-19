@@ -1,0 +1,88 @@
+<div class="card">
+  <p>
+    <a [routerLink]="'/vn/home'">Trang chủ</a> / {{ product.category.name }}
+  </p>
+
+  <div class="product">
+    <div class="image">
+      <div class="image-list">
+        <img
+          src="https://primefaces.org/cdn/primeng/images/galleria/galleria1.jpg"
+          alt=""
+        />
+        <img
+          src="https://primefaces.org/cdn/primeng/images/galleria/galleria1.jpg"
+          alt=""
+        />
+        <img
+          src="https://primefaces.org/cdn/primeng/images/galleria/galleria1.jpg"
+          alt=""
+        />
+      </div>
+
+      <img
+        src="https://primefaces.org/cdn/primeng/images/galleria/galleria1.jpg"
+        alt=""
+      />
+    </div>
+    <div class="content">
+      <div *ngIf="product">
+        <h1>{{ product.name }}</h1>
+
+        <div class="prices">
+          <p class="sell-price">
+            {{
+              (product.product_details[0]?.prices[0]?.sellingPrice ?? 1000) +
+                "đ"
+            }}
+          </p>
+          <p class="promotion-price">
+            {{
+              (product.product_details[0]?.prices[0]?.promotionPrice ?? 900) +
+                "đ"
+            }}
+          </p>
+        </div>
+        <div>
+          <p>Màu sắc:</p>
+          <div class="attribute">
+            <p
+              *ngFor="let color of getUniqueColors()"
+              [ngClass]="{ selected: selectedColor === color }"
+              (click)="selectColor(color)"
+            >
+              {{ color }}
+            </p>
+          </div>
+        </div>
+        <div>
+          <p>Kích thước:</p>
+          <div class="attribute">
+            <p
+              *ngFor="let size of getUniqueSizes()"
+              [ngClass]="{ selected: selectedSize === size }"
+              (click)="selectSize(size)"
+            >
+              {{ size }}
+            </p>
+          </div>
+        </div>
+
+        <div class="order">
+          <div class="quantity">
+            <p (click)="decreaseQuantity()">-</p>
+            <p>{{ quantity }}</p>
+            <p (click)="increaseQuantity()">+</p>
+          </div>
+
+          <button class="add-cart">
+            Thêm giỏ hàng
+            <i class="pi pi-cart-arrow-down" style="font-size: 1rem"></i>
+          </button>
+        </div>
+
+        <p>{{ product.description }}</p>
+      </div>
+    </div>
+  </div>
+</div>

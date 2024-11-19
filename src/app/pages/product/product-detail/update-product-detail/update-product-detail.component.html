@@ -1,0 +1,79 @@
+<p-dialog
+  header="Cập nhật chi tiết sản phẩm"
+  [(visible)]="display"
+  [modal]="true"
+  [closable]="false"
+  [draggable]="false"
+  [resizable]="false"
+  (onHide)="cancel()"
+>
+  <form [formGroup]="productDetailForm" (ngSubmit)="update()">
+    <div class="input-form">
+      <p>Mã SKU</p>
+      <input
+        pInputText
+        type="text"
+        formControlName="sku_version"
+        [ngClass]="{ 'is-invalid': submit && skuVerion?.invalid }"
+      />
+      <small *ngIf=" submit && skuVerion?.errors?.['required']"
+        >Nhập mã SKU</small
+      >
+      <small *ngIf=" submit && skuVerion?.errors?.['minlength']"
+        >Mã SKU phải có hơn 2 ký tự</small
+      >
+    </div>
+
+    <div class="input-form">
+      <p>Màu sắc</p>
+      <p-dropdown
+        class="md:w-20rem w-full"
+        placeholder="Chọn"
+        formControlName="color_id"
+        [options]="colorNodes"
+        appendTo="body"
+        [ngClass]="{ 'is-invalid': submit && color?.invalid }"
+      />
+      <small *ngIf=" submit && color?.errors?.['required']">Chọn màu sắc</small>
+    </div>
+
+    <div class="input-form">
+      <p>Kích thước</p>
+      <p-dropdown
+        class="md:w-20rem w-full"
+        placeholder="Chọn"
+        formControlName="size_id"
+        [options]="sizeNodes"
+        appendTo="body"
+        [ngClass]="{ 'is-invalid': submit && size?.invalid }"
+      />
+      <small *ngIf=" submit && size?.errors?.['required']"
+        >Chọn kích thước</small
+      >
+    </div>
+
+    <div class="input-form">
+      <p>Số lượng</p>
+      <input
+        pInputText
+        type="text"
+        formControlName="quantity"
+        [ngClass]="{ 'is-invalid': submit && quantity?.invalid }"
+      />
+      <small *ngIf=" submit && quantity?.errors?.['required']"
+        >Nhập số lượng</small
+      >
+    </div>
+
+    <div class="create-button">
+      <p-button
+        label="Hủy"
+        (click)="cancel()"
+        [text]="true"
+        [plain]="true"
+      ></p-button>
+
+      <p-button label="Lưu" type="submit" class="submit"></p-button>
+    </div>
+  </form>
+</p-dialog>

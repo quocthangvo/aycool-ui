@@ -1,0 +1,26 @@
+.actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & i {
+        cursor: pointer;
+        margin: 0 10px;
+    }
+}
+
+.caption {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.p-datatable-header {
+    background-color: transparent;
+    border: none;
+}
+.p-dialog{
+    width: 400px;
+}
+td{
+    padding: 0.5rem 1rem;
+}

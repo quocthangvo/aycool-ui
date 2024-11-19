@@ -1,0 +1,111 @@
+.card {
+    margin: 0 80px;
+    padding: 0 64px;
+
+    p{
+
+        a{
+            color: #000;
+            text-decoration: none;
+        }
+    }
+
+    .product {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        margin-bottom:80px ;
+        // margin: 0 80px 80px 80px;
+        // padding: 0 64px;
+
+        .image {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+
+            .image-list {
+                display: flex;
+                flex-direction: column;
+                margin-right: 20px;
+
+                img {
+                    margin-bottom: 10px;
+                    width: 50px;
+                    height: 70px;
+                    border-radius: 5px;
+                }
+            }
+
+            img {
+                width: 500px;
+                height: 450px;
+                border-radius: 10px;
+            }
+        }
+
+        .content {
+            width: 50%;
+
+            .sell-price {
+                text-decoration: line-through;
+                color: #999; // Optional: You can change the color to gray for strikethrough text
+            }
+
+            .promotion-price {
+                font-size: 24px;
+                font-weight: bold;
+                margin-top: 0;
+            }
+
+            .attribute {
+                display: flex;
+                justify-content: start;
+                align-items: start;
+
+                p {
+                    cursor: pointer;
+                    margin: 0 20px 0 0;
+                    border-radius: 99px;
+                    border: 2px solid grey;
+                    padding: 10px 20px;
+                }
+                p.selected {
+                  
+                    background-color: blue;
+                    color: #fff;
+                  }
+            }
+
+            .order {
+                display: flex;
+                justify-content: start;
+                align-items: center;
+                margin-top: 20px;
+                cursor: pointer;
+                .quantity {
+                    display: flex;
+                    justify-content: start;
+                    align-items: center;
+                    border-radius: 99px;
+                    border: 1px solid grey;
+                    margin-right: 20px;
+                    p {
+                        padding: 10px 20px;
+                        margin: 0;
+                    }
+                    
+                }
+
+                .add-cart {
+                    padding: 10px 100px;
+                    border-radius: 99px;
+                    border: 1px solid grey;
+                    cursor: pointer;
+                    background-color: #000;
+                    color: #fff;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+}

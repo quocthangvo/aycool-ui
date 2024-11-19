@@ -1,0 +1,26 @@
+.create-button {
+    margin-top: 20px;
+    display: flex;
+    justify-content: end;
+}
+
+.input-form {
+    & p{
+        color: #000;
+    }
+    & .p-inputtext {
+        width: 100%;
+    }
+
+    & small {
+        color: var(--red-color);
+        margin-top: 5px;
+        display: block;
+    }
+}
+.select-form{
+    margin-top: 20px;
+    & .p-dropdown{
+        width: 100%;
+    }
+}

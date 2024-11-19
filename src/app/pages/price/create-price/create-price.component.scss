@@ -1,0 +1,55 @@
+.card {
+    .form {
+      display: flex;
+      justify-content: center;
+      
+      .card-form {
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 20px;
+        background-color: var(--white-color);
+        width: 100%;
+        box-sizing: border-box; // Ensure padding is included in width
+  
+        .input-form {
+          margin: 1rem 0;
+  
+          p {
+            display: block;
+            margin-bottom: 0.5rem; // Optional, can be adjusted
+          }
+  
+          .p-dropdown,
+          .p-multiselect {
+            width: 100%; // Ensure the dropdowns and multi-select take full width
+          }
+  
+        }
+      }
+    }
+  
+    .button-create {
+      display: flex;
+      justify-content: end;
+      position: fixed;
+      bottom: 20px;
+      right: 5%;
+      z-index: 1000;
+    }
+  
+    .validator {
+      color: var(--red-color);
+      margin-top: 5px;
+    }
+  }
+  
+
+ 
+  
+  p-calendar {
+    position: absolute;
+    z-index: 9999; /* Đảm bảo lịch hiển thị trên các phần tử khác */
+   
+  }
+  
+  

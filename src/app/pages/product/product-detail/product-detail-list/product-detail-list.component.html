@@ -1,0 +1,116 @@
+<p-toast></p-toast>
+<p-confirmDialog />
+<div>
+  <p-dialog
+    header=""
+    [(visible)]="display"
+    [modal]="true"
+    [closable]="false"
+    [draggable]="false"
+    [resizable]="false"
+    (onHide)="cancel()"
+    class="detail-dialog"
+  >
+    <div class="dialog-header">
+      <h2>Chi tiết sản phẩm</h2>
+      <div class="cancel-button" (click)="cancel()">
+        <i class="pi pi-times" style="font-size: 2rem"></i>
+      </div>
+    </div>
+    <div *ngIf="productDetailList.length === 0" class="not-data">
+      <p>Không có chi tiết sản phẩm nào.</p>
+    </div>
+
+    <p-table
+      [value]="productDetailList"
+      responsiveLayout="stack"
+      [breakpoint]="'960px'"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      *ngIf="productDetailList.length > 0"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Id</th>
+          <th>Ảnh</th>
+          <th>Tên sản phẩm</th>
+          <th>Mã SKU</th>
+          <th>Màu sắc</th>
+          <th>Kích thước</th>
+          <th>Số lượng</th>
+          <th>Giá bán</th>
+          <th>Giá khuyến mãi</th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-product_details let-i="rowIndex">
+        <tr>
+          <td>{{ i + 1 }}</td>
+          <td>
+            <p-image
+              src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
+              alt="Ảnh"
+              width="50px"
+            />
+          </td>
+
+          <td>
+            {{
+              product_details.product_id?.subCategory.name +
+                " " +
+                product_details?.product_id.name
+            }}
+          </td>
+          <td>{{ product_details?.sku_version }}</td>
+          <td>{{ product_details?.color_id.name }}</td>
+          <td>{{ product_details?.size_id.name }}</td>
+          <td>{{ product_details?.quantity }}</td>
+          <td>
+            <!-- Giá bán: nếu không có giá thì để trống nhưng không thay đổi vị trí -->
+            <ng-container *ngIf="product_details?.price_id?.length > 0">
+              {{ product_details?.price_id[0].sellingPrice || "" }}đ
+            </ng-container>
+            <ng-container *ngIf="product_details?.price_id?.length === 0">
+              <!-- Không có giá, giữ khoảng trống -->
+              &nbsp;
+            </ng-container>
+          </td>
+          <td>
+            <!-- Giá khuyến mãi: nếu không có giá thì để trống nhưng không thay đổi vị trí -->
+            <ng-container *ngIf="product_details?.price_id?.length > 0">
+              {{ product_details?.price_id[0].promotionPrice || "" }}đ
+            </ng-container>
+            <ng-container *ngIf="product_details?.price_id?.length === 0">
+              <!-- Không có giá, giữ khoảng trống -->
+              &nbsp;
+            </ng-container>
+          </td>
+
+          <td>
+            <div class="actions">
+              <i
+                class="pi pi-trash"
+                style="font-size: 1.5rem; color: red"
+                (click)="onDelete(product_details.id, $event)"
+              >
+              </i>
+
+              <i
+                class="pi pi-user-edit"
+                style="font-size: 1.5rem; color: blue"
+                (click)="onModelUpdate(product_details.id)"
+              >
+              </i>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-dialog>
+
+  <app-update-product-detail
+    [display]="showDialog"
+    (close)="showDialog = false"
+    [productDetailId]="selectedId"
+    (refresh)="loadProductDetails(productId || 0)"
+  ></app-update-product-detail>
+</div>

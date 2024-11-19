@@ -1,0 +1,200 @@
+.list {
+    width: 100%;
+    margin: 3rem auto; // Canh giữa nội dung
+
+    // Đảm bảo hình ảnh giữ kích thước cố định
+    img {
+        width: 100%; // Đảm bảo ảnh chiếm hết chiều rộng vùng chứa
+        height: 350px; // Giới hạn chiều cao cố định cho ảnh
+        max-width: 350px; // Giới hạn kích thước tối đa cho ảnh
+        border-radius: 1rem;
+        object-fit: cover; // Đảm bảo ảnh không bị méo
+    }
+
+    .p-carousel {
+        width: 100%; // Đảm bảo carousel co dãn theo màn hình
+
+        .p-carousel-content {
+            width: 100%; // Chiếm toàn bộ vùng chứa
+            max-width: 100%; // Không vượt quá kích thước màn hình
+            overflow: hidden; // Đảm bảo không bị tràn
+
+            .p-carousel-container {
+                button {
+                    width: 3rem;
+                }
+            }
+
+            & .p-icon {
+                width: 2rem;
+                height: 2rem;
+            }
+
+        }
+
+        .p-carousel-item {
+            display: flex; // Căn chỉnh linh hoạt
+            justify-content: center;
+            align-items: flex-start; // Căn chỉnh phần tử con ở trên cùng
+            flex: 1; // Đảm bảo các item phân phối đều
+            max-width: calc(100% / 5); // 5 item trên mỗi hàng
+            padding: 1rem;
+
+            @media (max-width: 991px) {
+                max-width: calc(100% / 2); // 2 item trên mỗi hàng trên màn hình nhỏ
+            }
+
+            @media (max-width: 767px) {
+                max-width: 100%; // 1 item trên mỗi hàng trên màn hình rất nhỏ
+            }
+        }
+    }
+
+    & .product-content {
+        margin-top: 1rem;
+        min-height: 60px;
+        
+
+        & .sell-price {
+            color: grey;
+            text-decoration: line-through;
+        }
+    }
+}
+
+.new-product {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-left: 80px;
+    border: 1px solid grey;
+    border-radius: 100px;
+    width: 200px;
+    padding-left: 20px;
+
+    h3 {
+        margin: 10px 0;
+    }
+}
+
+//banner
+.product-banner {
+    position: relative;
+
+
+    img {
+        width: 100%;
+        height: auto;
+    }
+
+    .content {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        padding: 20px;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.5); // Nền bán trong suốt
+        max-width: 50%; // Giới hạn độ rộng của content nếu cần
+        margin-left: 2rem;
+
+        h1 {
+            font-size: 80px;
+        }
+
+        .button {
+            padding: 1px 50px;
+            background-color: var(--blue-color); // Màu nền nút
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition:  transform 0.3s ease;
+            border-radius: 100px;
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            i {
+                margin-left: 10px;
+            }
+
+            &:hover {
+                background-color: #2334b8;
+                transform: scale(1.1);
+                transition:transform 0.3s ease;
+
+            }
+        }
+    }
+}
+
+
+.list-shirt {
+    width: 100%;
+    margin: 3rem auto; // Canh giữa nội dung
+
+    h2 {
+        padding-left: 80px;
+        margin: 0;
+    }
+
+    img {
+        width: 100%; // Đảm bảo ảnh chiếm hết chiều rộng vùng chứa
+        height: auto; // Giữ tỷ lệ ảnh
+        max-width: 350px; // Giới hạn kích thước tối đa
+        height: 350px; // Giới hạn chiều cao tối đa
+        border-radius: 1rem;
+        object-fit: cover; // Đảm bảo ảnh không bị méo
+    }
+
+    .p-carousel {
+        width: 100%; // Đảm bảo carousel co dãn theo màn hình
+
+        .p-carousel-content {
+            width: 100%; // Chiếm toàn bộ vùng chứa
+            max-width: 100%; // Không vượt quá kích thước màn hình
+            overflow: hidden; // Đảm bảo không bị tràn
+
+            .p-carousel-container {
+                button {
+                    width: 3rem;
+                }
+            }
+
+            & .p-icon {
+                width: 2rem;
+                height: 2rem;
+            }
+
+        }
+
+        .p-carousel-item {
+            display: flex; // Căn chỉnh linh hoạt
+            justify-content: center;
+            align-items: center;
+            flex: 1; // Đảm bảo các item phân phối đều
+            max-width: calc(100% / 5); // 5 item trên mỗi hàng
+            padding: 1rem;
+
+
+            @media (max-width: 991px) {
+                max-width: calc(100% / 2); // 2 item trên mỗi hàng trên màn hình nhỏ
+            }
+
+            @media (max-width: 767px) {
+                max-width: 100%; // 1 item trên mỗi hàng trên màn hình rất nhỏ
+
+            }
+        }
+    }
+
+    & .product-content {
+        margin-top: 1rem;
+
+        & .sell-price {
+            color: grey;
+            text-decoration: line-through;
+        }
+    }
+}

@@ -1,0 +1,125 @@
+<div class="list">
+  <div class="new-product">
+    <h3 class="mr-2">Sản phẩm mới</h3>
+    <i class="pi pi-star-fill" style="font-size: 1rem"></i>
+  </div>
+  <p-carousel
+    [value]="products"
+    [numVisible]="5"
+    [numScroll]="5"
+    [circular]="true"
+    [responsiveOptions]="responsiveOptions"
+    autoplayInterval="0"
+    [showIndicators]="false"
+  >
+    <ng-template let-product pTemplate="item">
+      <div
+        class=""
+        (click)="navigateToProductDetail(product.id)"
+        style="cursor: pointer"
+      >
+        <!-- <img
+              src="https://primefaces.org/cdn/primeng/images/demo/product/{{
+                product.image
+              }}"
+              [alt]="product.name"
+              class="w-full border-round"
+            /> -->
+        <img
+          src="https://primefaces.org/cdn/primeng/images/galleria/galleria1.jpg"
+          alt=""
+        />
+
+        <div class="product-content">
+          <div class="mb-2 font-medium">
+            {{ product.name }}
+          </div>
+          <div class="flex align-items-center">
+            <div class="font-semibold">
+              {{
+                (product.product_details[0]?.prices[0]?.sellingPrice ?? 1000) +
+                  "đ"
+              }}
+            </div>
+            <div class="ml-5 sell-price">
+              {{
+                (product.product_details[0]?.prices[0]?.promotionPrice ?? 900) +
+                  "đ"
+              }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
+</div>
+
+<div class="product-banner">
+  <img
+    src="https://media3.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/November2024/mceclip0_27.jpg"
+    alt=""
+  />
+  <div class="content">
+    <h1>ÁO NAM</h1>
+
+    <button class="button">
+      <p>Khám phá ngay</p>
+      <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
+    </button>
+  </div>
+</div>
+
+<div class="list-shirt">
+  <div class="">
+    <h2 class="">SẢN PHẨM ÁO NAM</h2>
+  </div>
+  <p-carousel
+    [value]="products"
+    [numVisible]="5"
+    [numScroll]="5"
+    [circular]="true"
+    [responsiveOptions]="responsiveOptions"
+    autoplayInterval="0"
+    [showIndicators]="false"
+  >
+    <ng-template let-product pTemplate="item">
+      <div class="">
+        <!-- <img
+              src="https://primefaces.org/cdn/primeng/images/demo/product/{{
+                product.image
+              }}"
+              [alt]="product.name"
+              class="w-full border-round"
+            /> -->
+        <img
+          src="https://primefaces.org/cdn/primeng/images/galleria/galleria1.jpg"
+          alt="image"
+        />
+
+        <div class="product-content">
+          <div class="mb-2">
+            {{ product.name }}
+          </div>
+          <div class="flex align-items-center">
+            <div class="flex align-items-center">
+              <div class="font-semibold">
+                {{
+                  (product.product_details[0]?.prices[0]?.sellingPrice ??
+                    1000) +
+                    "đ"
+                }}
+              </div>
+              <div class="ml-5 sell-price">
+                {{
+                  (product.product_details[0]?.prices[0]?.promotionPrice ??
+                    900) +
+                    "đ"
+                }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
+</div>

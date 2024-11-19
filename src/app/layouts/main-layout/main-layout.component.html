@@ -1,0 +1,114 @@
+<div class="layout">
+  <div class="sidebar">
+    <div
+      (click)="home()"
+      class="list"
+      [class.selected]="selectedIndex === 0"
+      style="cursor: pointer"
+    >
+      <i class="pi pi-prime" style="font-size: 2rem">Admin</i>
+    </div>
+
+    <div class="sidebar-list">
+      <!-- <div class="list">
+        <i class="pi pi-sort-down" style="font-size: 1.5rem"></i>
+        <p>Dashboard</p>
+      </div> -->
+      <div
+        class="list"
+        (click)="userList()"
+        [class.selected]="selectedIndex === 1"
+      >
+        <i class="pi pi-user"></i>
+        <p>Người dùng</p>
+      </div>
+      <div
+        class="list"
+        (click)="subCategoryList()"
+        [class.selected]="selectedIndex === 2"
+      >
+        <i class="pi pi-align-justify"></i>
+        <p>Danh mục</p>
+      </div>
+      <div class="">
+        <div class="list" (click)="toggleDropdown()">
+          <i class="pi pi-caret-down"></i>
+          <p>Thuộc tính</p>
+        </div>
+
+        <div class="dropdown-content" *ngIf="isDropdownOpen">
+          <button
+            [class.selected]="selectedIndex === 4"
+            (click)="materialList()"
+            class="list"
+          >
+            Chất liệu
+          </button>
+          <button
+            [class.selected]="selectedIndex === 5"
+            (click)="colorList()"
+            class="list"
+          >
+            Màu sắc
+          </button>
+          <button
+            [class.selected]="selectedIndex === 6"
+            (click)="sizeList()"
+            class="list"
+          >
+            Kích thước
+          </button>
+        </div>
+      </div>
+      <div
+        class="list"
+        (click)="productList()"
+        [class.selected]="selectedIndex === 3"
+      >
+        <i class="pi pi-box"></i>
+        <p>Sản phẩm</p>
+      </div>
+
+      <div
+        class="list"
+        (click)="orderList()"
+        [class.selected]="selectedIndex === 7"
+      >
+        <i class="pi pi-cart-minus"></i>
+        <p>Đơn hàng</p>
+      </div>
+
+      <div
+        class="list"
+        (click)="priceList()"
+        [class.selected]="selectedIndex === 8"
+      >
+        <i class="pi pi-money-bill"></i>
+        <p>Giá bán</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="header">
+      <div class="header-top">
+        <img
+          src="https://cdn.codegym.vn/wp-content/uploads/2024/05/1_xvkF4IfpJ65JyYc_xQm6Lw.png"
+          alt=""
+          class="header-image"
+        />
+
+        <div class="avatar">
+          <p-avatar
+            image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+            (click)="menu.toggle($event)"
+          ></p-avatar>
+          <p-menu #menu [popup]="true" [model]="items"></p-menu>
+        </div>
+      </div>
+    </div>
+    <div class="content-form">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

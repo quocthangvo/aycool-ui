@@ -1,0 +1,19 @@
+<div class="card">
+  <p-carousel
+    [value]="images"
+    [numVisible]="1"
+    [numScroll]="1"
+    [circular]="true"
+    [responsiveOptions]="responsiveOptions"
+    autoplayInterval="5000"
+    [showIndicators]="false"
+  >
+    <ng-template let-image pTemplate="item">
+      <div class="">
+        <img [src]="image" alt="carousel-image" class="w-full" />
+      </div>
+    </ng-template>
+  </p-carousel>
+</div>
+
+<app-product />

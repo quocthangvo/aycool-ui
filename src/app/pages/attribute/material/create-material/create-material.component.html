@@ -1,0 +1,39 @@
+<p-toast></p-toast>
+
+<p-dialog
+  header="Thêm chất liệu"
+  [(visible)]="display"
+  [modal]="true"
+  [closable]="false"
+  [draggable]="false"
+  [resizable]="false"
+  (onHide)="cancel()"
+>
+  <form [formGroup]="materialForm" (ngSubmit)="createMaterial()">
+    <div class="input-form">
+      <p>Tên</p>
+      <input
+        pInputText
+        type="text"
+        formControlName="name"
+        [ngClass]="{ 'is-invalid': submit && name?.invalid }"
+      />
+      <small *ngIf=" submit && name?.errors?.['required']"
+        >Tên là bắt buộc</small
+      >
+      <small *ngIf=" submit && name?.errors?.['minlength']"
+        >Tên phải có hơn 2 ký tự</small
+      >
+    </div>
+
+    <div class="create-button">
+      <p-button
+        label="Hủy"
+        (click)="cancel()"
+        [text]="true"
+        [plain]="true"
+      ></p-button>
+      <p-button label="Thêm" type="submit" class="submit"></p-button>
+    </div>
+  </form>
+</p-dialog>

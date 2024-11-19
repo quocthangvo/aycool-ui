@@ -1,0 +1,139 @@
+<p-toast></p-toast>
+
+<div class="card">
+  <h1>Tạo sản phẩm</h1>
+
+  <form [formGroup]="productForm" (ngSubmit)="createProduct()" class="form">
+    <div class="card-form">
+      <div class="input-form">
+        <p>Tên danh mục</p>
+        <p-dropdown
+          placeholder="Chọn"
+          [options]="categorySubNodes"
+          formControlName="sub_category_id"
+          appendTo="body"
+          [ngClass]="{ 'is-invalid': submit && subCategory?.invalid }"
+          (onChange)="onCategoryChange($event)"
+        />
+        <p
+          class="validator"
+          *ngIf="submit && subCategory?.errors?.['required']"
+        >
+          Tên danh mục là bắt buộc.
+        </p>
+      </div>
+
+      <div class="input-form">
+        <p>Chất liệu</p>
+        <p-dropdown
+          class="md:w-20rem w-full"
+          placeholder="Chọn"
+          formControlName="material_id"
+          [options]="materialNodes"
+          appendTo="body"
+          [ngClass]="{ 'is-invalid': submit && material?.invalid }"
+        />
+        <p class="validator" *ngIf="submit && material?.errors?.['required']">
+          Chất liệu là bắt buộc.
+        </p>
+      </div>
+
+      <div class="input-form">
+        <p>Tên sản phẩm</p>
+        <input
+          pInputText
+          formControlName="name"
+          [ngClass]="{ 'is-invalid': submit && name?.invalid }"
+          [value]="selectedSubCategoryName"
+        />
+        <p class="validator" *ngIf="submit && name?.errors?.['required']">
+          Tên sản phẩm là bắt buộc.
+        </p>
+        <p class="validator" *ngIf="submit && name?.errors?.['minlength']">
+          Tên sản phẩm phải có hơn 3 ký tự.
+        </p>
+      </div>
+
+      <div class="input-form">
+        <p>Mã SKU</p>
+        <input
+          pInputText
+          formControlName="sku"
+          [ngClass]="{ 'is-invalid': submit && sku?.invalid }"
+        />
+        <p class="validator" *ngIf="submit && sku?.errors?.['required']">
+          Mã SKU là bắt buộc.
+        </p>
+        <p class="validator" *ngIf="submit && sku?.errors?.['minLength']">
+          Mã SKU phải có hơn 2 ký tự.
+        </p>
+      </div>
+      <div class="input-form">
+        <p>Mô tả</p>
+        <p-editor formControlName="description" [style]="{ height: '250px' }" />
+      </div>
+    </div>
+    <div class="card-form-right">
+      <div class="input-form">
+        <p>Màu sắc</p>
+        <p-treeSelect
+          placeholder="Chọn"
+          selectionMode="multiple"
+          formControlName="colors"
+          [options]="colorNodes"
+          appendTo="body"
+          [ngClass]="{ 'is-invalid': submit && colors?.invalid }"
+        />
+        <p class="validator" *ngIf="submit && colors?.errors?.['required']">
+          Màu sắc là bắt buộc.
+        </p>
+      </div>
+
+      <div class="input-form">
+        <p>Kích thước</p>
+        <p-treeSelect
+          placeholder="Chọn"
+          formControlName="sizes"
+          selectionMode="multiple"
+          [options]="sizeNodes"
+          appendTo="body"
+          [ngClass]="{ 'is-invalid': submit && sizes?.invalid }"
+        />
+        <p class="validator" *ngIf="submit && sizes?.errors?.['required']">
+          Kích thước là bắt buộc.
+        </p>
+      </div>
+
+      <div class="input-form">
+        <p>Ảnh</p>
+        <p-fileUpload
+          name="demo[]"
+          url="https://www.primefaces.org/cdn/api/upload.php"
+          (onUpload)="onUpload($event)"
+          [multiple]="true"
+          accept="image/*"
+          maxFileSize="1000000"
+        >
+          <ng-template pTemplate="content">
+            <ul *ngIf="uploadedFiles.length">
+              <li *ngFor="let file of uploadedFiles">
+                {{ file.name }} - {{ file.size }} bytes
+              </li>
+            </ul>
+          </ng-template>
+        </p-fileUpload>
+      </div>
+    </div>
+
+    <div class="button-create">
+      <p-button
+        label="Hủy"
+        (click)="cancel()"
+        [text]="true"
+        [plain]="true"
+      ></p-button>
+      <p-button label="Thêm" type="submit" class="submit"></p-button>
+      <!-- Disable if form is invalid -->
+    </div>
+  </form>
+</div>

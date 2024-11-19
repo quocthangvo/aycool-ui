@@ -1,0 +1,76 @@
+.card {
+    & .form{
+
+    display: flex;
+    justify-content: start;
+    // border: 1px solid #e5e7eb;
+    // border-radius: 8px;
+    // padding: 20px;
+    // background-color: white;
+   
+
+    & .card-form {
+
+           border: 1px solid #e5e7eb;
+           border-radius: 8px;
+           padding: 20px;
+           background-color: var(--white-color);
+        //    width: 50%;
+        & .input-form {
+            margin: 1rem 0;
+
+            & p {
+                display: block;
+                // margin-bottom: 0.5rem;
+            }
+
+            & .p-dropdown {
+                width: 100%;
+            }
+
+            // & .validator {
+            //     color: var(--red-color);
+            //     margin-top: 5px;
+            // }
+        }
+    }
+
+    & .card-form-right {
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 20px;
+        background-color: var(--white-color);
+        width: 40%;
+        margin:0 20px;
+
+        & .input-form {
+            margin: 1rem 0;
+        }
+
+        & .p-treeselect {
+            width: 100%;
+        }
+       & .p-fileupload-buttonbar{
+        display: flex;
+        justify-content: space-around;
+       }
+    }
+}
+}
+
+.p-inputtext {
+    width: 100%;
+}
+
+.button-create {
+    display: flex;
+    justify-content: end;
+    position: fixed;
+    bottom: 20px;
+    right: 5%;
+    z-index: 1000;
+}
+.validator {
+    color: var(--red-color);
+    margin-top: 5px;
+}

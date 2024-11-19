@@ -1,0 +1,119 @@
+.layout {
+    display: flex;
+    width: 100vw;
+}
+
+.header {
+    & .header-image {
+        width: 150px;
+        margin: 10px;
+    }
+}
+
+.sidebar {
+    width: 15%;
+    min-height: 100vh;
+    height: auto;
+    padding: 20px;
+    // box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #1E293B;
+    color: white;
+    & .sidebar-list {
+        margin-top: 40px;
+
+        & .list {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.5s;
+            padding:0 10px;
+            border-radius: 5px;
+            & p {
+                margin-left: 1rem;
+            }
+            & i{
+                font-size: 1.2rem;
+            }
+        }
+
+        & .list:hover {
+            cursor: pointer;
+            background-color: #0089ff;
+        }
+        //dropdown
+       & .dropdown-content {
+            // position: absolute;
+            background-color: #f9f9f9;
+            width: 100%;
+            // border-radius: 0 0 5px 5px;
+            z-index: 1;
+            margin-bottom: 10px;
+            animation: slideDown 0.4s ease-out; 
+        
+
+        }
+        
+        & .dropdown-content button {
+            color: white;
+            padding: 12px 46px;
+            text-decoration: none;
+            display: block;
+            border: none;
+            width: 100%;
+            background-color: #1E293B;
+            border-radius: 0;
+            text-align: start;
+            font-size: 1rem;
+
+        }
+        
+      
+
+       & .list.selected{
+        background-color: #0089ff;
+        }
+          
+    }
+
+}
+
+.content {
+    width: 85%;
+    background-color: var(--grey-color);
+    & .header-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 2px solid white;
+
+
+        & .avatar {
+            margin-right: 40px;
+            text-align: end;
+            cursor: pointer;
+            position: relative;
+        }
+    }
+
+    & .content-form {
+        margin:0 40px;
+
+    }
+}
+// chỉnh dropdown logout
+.ng-trigger-overlayAnimation{
+    left: -170px !important; 
+    top: 40px !important;
+}
+
+@keyframes slideDown {
+    0% {
+        transform: translateY(-20px); /* Bắt đầu từ trên, dịch chuyển lên -20px */
+        opacity: 0; /* Ban đầu mờ */
+    }
+    100% {
+        transform: translateY(0); /* Kết thúc tại vị trí ban đầu */
+        opacity: 1; /* Hiện đầy đủ */
+    }
+}

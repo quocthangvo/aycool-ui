@@ -1,0 +1,79 @@
+<div class="card">
+  <p-toast></p-toast>
+  <div class="card-form">
+    <h1>Tạo tài khoản</h1>
+
+    <form [formGroup]="userForm" (ngSubmit)="createUser()">
+      <div class="input-form">
+        <span>Họ tên</span>
+        <input
+          pInputText
+          formControlName="full_name"
+          [ngClass]="{ 'is-invalid': submit && fullName?.invalid }"
+        />
+        <p class="validator" *ngIf="submit && fullName?.errors?.['required']">
+          Họ tên là bắt buộc.
+        </p>
+        <p class="validator" *ngIf="submit && fullName?.errors?.['minlength']">
+          Họ tên phải có hơn 3 ký tự.
+        </p>
+      </div>
+
+      <div class="input-form">
+        <span>Email</span>
+        <input
+          pInputText
+          formControlName="email"
+          [ngClass]="{ 'is-invalid': submit && email?.invalid }"
+        />
+
+        <p class="validator" *ngIf="submit && email?.errors?.['required']">
+          Email là bắt buộc.
+        </p>
+        <p class="validator" *ngIf="submit && email?.errors?.['email']">
+          Vui lòng nhập đúng định dạng.
+        </p>
+      </div>
+
+      <div class="input-form">
+        <span>Mật khẩu</span>
+        <p-password
+          [toggleMask]="true"
+          formControlName="password"
+          [ngClass]="{ 'is-invalid': submit && password?.invalid }"
+        ></p-password>
+        <p class="validator" *ngIf="submit && password?.errors?.['required']">
+          Mật khẩu là bắt buộc.
+        </p>
+        <p class="validator" *ngIf="submit && password?.errors?.['minlength']">
+          Mật khẩu phải có hơn 6 kí tự.
+        </p>
+      </div>
+      <div class="input-form">
+        <span>Nhập lại mật khẩu</span>
+        <p-password
+          [toggleMask]="true"
+          formControlName="retype_password"
+          [ngClass]="{ 'is-invalid': submit && retypePassword?.invalid }"
+        ></p-password>
+        <p
+          class="validator"
+          *ngIf="submit && retypePassword?.errors?.['required']"
+        >
+          Nhập lại mật khẩu là bắt buộc.
+        </p>
+      </div>
+
+      <div class="button-create">
+        <p-button
+          label="Hủy"
+          (click)="cancel()"
+          [text]="true"
+          [plain]="true"
+        ></p-button>
+        <p-button label="Tạo" type="submit" class="submit"></p-button>
+        <!-- Disable if form is invalid -->
+      </div>
+    </form>
+  </div>
+</div>

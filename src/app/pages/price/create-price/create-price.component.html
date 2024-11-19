@@ -1,0 +1,86 @@
+<div class="card">
+  <h1>Thêm Giá</h1>
+
+  <form [formGroup]="priceForm" (ngSubmit)="createPrice()" class="form">
+    <div class="card-form">
+      <div class="input-form">
+        <p>Sản phẩm</p>
+        <p-multiSelect
+          [options]="productList"
+          formControlName="selectedProductDetail"
+          placeholder="Chọn sản phẩm"
+          display="chip"
+          [showClear]="true"
+          optionLabel="sku_name"
+          optionValue="id"
+          (onChange)="onProductSelectChange($event)"
+        />
+        <p
+          class="validator"
+          *ngIf="
+            submit &&
+            priceForm.get('selectedProductDetail')?.hasError('required')
+          "
+        >
+          Cần chọn sản phẩm
+        </p>
+      </div>
+      <!-- Bảng hiển thị chi tiết sản phẩm đã chọn -->
+      <p-table [value]="selectedProductDetail">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Id</th>
+            <th>Tên sản phẩm</th>
+            <th>Giá bán</th>
+            <th>Giá khuyến mãi %</th>
+            <th>Ngày bắt đầu</th>
+            <th>Ngày kết thúc</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-detail let-i="rowIndex">
+          <tr>
+            <td>{{ i + 1 }}</td>
+            <td>{{ detail.sku_name }}</td>
+            <td>
+              <input pInputText formControlName="selling_price" />
+              <p
+                class="validator"
+                *ngIf="
+                  submit && priceForm.get('selling_price')?.hasError('required')
+                "
+              >
+                Nhập giá bán
+              </p>
+            </td>
+            <td>
+              <input pInputText formControlName="promotion_price" />
+            </td>
+            <td>
+              <p-calendar
+                formControlName="start_date"
+                dateFormat="dd/mm/yy"
+                [style]="{ width: '100%' }"
+              ></p-calendar>
+            </td>
+            <td>
+              <p-calendar
+                formControlName="end_date"
+                dateFormat="dd/mm/yy"
+              ></p-calendar>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <div class="button-create">
+      <p-button
+        label="Hủy"
+        (click)="cancel()"
+        [text]="true"
+        [plain]="true"
+      ></p-button>
+      <p-button label="Thêm" type="submit" class="submit"></p-button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,88 @@
+<p-confirmDialog />
+<div class="table">
+  <p-table
+    [value]="materialList"
+    responsiveLayout="stack"
+    [breakpoint]="'960px'"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="caption">
+      <div class="caption">
+        <h1>Chất liệu</h1>
+        <p-button severity="contrast" (click)="openCreateMaterialDialog()">
+          <i
+            class="pi pi-plus"
+            style="font-size: 1rem; margin-right: 0.5rem"
+          ></i>
+          Thêm chất liệu
+        </p-button>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Id</th>
+        <th>Tên</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-materials let-i="rowIndex">
+      <tr>
+        <td>{{ i + 1 }}</td>
+        <td>{{ materials.name }}</td>
+
+        <td>
+          <div class="actions">
+            <i
+              class="pi pi-trash"
+              style="font-size: 1.5rem; color: red"
+              (click)="onDelete(materials.id, $event)"
+            >
+            </i>
+
+            <i
+              class="pi pi-user-edit"
+              style="font-size: 1.5rem; color: blue"
+              (click)="onModelUpdate(materials)"
+            >
+            </i>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <p-dialog
+    header="Cập nhật chất liệu"
+    [(visible)]="displayUpdateDialog"
+    [modal]="true"
+    [closable]="false"
+  >
+    <div class="p-fluid">
+      <div class="p-field">
+        <p>Tên</p>
+        <input pInputText id="name" [(ngModel)]="selectedMaterial.name" />
+      </div>
+    </div>
+
+    <p-footer>
+      <button
+        pButton
+        label="Hủy"
+        icon="pi pi-times"
+        class="p-button-text"
+        (click)="cancelUpdate()"
+      ></button>
+      <button
+        pButton
+        label="Lưu"
+        icon="pi pi-check"
+        class="p-button-primary"
+        (click)="saveMaterial()"
+      ></button>
+    </p-footer>
+  </p-dialog>
+  <app-create-material
+    [display]="displayDialog"
+    (close)="handleDialogClose()"
+  ></app-create-material>
+</div>

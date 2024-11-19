@@ -1,0 +1,104 @@
+<div class="table">
+  <p-table
+    [value]="orderList"
+    responsiveLayout="stack"
+    [breakpoint]="'960px'"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="caption">
+      <div class="caption">
+        <h1>Đơn hàng</h1>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Id</th>
+        <th>Người đặt</th>
+        <th>Mã đơn hàng</th>
+        <th>Sản phẩm</th>
+        <th>Thuộc tính</th>
+        <th>Ngày đặt hàng</th>
+        <th>Tổng tiền</th>
+        <th>Trạng thái</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-orders let-i="rowIndex">
+      <tr>
+        <td>{{ i + 1 }}</td>
+        <td>{{ orders.name }}</td>
+        <td>{{ orders.order_code }}</td>
+        <td>
+          <ng-container
+            *ngFor="let orderDetail of orders.order_details; let j = index"
+          >
+            <!-- Hiển thị thông tin sản phẩm cho mỗi phần tử trong order_details -->
+            <div *ngIf="j === 0">
+              {{ orderDetail.product_name }}
+            </div>
+          </ng-container>
+        </td>
+        <td>
+          <ng-container
+            *ngFor="let orderDetail of orders.order_details; let j = index"
+          >
+            ({{ orderDetail.color }}, {{ orderDetail.size }},
+            {{ orderDetail.quantity }})
+          </ng-container>
+        </td>
+
+        <td>{{ orders.order_date }}</td>
+        <td>{{ orders.total_money }}</td>
+        <td>{{ orders.statusDisplayName }}</td>
+
+        <!-- <td>
+          <div class="actions">
+            <i
+              class="pi pi-trash"
+              style="font-size: 1.5rem; color: red"
+              (click)="onDelete(orders.id, $event)"
+            >
+            </i>
+
+            <i
+              class="pi pi-user-edit"
+              style="font-size: 1.5rem; color: blue"
+              (click)="onModelUpdate(orders)"
+            >
+            </i>
+          </div>
+        </td> -->
+      </tr>
+    </ng-template>
+  </p-table>
+  <!-- <p-dialog
+    header="Cập nhật trạng thái đơn hàng"
+    [(visible)]="displayUpdateDialog"
+    [modal]="true"
+    [closable]="false"
+  >
+    <div class="p-fluid">
+      <div class="p-field">
+        <p>Tên</p>
+        <input pInputText [(ngModel)]="selectedOrder.name" />
+      </div>
+    </div>
+
+    <p-footer>
+      <button
+        pButton
+        label="Hủy"
+        icon="pi pi-times"
+        class="p-button-text"
+        (click)="cancelUpdate()"
+      ></button>
+      <button
+        pButton
+        label="Lưu"
+        icon="pi pi-check"
+        class="p-button-primary"
+        (click)="save()"
+      ></button>
+    </p-footer>
+  </p-dialog> -->
+</div>

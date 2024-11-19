@@ -1,0 +1,47 @@
+.card{
+    margin-top: 20px;
+    color: black;
+    display: flex;
+    justify-content: center;
+    & .card-form{
+       border: 1px solid #e5e7eb;
+       border-radius: 8px;
+       padding: 20px;
+       width: 50%;
+       background-color: var(--white-color);
+       & .input-form{
+        margin-bottom: 1rem;
+        & span{
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        & .validator{
+            color: var(--red-color);
+            margin-top: 5px;
+        }
+       }
+    }
+   
+ 
+}
+.p-inputtext {
+    width: 100%;
+}
+.p-input-icon-right > .p-inputtext{
+    padding-right: 33rem;
+}
+.p-button{
+        width: 100%;
+        margin-top: 50px;
+}
+.p-button.p-fileupload-choose{
+    margin: 0;
+}
+.button-create{  
+    display: flex;
+    justify-content: end;
+    position: fixed;
+    bottom: 20px;   
+    right: 5%; 
+    z-index: 1000;
+}

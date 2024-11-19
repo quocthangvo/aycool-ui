@@ -1,0 +1,114 @@
+<p-confirmDialog />
+<div class="table">
+  <p-table
+    [value]="userList"
+    responsiveLayout="stack"
+    [breakpoint]="'960px'"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="caption">
+      <div class="caption">
+        <h1>Users</h1>
+        <p-button severity="contrast" routerLink="/create-user">
+          <i
+            class="pi pi-plus"
+            style="font-size: 1rem; margin-right: 0.5rem"
+          ></i>
+          Tạo tài khoản
+        </p-button>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Id</th>
+        <th>Ảnh đại diện</th>
+        <th>Họ tên</th>
+        <th>Email</th>
+
+        <th>Trạng thái</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-users let-i="rowIndex">
+      <tr>
+        <td>{{ i + 1 }}</td>
+        <td>
+          <p-image
+            src="https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg"
+            alt="Image"
+            width="50px"
+          />
+        </td>
+        <td>{{ users.full_name }}</td>
+        <td>{{ users.email }}</td>
+
+        <td>{{ getActiveStatus(users.active) }}</td>
+
+        <td>
+          <div class="actions">
+            <i
+              class="pi pi-trash"
+              style="font-size: 1.5rem; color: red"
+              (click)="onDelete(users.id, $event)"
+            >
+            </i>
+
+            <i
+              class="pi pi-lock-open"
+              style="font-size: 1.5rem; color: blue"
+              (click)="onUnLock(users.id, $event)"
+            >
+            </i>
+            <i
+              class="pi pi-unlock"
+              style="font-size: 1.5rem; color: green"
+              (click)="onLock(users.id, $event)"
+            >
+            </i>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <!-- <p-dialog
+    header="Update User"
+    [(visible)]="displayUpdateDialog"
+    [modal]="true"
+    [closable]="false"
+  >
+    <div class="p-fluid">
+      <div class="p-field">
+        <p>Full name</p>
+        <input pInputText id="fullname" [(ngModel)]="selectedUser.fullname" />
+      </div>
+
+      <div class="p-field">
+        <p>Images</p>
+        <p-fileUpload
+          mode="basic"
+          chooseLabel="Choose"
+          chooseIcon="pi pi-upload"
+          accept="image/*"
+          maxFileSize="1000000"
+        />
+      </div>
+    </div>
+    <p-footer>
+      <button
+        pButton
+        label="Cancel"
+        icon="pi pi-times"
+        class="p-button-text"
+        (click)="cancelUpdate()"
+      ></button>
+      <button
+        pButton
+        label="Save"
+        icon="pi pi-check"
+        class="p-button-primary"
+        (click)="saveUser()"
+      ></button>
+    </p-footer>
+  </p-dialog> -->
+</div>

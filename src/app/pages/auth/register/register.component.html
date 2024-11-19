@@ -1,0 +1,99 @@
+<div>
+  <app-auth-layout></app-auth-layout>
+  <div class="login-content">
+    <img
+      src=" https://dochat.vn/themes/dochat-v3/images/user/login.webp"
+      alt=""
+      class="login-image"
+    />
+    <div class="login-form">
+      <h1>Đăng ký</h1>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="input-form">
+          <p-floatLabel>
+            <input
+              pInputText
+              formControlName="full_name"
+              [ngClass]="{ 'is-invalid': submit && fullName?.invalid }"
+            />
+            <label for="full_name">Họ tên</label>
+          </p-floatLabel>
+
+          <p *ngIf="submit && fullName?.errors?.['required']">
+            Họ tên là bắt buộc.
+          </p>
+          <p *ngIf="submit && fullName?.errors?.['minlength']">
+            Họ tên phải có hơn 3 ký tự.
+          </p>
+        </div>
+        <div class="input-form">
+          <p-floatLabel>
+            <input
+              pInputText
+              id="email"
+              formControlName="email"
+              [ngClass]="{ 'is-invalid': submit && email?.invalid }"
+            />
+            <label for="email">Email</label>
+          </p-floatLabel>
+
+          <p *ngIf="submit && email?.errors?.['required']">
+            Email là bắt buộc.
+          </p>
+          <p *ngIf="submit && email?.errors?.['email']">
+            Vui lòng nhập đúng định dạng.
+          </p>
+        </div>
+        <div class="input-form">
+          <p-floatLabel>
+            <p-password
+              [toggleMask]="true"
+              formControlName="password"
+              [ngClass]="{ 'is-invalid': submit && password?.invalid }"
+            />
+            <label for="password">Mật khẩu</label>
+          </p-floatLabel>
+
+          <p *ngIf="submit && password?.errors?.['required']">
+            Mật khẩu là bắt buộc.
+          </p>
+          <p *ngIf="submit && password?.errors?.['minlength']">
+            Mật khẩu phải có hơn 6 kí tự.
+          </p>
+        </div>
+        <div class="input-form">
+          <p-floatLabel>
+            <p-password
+              [toggleMask]="true"
+              formControlName="retype_password"
+              [ngClass]="{ 'is-invalid': submit && retypePassword?.invalid }"
+            />
+            <label for="retype_password">Nhập lại mật khẩu</label>
+          </p-floatLabel>
+
+          <p *ngIf="submit && retypePassword?.errors?.['required']">
+            Nhập lại mật khẩu là bắt buộc.
+          </p>
+        </div>
+
+        <p-button label="Register" type="submit" />
+        <!-- [disabled]="registerForm.invalid" -->
+
+        <div class="register">
+          <p>Bạn đã có tài khoản ? <a href="login">Đăng nhập</a></p>
+        </div>
+        <div class="google-account">
+          <p class="text-divider">Đăng nhập bằng</p>
+          <div class="login-google">
+            <p>Tài khoản Google</p>
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1024px-Google_%22G%22_logo.svg.png"
+              alt=""
+              class="google-image"
+            />
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

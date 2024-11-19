@@ -1,0 +1,72 @@
+<div class="page">
+  <div class="site-header">
+    <div class="header">
+      <div class="auth">
+        <ng-container *ngIf="userFullName; else authLinks">
+          <div class="dropdown" (click)="toggleDropdown($event)">
+            <span class="pi pi-user" style="cursor: pointer"></span>
+            <p>{{ userFullName }}</p>
+            <div class="dropdown-menu" [class.open]="dropdownOpen">
+              <p routerLink="/profile">Profile</p>
+              <p (click)="logout()">Đăng xuất</p>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #authLinks>
+          <p routerLink="/register" class="register">Đăng ký</p>
+          <p routerLink="/login">Đăng nhập</p>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="layout">
+      <p-image
+        src="https://www.coolmate.me/images/logo-coolmate-new.svg?v=1"
+        alt="Image"
+        width="80"
+      />
+
+      <div>
+        <ul class="list-category">
+          <li>
+            ÁO NAM
+            <ul class="dropdown">
+              <li>Áo thun</li>
+              <li>Áo khoác</li>
+            </ul>
+          </li>
+          <li>
+            QUẦN NAM
+            <ul class="dropdown">
+              <li>Quần jean</li>
+              <li>Quần kaki</li>
+            </ul>
+          </li>
+          <li>
+            PHỤ KIỆN
+            <ul class="dropdown">
+              <li>Thắt lưng</li>
+              <li>Giày</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="icon-button">
+        <div class="search">
+          <input type="text" placeholder="Tìm kiếm..." pInputText />
+          <span class="pi pi-search" style="cursor: pointer"></span>
+        </div>
+        <i class="pi pi-user" style="font-size: 1.5rem"></i>
+        <div class="cart-icon">
+          <i class="pi pi-cart-arrow-down" style="font-size: 1.5rem"></i>
+          <ul class="dropdown">
+            <li>Item 1</li>
+            <li>Item 2</li>
+            <li>Item 3</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

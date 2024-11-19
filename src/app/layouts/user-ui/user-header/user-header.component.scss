@@ -1,0 +1,254 @@
+.page{
+
+    display: flex;
+    flex-direction: column;
+    // min-height: 100vh; // Đảm bảo chiều cao tối thiểu cho toàn trang
+  & .site-header{
+    flex: 1;
+   
+  }
+}
+
+.header {
+  .auth {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    cursor: pointer;
+    height: 25px;
+    font-size: 15px;
+    padding: 0 80px;
+    color: #000;
+
+    & .register {
+      border-right: 1px solid black;
+      padding-right: 5px;
+
+      &:hover {
+        color: lighten(#000, 40%);
+      }
+    }
+
+    p:last-child {
+      padding-left: 5px;
+
+      &:hover {
+        color: lighten(#000, 40%);
+      }
+    }
+
+    // Dropdown menu styling
+    .dropdown {
+      position: relative;
+      // display: inline-block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      // User greeting text
+      p {
+        margin: 0;
+        padding-left: 10px;
+      }
+
+      // Dropdown menu styles
+      .dropdown-menu {
+        display: block;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: #fff;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        padding: 10px;
+        min-width: 150px;
+        z-index: 1;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+        margin-top: 10px;
+        border-radius: 5px;
+        text-align: end;
+
+        &.open {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(0);
+        }
+
+        // Menu item styling
+        p {
+          padding: 8px 12px;
+          margin: 0;
+          cursor: pointer;
+          white-space: nowrap;
+
+          &:hover {
+            background-color: #f1f1f1;
+          }
+        }
+      }
+    }
+  }
+}
+
+.layout {
+  background-color: var(--black-color);
+  height: 80px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 80px;
+
+  & .p-image {
+
+    width: 100%;
+    height: 100%;
+  }
+
+  & .icon-button {
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & i {
+      padding: 30px 0 30px 1rem;
+      cursor: pointer;
+    }
+
+    & .cart-icon {
+      position: relative;
+
+      .pi-cart-arrow-down {
+        transition: transform 1s ease;
+      }
+
+      /* Dropdown menu ẩn theo mặc định */
+      .dropdown {
+        display: none;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        position: absolute;
+        top: 100%;
+        /* Đặt dropdown dưới icon */
+        left: -250px;
+        /* Đặt dropdown nằm bên trái icon */
+        background-color: #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        width: 300px;
+        z-index: 10;
+
+        /* Style cho các mục trong dropdown */
+        li {
+          padding: 10px;
+
+          transition: background-color 1s ease;
+
+          &:hover {
+            background-color: #f0f0f0;
+          }
+        }
+      }
+
+      /* Hiển thị dropdown khi hover vào icon */
+      &:hover .dropdown {
+        display: block;
+      }
+
+      /* Hiệu ứng khi hover vào icon */
+      &:hover .pi-cart-arrow-down {
+        transform: scale(1.1);
+        /* Phóng to icon một chút khi hover */
+      }
+
+    }
+  }
+
+  & .list-category {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 0;
+
+    & li {
+      display: block;
+      font-size: 1rem;
+      font-weight: bold;
+      color: white;
+      padding: 30px 20px;
+      cursor: pointer;
+      position: relative;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+
+      &:hover {
+        background-color: #3C3C3C;
+        // transform: scale(1.05);
+
+        .dropdown {
+          display: block;
+        }
+      }
+    }
+  }
+
+  /* Dropdown menu ẩn theo mặc định */
+  .dropdown {
+    display: none;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 100%;
+    /* Đặt dropdown bên dưới mục li */
+    left: 0;
+    background-color: var(--grey-dropdown-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    z-index: 10;
+    padding-top: 20px;
+
+    /* Style cho các mục trong dropdown */
+    li {
+      padding: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      color: grey;
+
+      /* Hiệu ứng hover cho mục trong dropdown */
+      &:hover {
+        color: #3861D0;
+        background-color: var(--grey-dropdown-color);
+
+      }
+    }
+  }
+
+}
+
+.search {
+  position: relative;
+
+  & .p-inputtext {
+    padding-left: 2rem;
+    min-width: 550px;
+  }
+
+  & .pi-search {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    cursor: pointer;
+    /* Make cursor change to pointer when hovering over the icon */
+    pointer-events: all;
+    padding: 20px;
+    color: black;
+  }
+}
+

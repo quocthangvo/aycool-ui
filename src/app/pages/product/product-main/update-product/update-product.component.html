@@ -1,0 +1,68 @@
+<div class="card">
+  <p-toast />
+  <div class="card-form">
+    <form [formGroup]="productForm" (ngSubmit)="updateProduct()">
+      <div class="input-form">
+        <p>Tên danh mục</p>
+        <p-dropdown
+          class="md:w-20rem w-full"
+          placeholder="Chọn"
+          [options]="categorySubNodes"
+          formControlName="sub_category_id"
+          appendTo="body"
+          (onNodeSelect)="onSubCategorySelect($event)"
+        />
+      </div>
+
+      <div class="input-form">
+        <p>Chất liệu</p>
+        <p-dropdown
+          class="md:w-20rem w-full"
+          placeholder="Chọn"
+          formControlName="material_id"
+          [options]="materialNodes"
+          appendTo="body"
+          (onNodeSelect)="onMaterialSelect($event)"
+        />
+      </div>
+      <div class="input-form">
+        <p>Tên sản phẩm</p>
+        <input pInputText formControlName="name" />
+      </div>
+
+      <div class="input-form">
+        <p>Mã SKU</p>
+        <input pInputText formControlName="sku" />
+      </div>
+      <div class="input-form">
+        <p>Mô tả</p>
+        <p-editor formControlName="description" [style]="{ height: '320px' }" />
+      </div>
+      <div class="input-form">
+        <p>Images</p>
+        <p-fileUpload
+          mode="basic"
+          chooseLabel="Choose"
+          chooseIcon="pi pi-upload"
+          accept="image/*"
+          maxFileSize="1000000"
+        />
+      </div>
+    </form>
+  </div>
+</div>
+<p-footer class="button-update">
+  <button
+    pButton
+    label="Hủy"
+    icon="pi pi-times"
+    class="p-button-text"
+    (click)="cancelUpdate()"
+  ></button>
+  <p-button
+    label="Lưu"
+    type="submit"
+    class="submit"
+    (onClick)="updateProduct()"
+  ></p-button>
+</p-footer>
