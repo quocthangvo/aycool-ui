@@ -20,11 +20,14 @@
     </div>
 
     <div class="layout">
-      <p-image
-        src="https://www.coolmate.me/images/logo-coolmate-new.svg?v=1"
-        alt="Image"
-        width="80"
-      />
+      <div style="cursor: pointer">
+        <p-image
+          src="https://seeklogo.com/images/E/e-commerce-concept-logo-5146F23CC5-seeklogo.com.png"
+          alt="Image"
+          width="80"
+          [routerLink]="''"
+        />
+      </div>
 
       <div>
         <ul class="list-category">
@@ -58,13 +61,80 @@
           <span class="pi pi-search" style="cursor: pointer"></span>
         </div>
         <i class="pi pi-user" style="font-size: 1.5rem"></i>
+
         <div class="cart-icon">
-          <i class="pi pi-cart-arrow-down" style="font-size: 1.5rem"></i>
-          <ul class="dropdown">
-            <li>Item 1</li>
-            <li>Item 2</li>
-            <li>Item 3</li>
-          </ul>
+          <i
+            class="pi pi-cart-arrow-down"
+            style="font-size: 1.5rem"
+            [routerLink]="'/cart'"
+          ></i>
+          <span *ngIf="cartItems.length > 0" class="cart-count">
+            {{ cartItems.length }}
+          </span>
+          <div class="dropdown">
+            <div class="title">
+              <div *ngIf="cartItems.length > 0" class="">
+                {{ cartItems.length }} sản phẩm
+              </div>
+              <p class="total" [routerLink]="'/cart'">Xem tất cả</p>
+            </div>
+
+            <div
+              *ngFor="let items of cartItems; let i = index"
+              class="dropdown-item"
+            >
+              <div class="image">
+                <p-image
+                  *ngIf="
+                    items.image_url && items.image_url[0]?.imageUrl;
+                    else noImage
+                  "
+                  [src]="
+                    'http://localhost:8080/uploads/' +
+                    items.image_url[0].imageUrl
+                  "
+                  alt="Ảnh sản phẩm"
+                  width="50px"
+                ></p-image>
+                <ng-template #noImage>
+                  <p-image
+                    src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
+                    alt="Ảnh"
+                    width="50px"
+                  />
+                </ng-template>
+              </div>
+              <div class="content">
+                <p>{{ items.product_name }}</p>
+                <p>
+                  {{ items.product_detail_id.color.name }} /
+                  {{ items.product_detail_id.size.name }}
+                </p>
+                <div class="flex justify-content-start align-items-center">
+                  <p class="promotion-price">
+                    {{
+                      formatPrice(
+                        items.product_detail_id.prices[0]?.sellingPrice || 0
+                      )
+                    }}
+                  </p>
+                  <p class="sell-price">
+                    {{
+                      formatPrice(
+                        items.product_detail_id.prices[0]?.promotionPrice || 0
+                      )
+                    }}
+                  </p>
+                </div>
+                <p class="quantity">x{{ items.quantity }}</p>
+              </div>
+
+              <i
+                class="pi pi-times remove-btn"
+                (click)="removeItem(items.id, i)"
+              ></i>
+            </div>
+          </div>
         </div>
       </div>
     </div>

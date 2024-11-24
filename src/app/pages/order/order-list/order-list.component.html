@@ -32,7 +32,6 @@
           <ng-container
             *ngFor="let orderDetail of orders.order_details; let j = index"
           >
-            <!-- Hiển thị thông tin sản phẩm cho mỗi phần tử trong order_details -->
             <div *ngIf="j === 0">
               {{ orderDetail.product_name }}
             </div>
@@ -50,24 +49,14 @@
         <td>{{ orders.order_date }}</td>
         <td>{{ orders.total_money }}</td>
         <td>{{ orders.statusDisplayName }}</td>
-
-        <!-- <td>
-          <div class="actions">
-            <i
-              class="pi pi-trash"
-              style="font-size: 1.5rem; color: red"
-              (click)="onDelete(orders.id, $event)"
-            >
-            </i>
-
-            <i
-              class="pi pi-user-edit"
-              style="font-size: 1.5rem; color: blue"
-              (click)="onModelUpdate(orders)"
-            >
-            </i>
-          </div>
-        </td> -->
+        <td>
+          <p-dropdown
+            [options]="statusOptions"
+            [(ngModel)]="orders.status"
+            (onChange)="onStatusChange(orders)"
+          >
+          </p-dropdown>
+        </td>
       </tr>
     </ng-template>
   </p-table>

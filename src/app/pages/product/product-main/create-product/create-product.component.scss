@@ -45,6 +45,14 @@
 
         & .input-form {
             margin: 1rem 0;
+         
+                li{
+                   display: flex;
+                   justify-content: space-between;
+                   align-items: center;
+                   cursor: pointer;
+                }
+            
         }
 
         & .p-treeselect {
@@ -74,3 +82,13 @@
     color: var(--red-color);
     margin-top: 5px;
 }
+
+::ng-deep .p-fileupload-choose,
+::ng-deep .p-fileupload-cancel {
+    display: block; /* Giữ nút Choose */
+  }
+  
+  ::ng-deep .p-fileupload-upload{
+    display: none; /* Ẩn nút Upload và Cancel */
+  }
+  

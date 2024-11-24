@@ -198,7 +198,7 @@ export class CreatePriceComponent implements OnInit {
 
 
   cancel() {
-    this.router.navigateByUrl("/price");
+    this.router.navigateByUrl("/admin/price");
   }
 
 }

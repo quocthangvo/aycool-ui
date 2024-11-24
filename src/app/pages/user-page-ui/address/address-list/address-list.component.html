@@ -1,0 +1,53 @@
+<p-dialog
+  header="Địa chỉ"
+  [(visible)]="display"
+  [modal]="true"
+  [closable]="false"
+  [draggable]="false"
+  [resizable]="false"
+  (onHide)="cancel()"
+>
+  <p-button
+    label=" Thêm địa chỉ mới"
+    severity="contrast"
+    (click)="showAddressDialog()"
+    [style]="{ marginBottom: '1rem' }"
+  />
+  <div *ngFor="let address of addressList" class="address">
+    <div class="address-list">
+      <label (click)="selectedAddress = address">
+        <input
+          type="radio"
+          [value]="address"
+          name="selectedAddress"
+          [(ngModel)]="selectedAddress"
+        />
+
+        <div>
+          <p><strong>Tên:</strong> {{ address.full_name }}</p>
+          <p><strong>Điện thoại:</strong> {{ address.phone_number }}</p>
+
+          <p>
+            <strong>Địa chỉ:</strong> {{ address.street_name }},
+            {{ address.district }}, {{ address.ward }}, {{ address.city }}
+          </p>
+        </div>
+      </label>
+    </div>
+  </div>
+
+  <p-footer>
+    <div class="button">
+      <p-button (click)="cancel()" [text]="true" [plain]="true">Đóng</p-button>
+
+      <p-button
+        label="Xác nhận"
+        [disabled]="!selectedAddress"
+        (click)="confirmAddress()"
+        [style]="{ marginRight: '20px' }"
+      ></p-button>
+    </div>
+  </p-footer>
+</p-dialog>
+<app-address [display]="displayAddressDialog" (close)="closeAddressDialog()">
+</app-address>

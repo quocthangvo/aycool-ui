@@ -64,34 +64,34 @@ export class MainLayoutComponent {
   }
 
   home() {
-    this.onSelect(0, '');
+    this.onSelect(0, '/admin');
   }
   userList() {
-    this.onSelect(1, '/user');
+    this.onSelect(1, '/admin/user');
   }
   subCategoryList() {
-    this.onSelect(2, '/sub-category');
+    this.onSelect(2, '/admin/sub-category');
   }
 
   productList() {
-    this.onSelect(3, '/product');
+    this.onSelect(3, '/admin/product');
   }
 
   materialList() {
-    this.onSelect(4, '/material');
+    this.onSelect(4, '/admin/material');
   }
 
   colorList() {
-    this.onSelect(5, '/color');
+    this.onSelect(5, '/admin/color');
   }
   sizeList() {
-    this.onSelect(6, '/size');
+    this.onSelect(6, '/admin/size');
   }
   orderList() {
-    this.onSelect(7, '/order');
+    this.onSelect(7, '/admin/order');
   }
 
   priceList() {
-    this.onSelect(8, 'price')
+    this.onSelect(8, '/admin/price')
   }
 }

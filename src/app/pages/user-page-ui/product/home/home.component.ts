@@ -23,11 +23,11 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     // Chỉ cần URL ảnh mẫu hoặc từ API
     this.images = [
-      'https://primefaces.org/cdn/primeng/images/galleria/galleria1.jpg',
-      'https://primefaces.org/cdn/primeng/images/galleria/galleria2.jpg',
-      'https://primefaces.org/cdn/primeng/images/galleria/galleria3.jpg',
-      'https://primefaces.org/cdn/primeng/images/galleria/galleria4.jpg',
-      'https://primefaces.org/cdn/primeng/images/galleria/galleria5.jpg',
+
+      'https://intphcm.com/data/upload/mau-banner-thoi-trang-nam.jpg',
+      'https://intphcm.com/data/upload/banner-thoi-trang-nam.jpg',
+      'https://media3.coolmate.me/cdn-cgi/image/width=1920,quality=90,format=auto/uploads/November2024/Hero_Banner_-_Desktop_SL_SSS.jpg',
+      'https://media3.coolmate.me/cdn-cgi/image/width=1920,quality=90,format=auto/uploads/November2024/Hero_Banner_-_Desktop_2_KW.jpg',
     ];
 
     this.responsiveOptions = [

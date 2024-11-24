@@ -85,10 +85,12 @@ export class LoginComponent implements OnInit {
             const role = res.data.user.role.name;
             this.tokenService.setRole(role); // Lưu vai trò người dùng
             if (role === 'ADMIN') {
-              this.router.navigateByUrl('/'); // Đường dẫn tới `MainLayoutComponent`
+              this.router.navigateByUrl('/admin'); // Đường dẫn tới `MainLayoutComponent`
             } else if (role === 'USER') {
-              this.router.navigateByUrl('/vn'); // Đường dẫn tới `UserLayoutComponent`
+              this.router.navigateByUrl('/'); // Đường dẫn tới `UserLayoutComponent`
             }
+
+
             this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Đăng nhập thành công' });
           } else {
             this.messageService.add({ severity: 'error', summary: "Thất bại", detail: "Đăng nhập thất bại. Kiểm tra email và mật khẩu" });

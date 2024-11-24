@@ -1,20 +1,21 @@
 
 export class OrderDTO {
-    user_id: string;
-    order_code: String;
-    order_date: Date;
-    total_money: number;
-    status: String;
 
 
-
+    user_id: number;
+    address_id: number;
+    note: string;
+    payment_method: string;
+    selected_items: any[];
 
     constructor(data: any) {
+
         this.user_id = data.user_id;
-        this.order_code = data.order_code;
-        this.order_date = new Date(data.order_date);
-        this.total_money = data.total_money;
-        this.status = data.status;
+        this.address_id = data.address_id;
+        this.note = data.note;
+        this.payment_method = data.payment_method;
+        this.selected_items = data.selected_items;
+
     }
 
 }

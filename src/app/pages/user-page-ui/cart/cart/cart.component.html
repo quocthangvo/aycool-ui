@@ -1,0 +1,179 @@
+<div class="card">
+  <div class="address">
+    <div>
+      <h2>Thông tin đặt hàng</h2>
+      <p-button
+        label="Chọn địa chỉ"
+        severity="contrast"
+        (click)="showAddressDialog()"
+      ></p-button>
+
+      <div class="address-view" *ngIf="selectedAddress">
+        <p><strong>Tên:</strong> {{ selectedAddress.full_name }}</p>
+        <p>
+          <strong>Số điện thoại:</strong> {{ selectedAddress.phone_number }}
+        </p>
+        <p>
+          <strong>Địa chỉ:</strong> {{ selectedAddress.street_name }},
+          {{ selectedAddress.ward }}, {{ selectedAddress.district }},
+          {{ selectedAddress.city }}
+        </p>
+      </div>
+
+      <div class="mt-3">
+        <input
+          type="text"
+          pInputText
+          placeholder="Ghi chú thêm"
+          [(ngModel)]="note"
+        />
+      </div>
+    </div>
+    <div class="payment">
+      <h2>Hình thức thanh toán</h2>
+      <div class="payment-method">
+        <label class="payment-icon" for="payment-cod">
+          <input
+            type="radio"
+            id="payment-cod"
+            name="payment"
+            value="COD"
+            [(ngModel)]="paymentMethod"
+          />
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/2897/2897853.png"
+            alt=""
+          />
+          <p>Thanh toán khi nhận hàng</p>
+        </label>
+
+        <label class="payment-icon" for="payment-card">
+          <input
+            type="radio"
+            id="payment-card"
+            name="payment"
+            value="CARD"
+            [(ngModel)]="paymentMethod"
+          />
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/5223/5223830.png"
+            alt=""
+          />
+          <p>Thanh toán qua ngân hàng</p>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="cart">
+    <h2>Giỏ hàng</h2>
+    <div class="title">
+      <div class="product">
+        <p>TẤT CẢ SẢN PHẨM</p>
+        <p>XÓA TẤT CẢ</p>
+      </div>
+      <p style="margin-left: 15%">SỐ LƯỢNG</p>
+      <p>GIÁ</p>
+    </div>
+
+    <div class="cart-list" *ngFor="let item of cartItems; let i = index">
+      <div class="select-product">
+        <input
+          type="checkbox"
+          [(ngModel)]="item.selected"
+          (change)="onProductSelect(item, $event)"
+        />
+      </div>
+      <div class="image">
+        <img
+          *ngIf="item.image_url && item.image_url[0]?.imageUrl; else noImage"
+          [src]="'http://localhost:8080/uploads/' + item.image_url[0].imageUrl"
+          alt="Ảnh sản phẩm"
+        />
+        <ng-template #noImage>
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
+            alt="Ảnh"
+            width="50px"
+          />
+        </ng-template>
+      </div>
+      <div class="content">
+        <p class="name">{{ item.product_name }}</p>
+        <p>
+          {{ item.product_detail_id.color.name }}/{{
+            item.product_detail_id.size.name
+          }}
+        </p>
+        <i class="pi pi-trash" (click)="removeItem(item.id, i)"> Xóa</i>
+      </div>
+      <div class="quantity">
+        <button
+          (click)="decrementQuantity(item.id, item.quantity)"
+          [disabled]="item.quantity <= 1"
+        >
+          -
+        </button>
+
+        <input
+          type="number"
+          [(ngModel)]="item.quantity"
+          (blur)="onManualQuantityChange(item.id, item.quantity)"
+          min="1"
+          [max]="item.productDetail?.stock"
+          [placeholder]="item.quantity"
+        />
+
+        <button
+          (click)="incrementQuantity(item.id, item.quantity)"
+          [disabled]="item.quantity >= 99"
+        >
+          +
+        </button>
+      </div>
+
+      <div class="price">
+        <p
+          *ngIf="item.product_detail_id.prices[0].promotionPrice"
+          class="font-bold"
+        >
+          {{ formatPrice(item.product_detail_id.prices[0].promotionPrice) }}
+        </p>
+        <p class="sell-price">
+          {{ formatPrice(item.product_detail_id.prices[0].sellingPrice) }}
+        </p>
+        <p class="total-price">
+          {{
+            formatPrice(
+              item.product_detail_id.prices[0].promotionPrice
+                ? item.product_detail_id.prices[0].promotionPrice *
+                    item.quantity
+                : item.product_detail_id.prices[0].sellingPrice * item.quantity
+            )
+          }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="order">
+  <div class="payment-content">
+    <div class="flex justify-content-end align-items-center">
+      <p>Tổng:</p>
+      <p style="font-size: 1rem">{{ getTotalQuantity() }} sản phẩm</p>
+    </div>
+    <div class="flex justify-content-end align-items-end">
+      <p>Thành tiền:</p>
+      <p>{{ formatPrice(totalPrice) }}</p>
+    </div>
+  </div>
+  <button (click)="placeOrder()">ĐẶT HÀNG</button>
+</div>
+
+<app-address-list
+  [display]="displayAddressDialog"
+  (close)="closeAddressDialog()"
+  (addressSelected)="onAddressSelected($event)"
+>
+</app-address-list>

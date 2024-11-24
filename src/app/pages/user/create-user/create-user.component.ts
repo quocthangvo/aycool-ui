@@ -61,7 +61,7 @@ export class CreateUserComponent {
         if (res.data) {
           // Hiển thị toast thông báo thành công
           this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Tạo tài khoản thành công' });
-          this.router.navigateByUrl("/user")
+          this.router.navigateByUrl("/admin/user")
         } else {
           // Hiển thị toast thông báo lỗi
           this.messageService.add({ severity: 'error', summary: 'Thất bại', detail: 'Tạo tài khoản thất bại' });
@@ -74,6 +74,6 @@ export class CreateUserComponent {
     });
   }
   cancel() {
-    this.router.navigateByUrl("/user"); // Chuyển hướng về danh sách 
+    this.router.navigateByUrl("/admin/user"); // Chuyển hướng về danh sách 
   }
 }

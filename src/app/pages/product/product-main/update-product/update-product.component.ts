@@ -92,7 +92,7 @@ export class UpdateProductComponent implements OnInit {
         next: () => {
 
           this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Cập nhật sản phẩm thành công!' });
-          this.router.navigate(['/product']); // Điều hướng về trang sản phẩm
+          this.router.navigate(['/admin/product']); // Điều hướng về trang sản phẩm
 
         },
         error: (error) => {
@@ -104,7 +104,7 @@ export class UpdateProductComponent implements OnInit {
 
 
   cancelUpdate() {
-    this.router.navigateByUrl('product')
+    this.router.navigateByUrl('/admin/product')
   }
 
   loadSubCategoryOptions() {

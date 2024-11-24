@@ -66,7 +66,7 @@ export class CreateSizeComponent {
               summary: 'Thành công',
               detail: 'Tạo mới thành công'
             });
-            this.router.navigateByUrl('/size'); // Điều hướng sau khi tạo thành công
+            this.router.navigateByUrl('/admin/size'); // Điều hướng sau khi tạo thành công
             this.close.emit(); // Đóng dialog sau khi thành công
             this.sizeList.loadSizes()
           } else {

@@ -1,7 +1,7 @@
 .card {
     margin: 0 80px;
     padding: 0 64px;
-
+   
     p{
 
         a{
@@ -27,12 +27,13 @@
                 display: flex;
                 flex-direction: column;
                 margin-right: 20px;
-
                 img {
                     margin-bottom: 10px;
                     width: 50px;
-                    height: 70px;
+                    height: 60px;
                     border-radius: 5px;
+                    object-fit: cover;
+                   
                 }
             }
 
@@ -71,7 +72,7 @@
                 }
                 p.selected {
                   
-                    background-color: blue;
+                    background-color: var(--blue-color);
                     color: #fff;
                   }
             }
@@ -104,8 +105,20 @@
                     background-color: #000;
                     color: #fff;
                     font-weight: 600;
+
+                }
+                .add-cart:hover{
+                    background-color: #d9d9d9;
+                    color: #000;
                 }
             }
         }
+    }
+}
+@media (min-width: 1920px) {
+    .card {
+        margin: 0 250px;
+        padding: 0 64px;
+        // max-width: 1280px;
     }
 }

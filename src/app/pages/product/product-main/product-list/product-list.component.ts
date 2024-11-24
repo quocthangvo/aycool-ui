@@ -101,7 +101,7 @@ export class ProductListComponent implements OnInit {
         this.selectedProduct = productData;
 
         // Điều hướng sang trang cập nhật với ID của sản phẩm
-        this.router.navigate(['/update-product', productId]);
+        this.router.navigate(['/admin/update-product', productId]);
       }
 
     );

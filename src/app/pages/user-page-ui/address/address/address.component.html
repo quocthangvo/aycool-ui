@@ -1,0 +1,115 @@
+<p-dialog
+  header="Thêm địa chỉ"
+  [(visible)]="display"
+  [modal]="true"
+  [closable]="false"
+  [draggable]="false"
+  [resizable]="false"
+  (onHide)="cancel()"
+>
+  <div class="address">
+    <h2>Địa chỉ đặt hàng</h2>
+    <form [formGroup]="addressForm" (ngSubmit)="create()">
+      <div class="flex justify-content-between align-items-center mb-3">
+        <div style="width: 50%">
+          <p>Họ tên</p>
+          <input
+            type="text"
+            pInputText
+            formControlName="full_name"
+            placeholder="Họ tên"
+          />
+        </div>
+        <div style="width: 40%">
+          <p>Số điện thoại</p>
+          <input
+            type="text"
+            pInputText
+            formControlName="phone_number"
+            placeholder="Số điện thoại"
+          />
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <p>Địa chỉ</p>
+        <input
+          type="text"
+          pInputText
+          formControlName="street_name"
+          placeholder="Địa chỉ"
+        />
+      </div>
+
+      <!-- <div class="flex justify-content-between align-items-center mb-3">
+        <input
+          type="text"
+          pInputText
+          formControlName="city"
+          placeholder="Thành phố"
+        />
+        <input
+          type="text"
+          pInputText
+          formControlName="district"
+          placeholder="Quận/Huyện"
+        />
+        <input
+          type="text"
+          pInputText
+          formControlName="ward"
+          placeholder="Thị trấn/Xã"
+        />
+      </div> -->
+      <div class="mb-3 address-selected">
+        <div class="">
+          <p>Thành phố</p>
+          <select
+            formControlName="city"
+            class="form-select form-select-sm mb-3"
+            (change)="onCityChange()"
+          >
+            <option value="" selected>Chọn tỉnh thành</option>
+            <option *ngFor="let city of cities" [value]="city.Id">
+              {{ city.Name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="">
+          <p>Quận/Huyện</p>
+          <select
+            formControlName="district"
+            class="form-select form-select-sm mb-3"
+            (change)="onDistrictChange()"
+          >
+            <option value="" selected>Chọn quận huyện</option>
+            <option *ngFor="let district of districts" [value]="district.Id">
+              {{ district.Name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="">
+          <p>Xã/Phường</p>
+          <select formControlName="ward" class="form-select form-select-sm">
+            <option value="" selected>Chọn phường xã</option>
+            <option *ngFor="let ward of wards" [value]="ward.Id">
+              {{ ward.Name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="create-button">
+        <p-button
+          label="Hủy"
+          (click)="cancel()"
+          [text]="true"
+          [plain]="true"
+        ></p-button>
+        <p-button label="Thêm" type="submit" class="submit"></p-button>
+      </div>
+    </form>
+  </div>
+</p-dialog>

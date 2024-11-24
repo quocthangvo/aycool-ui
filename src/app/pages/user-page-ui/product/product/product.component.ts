@@ -30,17 +30,21 @@ export class ProductComponent implements OnInit {
 
 
     // Lấy danh sách sản phẩm từ API
-    this.productService.getAllProducts(0, 10).subscribe((res) => {
+    this.productService.getAllProducts(0, 20).subscribe((res) => {
       this.products = res.data.productResponseList;
     });
   }
 
   navigateToProductDetail(productId: number): void {
-    this.router.navigate(['/vn/product-detail', productId]).then(() => {
+    this.router.navigate(['/product-detail', productId]).then(() => {
       // Scroll to the top of the page after navigation
       this.viewportScroller.scrollToPosition([0, 0]);
     });
   }
 
+
+  formatPrice(price: number): string {
+    return price ? price.toLocaleString('vi-VN') + 'đ' : '';
+  }
 
 }

@@ -179,7 +179,7 @@ export class CreateProductComponent implements OnInit {
                 next: (uploadRes: any) => {
                   console.log('Danh sách URL ảnh:', uploadRes.imageUrl);
                   this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Tạo sản phẩm và tải ảnh thành công' });
-                  this.router.navigateByUrl("/product");
+                  this.router.navigateByUrl("/admin/product");
                 },
                 error: (err) => {
                   this.messageService.add({ severity: 'error', summary: 'Lỗi', detail: 'Tải ảnh lên thất bại: ' + err.message });
@@ -188,7 +188,7 @@ export class CreateProductComponent implements OnInit {
             } else {
               // Hiển thị toast thông báo thành công
               this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Tạo sản phẩm thành công' });
-              this.router.navigateByUrl("/product");
+              this.router.navigateByUrl("/admin/product");
 
             }
           } else {
@@ -214,7 +214,7 @@ export class CreateProductComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigateByUrl("/product"); // Chuyển hướng về danh sách 
+    this.router.navigateByUrl("/admin/product"); // Chuyển hướng về danh sách 
   }
 
   //tự động điền danh mục vào ô tên
@@ -227,6 +227,15 @@ export class CreateProductComponent implements OnInit {
     }
   }
 
+
+  //xóa ảnh đã upload
+  removeFile(file: any) {
+    // Loại bỏ ảnh khỏi danh sách ảnh đã tải lên
+    const index = this.uploadedFiles.indexOf(file);
+    if (index !== -1) {
+      this.uploadedFiles.splice(index, 1);
+    }
+  }
 
 }
 

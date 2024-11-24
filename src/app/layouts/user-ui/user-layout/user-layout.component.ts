@@ -14,7 +14,7 @@ import { UserHeaderComponent } from "../user-header/user-header.component";
 @Component({
   selector: 'app-user-layout',
   standalone: true,
-  imports: [InputTextModule, FormsModule, ImageModule, RouterLink, CommonModule, UserFooterComponent, RouterModule, UserHeaderComponent],
+  imports: [InputTextModule, FormsModule, ImageModule, RouterLink, CommonModule, UserFooterComponent, RouterModule, UserHeaderComponent, HomeComponent],
   templateUrl: './user-layout.component.html',
   styleUrl: './user-layout.component.scss',
   encapsulation: ViewEncapsulation.None

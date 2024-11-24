@@ -64,7 +64,7 @@ export class CreateMaterialComponent {
               summary: 'Thành công',
               detail: 'Tạo mới thành công'
             });
-            this.router.navigateByUrl('/material'); // Điều hướng sau khi tạo thành công
+            this.router.navigateByUrl('/admin/material'); // Điều hướng sau khi tạo thành công
             this.close.emit(); // Đóng dialog sau khi thành công
             this.materialList.loadMaterials()
           } else {

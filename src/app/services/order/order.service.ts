@@ -57,5 +57,10 @@ export class OrderService {
     updateOrderById(id: number, userData: any) {
         return this.http.put(`${this.apiUrl}/update/${id}`, userData, { headers: this.getAuthHeaders() });
     }
+    updateOrderStatus(orderId: number, status: string): Observable<any> {
+        const payload = { status };
+        return this.http.put<any>(`${this.apiUrl}/update/${orderId}`, payload, { headers: this.getAuthHeaders() });
+    }
+
 
 }

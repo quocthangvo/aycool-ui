@@ -5,7 +5,7 @@
         /* Chiều rộng hình ảnh chiếm toàn bộ vùng chứa */
         height: 600px;
         /* Giữ tỷ lệ hình ảnh */
-        // object-fit: cover; /* Tùy chọn: Có thể điều chỉnh để cắt hoặc giữ nguyên hình */
+        object-fit: cover; /* Tùy chọn: Có thể điều chỉnh để cắt hoặc giữ nguyên hình */
     }
 
     & .p-carousel-container {

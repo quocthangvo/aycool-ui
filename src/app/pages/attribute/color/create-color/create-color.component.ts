@@ -67,7 +67,7 @@ export class CreateColorComponent {
               summary: 'Thành công',
               detail: 'Tạo mới thành công'
             });
-            this.router.navigateByUrl('/color'); // Điều hướng sau khi tạo thành công
+            this.router.navigateByUrl('/admin/color'); // Điều hướng sau khi tạo thành công
             this.close.emit(); // Đóng dialog sau khi thành công
             this.colorList.loadColors()
           } else {

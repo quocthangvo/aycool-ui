@@ -20,6 +20,12 @@ import { HomeComponent } from './pages/user-page-ui/product/home/home.component'
 import { PriceListComponent } from './pages/price/price-list/price-list.component';
 import { CreatePriceComponent } from './pages/price/create-price/create-price.component';
 import { ProductDetailComponent } from './pages/user-page-ui/product/product-detail/product-detail.component';
+import { CartComponent } from './pages/user-page-ui/cart/cart/cart.component';
+import { LoadingComponent } from './pages/home/loading/loading.component';
+import { AddressComponent } from './pages/user-page-ui/address/address/address.component';
+
+
+
 
 export const routes: Routes = [
     // {
@@ -40,11 +46,15 @@ export const routes: Routes = [
         component: RegisterComponent,
     },
     {
-        path: '',
+        path: 'admin',
         component: MainLayoutComponent,
         canActivate: [AuthGuard], // Bảo vệ nếu đã đăng nhập
         data: { roles: ['ADMIN'] },
         children: [
+            {
+                path: '',
+                component: LoadingComponent
+            },
             {
                 path: 'user',
                 component: UserListComponent
@@ -96,11 +106,16 @@ export const routes: Routes = [
         ]
     },
     {
-        path: 'vn',
+        path: '',
         component: UserLayoutComponent,
         canActivate: [AuthGuard],
         data: { roles: ['USER'] },
         children: [
+            {
+                path: '',
+                redirectTo: 'home',
+                pathMatch: 'full' // Đảm bảo chỉ chuyển hướng khi đường dẫn hoàn toàn trống.
+            },
             {
                 path: 'home',
                 component: HomeComponent
@@ -108,9 +123,22 @@ export const routes: Routes = [
             {
                 path: 'product-detail/:id',
                 component: ProductDetailComponent
+            },
+            {
+                path: 'cart',
+                component: CartComponent
+            },
+            {
+                path: 'address',
+                component: AddressComponent
             }
+
         ]
     },
+    {
+        path: '**',
+        redirectTo: 'vn/home' // Chuyển hướng khi đường dẫn không tồn tại.
+    }
     // {
     //     path: '**', // Đường dẫn không hợp lệ
     //     redirectTo: '/vn', // Chuyển hướng main nếu có token

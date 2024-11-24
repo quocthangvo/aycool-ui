@@ -1,0 +1,26 @@
+.address{
+    .address-selected {
+        display: flex;
+            justify-content: space-between;
+            align-items: start;
+            width: 500px;
+           
+        .form-select {
+          width: 160px; 
+          padding: 0.75rem; 
+          font-size: 1rem; 
+          border: 1px solid #d1d5db; 
+          border-radius: 6px; 
+          background-color: #fff; 
+          appearance: none; 
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          transition: border-color 0.3s ease;
+        
+        }
+      }
+      .create-button{
+        text-align: end;
+      }
+      
+}

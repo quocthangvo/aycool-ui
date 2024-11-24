@@ -19,16 +19,34 @@
         style="cursor: pointer"
       >
         <!-- <img
-              src="https://primefaces.org/cdn/primeng/images/demo/product/{{
-                product.image
-              }}"
-              [alt]="product.name"
-              class="w-full border-round"
-            /> -->
+          src="https://primefaces.org/cdn/primeng/images/demo/product/{{
+            product.image
+          }}"
+          [alt]="product.name"
+          class="w-full border-round"
+        /> -->
         <img
-          src="https://primefaces.org/cdn/primeng/images/galleria/galleria1.jpg"
-          alt=""
+          *ngIf="
+            product.product_images && product.product_images[0]?.imageUrl;
+            else noImage
+          "
+          [src]="
+            'http://localhost:8080/uploads/' +
+            product.product_images[0]?.imageUrl
+          "
+          alt="Ảnh sản phẩm"
+          width="50px"
         />
+        <ng-template #noImage>
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
+            alt=""
+          />
+        </ng-template>
+        <!-- <img
+          src="https://product.hstatic.net/1000026602/product/dsc03170_2dfd2355eeec459b8d7d634b0214d5ca.jpg"
+          alt=""
+        /> -->
 
         <div class="product-content">
           <div class="mb-2 font-medium">
@@ -37,14 +55,16 @@
           <div class="flex align-items-center">
             <div class="font-semibold">
               {{
-                (product.product_details[0]?.prices[0]?.sellingPrice ?? 1000) +
-                  "đ"
+                formatPrice(
+                  product.product_details[0]?.prices[0]?.promotionPrice ?? 900
+                )
               }}
             </div>
             <div class="ml-5 sell-price">
               {{
-                (product.product_details[0]?.prices[0]?.promotionPrice ?? 900) +
-                  "đ"
+                formatPrice(
+                  product.product_details[0]?.prices[0]?.sellingPrice ?? 1000
+                )
               }}
             </div>
           </div>
@@ -92,7 +112,7 @@
               class="w-full border-round"
             /> -->
         <img
-          src="https://primefaces.org/cdn/primeng/images/galleria/galleria1.jpg"
+          src="https://product.hstatic.net/1000026602/product/dsc03170_2dfd2355eeec459b8d7d634b0214d5ca.jpg"
           alt="image"
         />
 

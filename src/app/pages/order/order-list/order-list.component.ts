@@ -8,27 +8,32 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { OrderService } from '../../../services/order/order.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-order-list',
   standalone: true,
   imports: [TableModule, CommonModule, ButtonModule,
-    DialogModule, InputTextModule, FormsModule],
+    DialogModule, InputTextModule, FormsModule, DropdownModule],
   templateUrl: './order-list.component.html',
   styleUrl: './order-list.component.scss'
 })
 export class OrderListComponent {
-
-  selectedOrder: any = {}
-
-
+  selectedOrder: any = {};
   orderList: any[] = [];
+  statusOptions = [
+    { label: 'Chờ xử lý', value: 'PENDING' },
+    { label: 'Đang xử lý', value: 'PROCESSING' },
+    { label: 'Đang giao hàng', value: 'SHIPPED' },
+    { label: 'Đã giao hàng', value: 'DELIVERED' },
+    { label: 'Đã huỷ', value: 'CANCELLED' }
+  ];
+
   displayDialog: boolean = false;
 
   constructor(
     private orderService: OrderService,
-
-    private messageService: MessageService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -38,7 +43,41 @@ export class OrderListComponent {
   loadOrders() {
     this.orderService.getAllOrders(0, 10).subscribe((res: any) => {
       this.orderList = res.data.orderResponseList;
-    })
+    });
+  }
+
+  onStatusChange(order: any) {
+    this.orderService.updateOrderStatus(order.id, order.status).subscribe(
+      (response: any) => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Cập nhật trạng thái thành công',
+          detail: `Đơn hàng ${order.order_code} đã được cập nhật trạng thái thành công!`
+        });
+      },
+      (error) => {
+        console.error('Lỗi khi cập nhật trạng thái đơn hàng:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Lỗi',
+          detail: 'Không thể cập nhật trạng thái đơn hàng.'
+        });
+      }
+    );
+  }
+
+
+
+
+  getStatusDisplayName(status: string): string {
+    const statusMap: { [key: string]: string } = {
+      PENDING: 'Chờ xử lý',
+      PROCESSING: 'Đang xử lý',
+      SHIPPED: 'Đang giao hàng',
+      DELIVERED: 'Đã giao hàng',
+      CANCELLED: 'Đã huỷ'
+    };
+    return statusMap[status] || 'Không xác định';
   }
 
 

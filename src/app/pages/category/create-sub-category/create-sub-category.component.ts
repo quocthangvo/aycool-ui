@@ -96,7 +96,7 @@ export class CreateSubCategoryComponent {
               summary: 'Thành công',
               detail: 'Tạo mới thành công'
             });
-            this.router.navigateByUrl('/sub-category'); // Điều hướng sau khi tạo thành công
+            this.router.navigateByUrl('/admin/sub-category'); // Điều hướng sau khi tạo thành công
             this.close.emit(); // Đóng dialog sau khi thành công
             this.categoryList.loadCategorys()
           } else {

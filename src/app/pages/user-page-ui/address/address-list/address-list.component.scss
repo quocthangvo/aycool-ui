@@ -1,0 +1,43 @@
+.p-dialog{
+    height: 500px;
+    padding: 0;
+}
+
+.address{
+
+    .address-list{
+        label{
+            width: 600px;
+            display: flex;
+            justify-content: start;
+            align-self: start;
+            border-bottom: 1px solid var(--grey-dropdown-color);
+            margin-bottom: 1rem;
+            input{
+                margin-right: 1rem;
+            }
+            p{
+                margin: 5px 0;
+            }
+        }
+       
+    }
+}
+  
+.button {
+    display: flex;
+    justify-content: flex-end; /* Đưa các button về phía bên phải */
+    align-items: center;
+    gap: 10px;  /* Khoảng cách giữa các nút */
+    width: 100%;
+    background-color: #fff;
+    padding-top: 10px; /* Khoảng cách phía trên */
+    padding-bottom: 10px; /* Khoảng cách phía dưới */
+  }
+  
+  .p-dialog .p-dialog-footer {
+    display: flex;
+    justify-content: flex-end; /* Đảm bảo các button căn ở cuối */
+    padding: 0;
+  }
+  

@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../../../services/product/product.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { MessageService } from 'primeng/api';
+import { CartService } from '../../../../services/order/cart.service';
+
 
 @Component({
   selector: 'app-product-detail',
@@ -13,13 +16,27 @@ import { CommonModule } from '@angular/common';
 export class ProductDetailComponent implements OnInit {
   product: any;
   productId: number = 0;
+  cartItems: any[] = [];
+  userId: number | null = null;
 
   constructor(
     private productService: ProductService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private messageService: MessageService,
+    private cartService: CartService
   ) { }
   ngOnInit(): void {
+
+    this.cartService.cart$.subscribe((items) => {
+      this.cartItems = items;  // Cập nhật giỏ hàng trên giao diện mỗi khi `cartSubject` thay đổi
+    });
+
+    this.loadCart();
+
     this.getProductById();
+    this.loadCartItems();
+    const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+    this.userId = userInfo.id;
   }
 
   getProductById() {
@@ -38,21 +55,24 @@ export class ProductDetailComponent implements OnInit {
 
   getUniqueColors(): string[] {
     if (this.product?.product_details) {
-      // Create a set to store unique color names
+      // Lấy tất cả các màu sắc trong product_details
       const colors = this.product.product_details.map((detail: any) => detail.color?.name);
-      // Return unique colors only
+      // Trả về một mảng các màu sắc duy nhất
       return Array.from(new Set(colors));
     }
     return [];
   }
 
+
   getUniqueSizes(): string[] {
     if (this.product?.product_details) {
+      // Lấy tất cả các size trong product_details
       const sizes = this.product.product_details.map((detail: any) => detail.size?.name);
-      return [...new Set(sizes)] as string[]; // Explicitly cast to string[]
+      return [...new Set(sizes)] as string[]; // Trả về một mảng các màu sắc duy nhất
     }
     return [];
   }
+
 
   quantity: number = 1; // Initial quantity
   maxQuantity: number = 99;
@@ -73,10 +93,176 @@ export class ProductDetailComponent implements OnInit {
 
   selectColor(color: string): void {
     this.selectedColor = color;
+    this.updatePrice();
   }
 
   // Select size
   selectSize(size: string): void {
     this.selectedSize = size;
+    this.updatePrice();
+  }
+
+  price: number = 19000; // Giá bán hoặc giá khuyến mãi
+  promotionPrice: number | null = 20000; // Lưu giá khuyến mãi
+  // Cập nhật giá khi người dùng chọn màu sắc và kích thước
+  updatePrice() {
+    if (this.selectedColor && this.selectedSize) {
+      const selectedProductDetail = this.product.product_details.find(
+        (detail: any) =>
+          detail.color?.name === this.selectedColor && detail.size?.name === this.selectedSize
+      );
+
+      if (selectedProductDetail) {
+        const priceDetails = selectedProductDetail.prices[0];
+        this.promotionPrice = priceDetails.promotionPrice; // Ensure this is not null or undefined
+        this.price = priceDetails.sellingPrice; // Fallback to selling price if no promotion price
+      }
+
+    }
+  }
+
+  loadCartItems() {
+    const storedCart = localStorage.getItem('cart');
+    if (storedCart) {
+      this.cartItems = JSON.parse(storedCart); // Cập nhật giỏ hàng từ localStorage
+    }
+  }
+  // addToCart() {
+  //   if (!this.selectedColor || !this.selectedSize) {
+  //     alert('Vui lòng chọn màu sắc và kích thước!');
+  //     return;
+  //   }
+
+  //   const productDetail = this.product.product_details.find(
+  //     (detail: any) =>
+  //       detail.color?.name === this.selectedColor && detail.size?.name === this.selectedSize
+  //   );
+
+  //   if (!productDetail) {
+  //     alert('Không tìm thấy sản phẩm với màu và kích thước đã chọn!');
+  //     return;
+  //   }
+
+  //   const cartItem = {
+  //     id: this.product.id,
+  //     name: this.product.name,
+  //     color: this.selectedColor,
+  //     size: this.selectedSize,
+  //     quantity: this.quantity,
+  //     promotionPrice: productDetail.prices[0]?.promotionPrice ?? productDetail.prices[0]?.sellingPrice,
+  //     sellingPrice: productDetail.prices[0]?.sellingPrice,
+  //     image: productDetail.images?.[0] || 'default-image.jpg',
+  //   };
+
+  //   // Kiểm tra nếu sản phẩm đã tồn tại trong giỏ hàng
+  //   const existingItemIndex = this.cartItems.findIndex(
+  //     (item: any) =>
+  //       item.id === cartItem.id &&
+  //       item.color === cartItem.color &&
+  //       item.size === cartItem.size
+  //   );
+
+  //   if (existingItemIndex !== -1) {
+  //     // Nếu sản phẩm đã tồn tại, tăng số lượng lên
+  //     this.cartItems[existingItemIndex].quantity += cartItem.quantity;
+  //   } else {
+  //     // Nếu sản phẩm chưa tồn tại, thêm sản phẩm mới vào giỏ
+  //     this.cartItems.push(cartItem);
+  //   }
+
+  //   // Lưu giỏ hàng vào localStorage và cập nhật lại giỏ hàng trong component
+  //   localStorage.setItem('cart', JSON.stringify(this.cartItems));
+
+  //   // Cập nhật trực tiếp giỏ hàng trong component
+  //   // this.cartItems = [...this.cartItems];
+  //   this.cartService.loadCartItems();
+
+  //   this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Thêm sản phẩm thành công' });
+
+  // }
+
+
+  formatPrice(price: number): string {
+    return price ? price.toLocaleString('vi-VN') + 'đ' : '';
+  }
+
+  addToCart() {
+    if (!this.userId) {
+      console.error('User not logged in');
+      return;
+    }
+
+    // Kiểm tra xem người dùng đã chọn color và size chưa
+    if (!this.selectedColor || !this.selectedSize) {
+      alert('Vui lòng chọn màu sắc và kích thước!');
+      return;
+    }
+
+    // Tìm kiếm productDetailId dựa trên color và size đã chọn
+    const selectedProductDetail = this.product.product_details.find(
+      (detail: any) =>
+        detail.color?.name === this.selectedColor && detail.size?.name === this.selectedSize
+    );
+
+    if (!selectedProductDetail) {
+      alert('Không tìm thấy sản phẩm với màu sắc và kích thước đã chọn!');
+      return;
+    }
+
+    const productDetailId = selectedProductDetail.id; // Lấy id từ product_details
+    const quantity = this.quantity;
+
+    const data = {
+      user_id: this.userId, // Sử dụng userId từ localStorage
+      product_detail_id: productDetailId,
+      quantity: quantity,
+    };
+
+    // Gọi CartService để thêm sản phẩm vào giỏ
+    this.cartService.addToCart(data).subscribe(
+      (response: any) => {
+        console.log('Sản phẩm đã được thêm vào giỏ hàng:', response);
+
+        this.cartService.updateCartSubject(response.data.items);  // Cập nhật giỏ hàng từ phản hồi API
+
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Thành công',
+          detail: 'Thêm sản phẩm vào giỏ hàng thành công',
+        });
+      },
+      (error: any) => {
+        console.error('Lỗi khi thêm sản phẩm vào giỏ hàng:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Lỗi',
+          detail: 'Không thể thêm sản phẩm vào giỏ hàng',
+        });
+      }
+    );
+
+  }
+
+  loadCart(): void {
+    const userInfo = localStorage.getItem('userInfo');
+    if (userInfo) {
+      const user = JSON.parse(userInfo);
+      const userId = user.id;
+
+      // Gọi API để lấy giỏ hàng
+      this.cartService.getCart(userId).subscribe({
+        next: (res: any) => {
+          if (res && res.data) {
+            this.cartItems = res.data.items;  // Cập nhật giỏ hàng từ API
+            this.cartService.updateCartSubject(this.cartItems);  // Cập nhật lại cartSubject để đồng bộ giỏ hàng
+          }
+        },
+        error: (err: any) => {
+          console.error('An error occurred:', err);
+        }
+      });
+    } else {
+      console.error('User information not found in localStorage.');
+    }
   }
 }
