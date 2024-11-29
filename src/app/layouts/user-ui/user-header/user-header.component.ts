@@ -9,6 +9,8 @@ import { TokenService } from '../../../services/auth/token.service';
 
 import { UserService } from '../../../services/user/user.service';
 import { CartService } from '../../../services/order/cart.service';
+import { SubCategoryService } from '../../../services/category/sub-category.service';
+import { CategoryService } from '../../../services/category/category.service';
 
 
 @Component({
@@ -25,13 +27,15 @@ export class UserHeaderComponent {
 
   cartItems: any[] = [];
   userId: number | null = null;
+  categories: any[] = [];
 
 
   constructor(
     private tokenService: TokenService,
     private router: Router,
     private cartService: CartService,
-    private userSerivce: UserService
+    private userSerivce: UserService,
+    private categoryService: CategoryService,
   ) {
 
   }
@@ -42,6 +46,7 @@ export class UserHeaderComponent {
     });
 
     this.loadCart();
+    this.loadCategories()
     // Lấy thông tin người dùng từ localStorage
     const userInfo = localStorage.getItem('userInfo');
     if (userInfo) {
@@ -50,6 +55,11 @@ export class UserHeaderComponent {
     }
   }
 
+  loadCategories() {
+    this.categoryService.getAllCategories().subscribe((res: any) => {
+      this.categories = res.data;
+    });
+  }
 
 
   toggleDropdown(event: Event): void {
@@ -70,7 +80,7 @@ export class UserHeaderComponent {
     this.tokenService.removeToken();
     this.userFullName = null; // Xóa tên người dùng hiển thị
     this.cartService.clearCart();
-    this.router.navigateByUrl('/vn/home'); // Chuyển hướng về trang đăng nhập
+    this.router.navigateByUrl('/home'); // Chuyển hướng về trang đăng nhập
   }
 
 

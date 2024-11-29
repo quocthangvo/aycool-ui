@@ -2,6 +2,7 @@
 
     display: flex;
     flex-direction: column;
+    padding-bottom: 110px;
     // min-height: 100vh; // Đảm bảo chiều cao tối thiểu cho toàn trang
   & .site-header{
     flex: 1;
@@ -74,6 +75,7 @@
           opacity: 1;
           visibility: visible;
           transform: translateY(0);
+          width: 10rem;
         }
 
         // Menu item styling
@@ -100,7 +102,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 80px;
-
+  
   & .p-image {
 
     width: 100%;
@@ -305,4 +307,17 @@
     color: black;
   }
 }
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000; /* Đảm bảo header luôn nằm trên cùng */
+  background-color: #fff; /* Màu nền header */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ cho header */
+  margin-bottom: 100px;
+}
+
 

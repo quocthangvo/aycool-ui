@@ -9,7 +9,17 @@
     <ng-template pTemplate="caption">
       <div class="caption">
         <h1>Giá</h1>
-        <p-button severity="contrast" routerLink="/admin /create-price">
+        <div class="filter">
+          <p-dropdown
+            [options]="sortOptions"
+            [(ngModel)]="sortOrder"
+            placeholder="Chọn cách sắp xếp"
+            (onChange)="onSortOrderChange($event)"
+          >
+          </p-dropdown>
+        </div>
+
+        <p-button severity="contrast" routerLink="/admin/create-price">
           <i
             class="pi pi-plus"
             style="font-size: 1rem; margin-right: 0.5rem"
@@ -61,6 +71,14 @@
       </tr>
     </ng-template>
   </p-table>
+
+  <p-paginator
+    [totalRecords]="totalRecords"
+    [rows]="rowsPerPage"
+    [rowsPerPageOptions]="[10, 20, 30]"
+    (onPageChange)="onPageChange($event)"
+  >
+  </p-paginator>
   <!-- <p-dialog
     header="Cập nhật màu sắc"
     [(visible)]="displayUpdateDialog"

@@ -1,0 +1,49 @@
+.account{
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin: 80px 240px 160px 240px;
+
+    .side-bar {
+        align-items: start;
+        width: 20%;
+    }
+    .profile{
+        width: 75%;
+        border: 1px solid var(--grey-dropdown-color);
+        border-radius: 10px;
+        padding: 1rem;
+        .title{
+            border-bottom: 1px solid #999;
+            padding-bottom: 1rem;
+        }
+        .account-info{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px ;
+            .info-left{
+                width: 60%;
+                .info-input{
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    p{
+                        width: 30%;
+                    }
+                    .p-inputtext{
+                        width: 100%;
+                    }
+    
+                }
+            }
+            .info-right{
+               width: 30%;
+               text-align: center;
+               border-left: 1px solid #999;
+            }
+        }
+    }
+   
+   
+}

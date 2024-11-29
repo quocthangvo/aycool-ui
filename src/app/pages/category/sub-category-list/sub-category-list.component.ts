@@ -44,7 +44,7 @@ export class SubCategoryListComponent {
 
   ngOnInit(): void {
     this.loadCategorys();
-    this.loadCategoryOptions();
+    // this.loadCategoryOptions();
   }
 
   loadCategorys() {
@@ -56,10 +56,12 @@ export class SubCategoryListComponent {
   loadCategoryOptions() {
     this.categoryService.getAllCategories().subscribe((res: any) => {
       // Ánh xạ dữ liệu trả về vào categoryNodes
-      this.categoryNodes = res.data.map((category: Category) => ({
-        label: category.name, // Tên danh mục
-        value: category.id    // ID danh mục
-      }));
+      // this.categoryNodes = res.data.map((category: Category) => ({
+      //   label: category.name, // Tên danh mục
+      //   value: category.id    // ID danh mục
+
+      // }));
+      this.categoryList = res.data;
     });
   }
   onCategorySelect(event: any) {

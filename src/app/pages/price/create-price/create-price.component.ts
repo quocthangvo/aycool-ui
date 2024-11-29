@@ -187,7 +187,7 @@ export class CreatePriceComponent implements OnInit {
         const response = await this.priceService.createPrice(priceDTO).toPromise();
         console.log('Thêm giá thành công:', response);
         this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Thêm giá thành công.' });
-        this.router.navigateByUrl("/price")
+        this.router.navigateByUrl("/admin/price")
       }
     } catch (error) {
       console.error('Lỗi khi thêm giá:', error);

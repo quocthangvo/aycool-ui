@@ -1,0 +1,97 @@
+<div class="user">
+  <div class="side-bar">
+    <app-side-bar />
+  </div>
+  <div class="card">
+    <div class="status-list">
+      <p (click)="filterOrders('')">Tất cả</p>
+      <p (click)="filterOrders('PENDING')">Chờ xử lý</p>
+      <p (click)="filterOrders('PROCESSING')">Đang xử lý</p>
+      <p (click)="filterOrders('SHIPPED')">Đang giao hàng</p>
+      <p (click)="filterOrders('DELIVERED')">Đã giao hàng</p>
+      <p (click)="filterOrders('CANCELLED')">Đã hủy</p>
+    </div>
+
+    <div class="filter">
+      <input
+        type="text"
+        pInputText
+        placeholder="Tìm kiếm theo ID đơn hàng, tên sản phẩm"
+      />
+      <i class="pi pi-search" style="font-size: 1.5rem"></i>
+    </div>
+    <div *ngIf="noOrdersMessage" class="no-orders-message not-order">
+      <p>{{ noOrdersMessage }}</p>
+      <img
+        src="https://newnet.vn/themes/newnet/assets/img/empty-cart.png"
+        alt="Product Image"
+      />
+    </div>
+    <div class="order-list" *ngFor="let order of orders">
+      <div class="order-title">
+        <p>ID đơn hàng: {{ order.order_code }}</p>
+        <div class="flex justify-content-between">
+          <p>Trạng thái</p>
+          <p class="status">{{ order.statusDisplayName }}</p>
+        </div>
+      </div>
+
+      <!-- Loop through the order details (products in the order) -->
+      <div class="order-content" *ngFor="let detail of order.order_details">
+        <div class="flex justify-content-center align-items-center">
+          <img
+            *ngIf="
+              detail?.image_url && detail.image_url.length > 0;
+              else noImage
+            "
+            [src]="
+              'http://localhost:8080/uploads/' + detail.image_url[0]?.imageUrl
+            "
+            alt="Ảnh sản phẩm"
+            width="50px"
+          />
+          <ng-template #noImage>
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
+              alt=""
+            />
+          </ng-template>
+          <div>
+            <p>{{ detail.product_name }}</p>
+            <p class="attribute">
+              Phân loại: {{ detail.color }}/{{ detail.size }}
+            </p>
+            <p>Số lượng: {{ detail.quantity }}</p>
+          </div>
+        </div>
+
+        <div class="order-price">
+          <!-- Format and display the selling and promotion prices -->
+          <p class="sell-price">
+            {{ formatPrice(detail.price[0].sellingPrice) }}
+          </p>
+          <p class="promotion-price">
+            {{ formatPrice(detail.price[0].promotionPrice) }}
+          </p>
+        </div>
+      </div>
+
+      <div class="total">
+        <p>Thành tiền:</p>
+        <p class="total-price">{{ formatPrice(order.total_money) }}</p>
+      </div>
+
+      <div class="footer">
+        <p>Ngày giao hàng: {{ order.shippingDate | date : "short" }}</p>
+        <div>
+          <p-button label="Đánh giá" severity="contrast"></p-button>
+          <p-button
+            label="Mua lại"
+            [outlined]="true"
+            severity="contrast"
+          ></p-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

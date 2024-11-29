@@ -8,6 +8,54 @@
     <ng-template pTemplate="caption">
       <div class="caption">
         <h1>Đơn hàng</h1>
+        <div class="filter">
+          <!-- Chọn trạng thái (có thể chọn nhiều trạng thái) -->
+          <p-multiSelect
+            [options]="statusOptions"
+            [(ngModel)]="status"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Trạng thái"
+            [filter]="true"
+            [showToggleAll]="false"
+            class="filter-item"
+          >
+          </p-multiSelect>
+
+          <!-- Chọn ngày (Chọn một ngày cụ thể) -->
+          <p-calendar
+            [(ngModel)]="orderDate"
+            [showIcon]="true"
+            dateFormat="yy-mm-dd"
+            placeholder="Chọn ngày đặt hàng"
+            class="filter-item"
+          >
+          </p-calendar>
+
+          <!-- Nhập mã đơn hàng để tìm kiếm -->
+          <div class="search-container">
+            <input
+              type="text"
+              pInputText
+              [(ngModel)]="orderCode"
+              placeholder="Tìm kiếm theo mã đơn hàng"
+              class="filter-item"
+            />
+            <i class="pi pi-search"></i>
+          </div>
+
+          <!-- Nút lọc -->
+          <p-button (click)="onFilter()" class="filter-item">
+            <i class="pi pi-filter" style="font-size: 1rem"></i> Lọc</p-button
+          >
+          <p-button
+            (click)="onClearFilters()"
+            icon="pi pi-filter-slash"
+            styleClass="p-button-secondary"
+            class="filter-item"
+          >
+          </p-button>
+        </div>
       </div>
     </ng-template>
 
@@ -27,7 +75,7 @@
       <tr>
         <td>{{ i + 1 }}</td>
         <td>{{ orders.name }}</td>
-        <td>{{ orders.order_code }}</td>
+        <td (click)="showOrderDetails(orders.id)">{{ orders.order_code }}</td>
         <td>
           <ng-container
             *ngFor="let orderDetail of orders.order_details; let j = index"
@@ -48,46 +96,82 @@
 
         <td>{{ orders.order_date }}</td>
         <td>{{ orders.total_money }}</td>
-        <td>{{ orders.statusDisplayName }}</td>
+        <!-- <td>{{ orders.statusDisplayName }}</td> -->
         <td>
           <p-dropdown
             [options]="statusOptions"
             [(ngModel)]="orders.status"
             (onChange)="onStatusChange(orders)"
+            [ngClass]="getStatusClass(orders.status)"
+            class="status"
           >
           </p-dropdown>
         </td>
       </tr>
     </ng-template>
   </p-table>
-  <!-- <p-dialog
-    header="Cập nhật trạng thái đơn hàng"
-    [(visible)]="displayUpdateDialog"
-    [modal]="true"
-    [closable]="false"
+  <p-paginator
+    [totalRecords]="totalRecords"
+    [rows]="rowsPerPage"
+    [rowsPerPageOptions]="[10, 20, 30]"
+    (onPageChange)="onPageChange($event)"
   >
-    <div class="p-fluid">
-      <div class="p-field">
-        <p>Tên</p>
-        <input pInputText [(ngModel)]="selectedOrder.name" />
-      </div>
+  </p-paginator>
+</div>
+
+<!-- Dialog hiển thị chi tiết đơn hàng -->
+<p-dialog
+  [(visible)]="displayDialog"
+  [modal]="true"
+  [responsive]="true"
+  [closable]="true"
+  [style]="{ width: '40vw' }"
+>
+  <h2>Chi tiết đơn hàng</h2>
+  <div *ngIf="selectedOrderDetails && selectedOrderDetails.length > 0">
+    <div class="product-detail-status">
+      <p style="color: red"><strong>Trạng thái:</strong> {{ status }}</p>
     </div>
 
-    <p-footer>
-      <button
-        pButton
-        label="Hủy"
-        icon="pi pi-times"
-        class="p-button-text"
-        (click)="cancelUpdate()"
-      ></button>
-      <button
-        pButton
-        label="Lưu"
-        icon="pi pi-check"
-        class="p-button-primary"
-        (click)="save()"
-      ></button>
-    </p-footer>
-  </p-dialog> -->
-</div>
+    <!-- Hiển thị thông tin địa chỉ -->
+    <div class="product-detail-address">
+      <h3>Địa chỉ nhận hàng</h3>
+      <div class="address">
+        <p>{{ address_id?.full_name }}</p>
+        <p>{{ address_id?.phone_number }}</p>
+      </div>
+      <p>
+        <i class="pi pi-map-marker" style="font-size: 1rem"></i>
+
+        {{ address_id?.street_name }}, {{ address_id?.ward }},
+        {{ address_id?.district }}, {{ address_id?.city }}
+      </p>
+    </div>
+    <h3>Chi tiết sản phẩm</h3>
+    <div *ngFor="let item of selectedOrderDetails">
+      <div class="product-detail-dialog">
+        <p class="detail-name">
+          {{ item.product_name }}
+        </p>
+
+        <div class="flex justify-content-between align-items-center">
+          <p class="attribute">{{ item.color }} - {{ item.size }}</p>
+
+          <p>x{{ item.quantity }}</p>
+        </div>
+
+        <div class="price">
+          <p class="sell-price">
+            {{ formatPrice(item.price[0].sellingPrice) }}
+          </p>
+          <p class="font-bold">
+            {{ formatPrice(item.price[0].promotionPrice) }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <p class="total-price-dialog">
+      <strong>Thành tiền: </strong>{{ formatPrice(totalMoney) }}
+    </p>
+  </div>
+</p-dialog>

@@ -106,7 +106,7 @@ export class CartComponent {
       return acc + (price * item.quantity);
     }, 0);
   }
-
+  //thành tiền
   calculateTotal() {
     this.totalPrice = this.cartItems
       .filter(item => item.selected) // Lọc các sản phẩm được chọn
@@ -193,6 +193,7 @@ export class CartComponent {
     // this.loadCart();
     const newQuantity = quantity + 1;  // Tăng số lượng lên 1
     this.updateQuantity(cartItemId, newQuantity); // Gọi hàm cập nhật số lượng
+    this.calculateTotal();
   }
 
   // Giảm số lượng sản phẩm
@@ -200,6 +201,7 @@ export class CartComponent {
     // this.loadCart();
     const newQuantity = quantity > 1 ? quantity - 1 : 1; // Giảm số lượng, nhưng không cho phép nhỏ hơn 1
     this.updateQuantity(cartItemId, newQuantity); // Gọi hàm cập nhật số lượng
+    this.calculateTotal();
 
   }
 
@@ -207,6 +209,8 @@ export class CartComponent {
   onManualQuantityChange(cartItemId: number, quantity: number): void {
     const newQuantity = quantity > 0 ? quantity : 1;  // Đảm bảo số lượng phải lớn hơn 0
     this.updateQuantity(cartItemId, newQuantity); // Gọi hàm cập nhật số lượng
+    this.calculateTotal(); //cập nhật thành tiền
+
   }
 
   onProductSelect(item: any, event: any) {

@@ -47,10 +47,25 @@
           <td>{{ i + 1 }}</td>
           <td>
             <p-image
-              src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
-              alt="Ảnh"
+              *ngIf="
+                product_details.image_url &&
+                  product_details.image_url[0]?.imageUrl;
+                else noImage
+              "
+              [src]="
+                'http://localhost:8080/uploads/' +
+                product_details.image_url[0]?.imageUrl
+              "
+              alt="Ảnh sản phẩm"
               width="50px"
-            />
+            ></p-image>
+            <ng-template #noImage>
+              <p-image
+                src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
+                alt="Ảnh"
+                width="50px"
+              />
+            </ng-template>
           </td>
 
           <td>
@@ -95,8 +110,8 @@
               </i>
 
               <i
-                class="pi pi-user-edit"
-                style="font-size: 1.5rem; color: blue"
+                class="pi pi-pencil"
+                style="font-size: 1.5rem"
                 (click)="onModelUpdate(product_details.id)"
               >
               </i>

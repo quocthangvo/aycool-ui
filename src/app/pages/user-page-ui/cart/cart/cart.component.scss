@@ -7,6 +7,12 @@
     .address {
         width: 60%;
         margin-right: 40px;
+        .note{
+            margin-top: 1rem;
+            .p-inputtext{
+                width: 100%;
+            }
+        }
 
         .address-view{
             border: 1px solid var(--grey-dropdown-color);

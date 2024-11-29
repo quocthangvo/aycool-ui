@@ -23,20 +23,19 @@ import { ProductDetailComponent } from './pages/user-page-ui/product/product-det
 import { CartComponent } from './pages/user-page-ui/cart/cart/cart.component';
 import { LoadingComponent } from './pages/home/loading/loading.component';
 import { AddressComponent } from './pages/user-page-ui/address/address/address.component';
+import { OrderComponent } from './pages/user-page-ui/order/order/order.component';
+import { DashboardComponent } from './pages/home/dashboard/dashboard.component';
+import { AccountComponent } from './pages/user-page-ui/order/account/account.component';
+import { SideBarComponent } from './pages/user-page-ui/order/order/side-bar/side-bar.component';
 
 
 
 
 export const routes: Routes = [
-    // {
-    //     path: '***',
-    //     redirectTo: '/vn',// chuyển hướng về login nếu không tìm thấy đường dẫn
-    //     pathMatch: 'full'
-    // },
-    // {
-    //     path: 'vn',
-    //     component: UserLayoutComponent,
-    // },
+    {
+        path: 'loading',
+        component: LoadingComponent
+    },
     {
         path: 'login',
         component: LoginComponent,
@@ -49,11 +48,16 @@ export const routes: Routes = [
         path: 'admin',
         component: MainLayoutComponent,
         canActivate: [AuthGuard], // Bảo vệ nếu đã đăng nhập
-        data: { roles: ['ADMIN'] },
+        // data: { roles: ['ADMIN'] },
         children: [
+            // {
+            //     path: '', // Nếu không chỉ định component hoặc redirect, sẽ xảy ra lỗi giao diện
+            //     redirectTo: 'dashboard', // Điều hướng đến một component chính (ví dụ: Dashboard)
+            //     pathMatch: 'full'
+            // },
             {
-                path: '',
-                component: LoadingComponent
+                path: 'dashboard',
+                component: DashboardComponent
             },
             {
                 path: 'user',
@@ -109,7 +113,7 @@ export const routes: Routes = [
         path: '',
         component: UserLayoutComponent,
         canActivate: [AuthGuard],
-        data: { roles: ['USER'] },
+        // data: { roles: ['USER'] },
         children: [
             {
                 path: '',
@@ -131,13 +135,25 @@ export const routes: Routes = [
             {
                 path: 'address',
                 component: AddressComponent
+            },
+            {
+                path: 'order',
+                component: OrderComponent
+            },
+            {
+                path: 'account',
+                component: AccountComponent
+            },
+            {
+                path: 'profile',
+                component: SideBarComponent
             }
 
         ]
     },
     {
         path: '**',
-        redirectTo: 'vn/home' // Chuyển hướng khi đường dẫn không tồn tại.
+        redirectTo: 'home' // Chuyển hướng khi đường dẫn không tồn tại.
     }
     // {
     //     path: '**', // Đường dẫn không hợp lệ

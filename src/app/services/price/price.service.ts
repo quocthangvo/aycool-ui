@@ -16,6 +16,10 @@ export class PriceService {
 
     constructor(private http: HttpClient, private tokenService: TokenService) { }
 
+    private createHeaders(): HttpHeaders {
+        return new HttpHeaders({ 'Content-Type': 'application/json' })
+    }
+
     private getAuthHeaders() {
         const token = this.tokenService.getToken(); // Lấy token từ AuthService
         return new HttpHeaders({
@@ -28,8 +32,10 @@ export class PriceService {
         return this.http.post(`${this.apiUrl}`, data, { headers: this.getAuthHeaders() });
     }
 
-    getAllPrices() {
-        return this.http.get(`${this.apiUrl}`);
+    getAllPrices(page: number, limit: number, sortOrder: string): Observable<any> {
+        const params = { page: page.toString(), limit: limit.toString(), sortOrder: sortOrder };
+        const options = { headers: this.createHeaders(), params };
+        return this.http.get(`${this.apiUrl}`, options);
     }
     getPriceById(id: number): Observable<PriceDTO> {
         return this.http.get<PriceDTO>(`${this.apiUrl}/${id}`);

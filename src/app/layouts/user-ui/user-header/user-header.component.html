@@ -7,7 +7,8 @@
             <span class="pi pi-user" style="cursor: pointer"></span>
             <p>{{ userFullName }}</p>
             <div class="dropdown-menu" [class.open]="dropdownOpen">
-              <p routerLink="/profile">Profile</p>
+              <p routerLink="/account">Profile</p>
+              <p routerLink="/order">Đơn mua</p>
               <p (click)="logout()">Đăng xuất</p>
             </div>
           </div>
@@ -31,25 +32,12 @@
 
       <div>
         <ul class="list-category">
-          <li>
-            ÁO NAM
+          <li *ngFor="let category of categories">
+            <strong>{{ category.name }}</strong>
             <ul class="dropdown">
-              <li>Áo thun</li>
-              <li>Áo khoác</li>
-            </ul>
-          </li>
-          <li>
-            QUẦN NAM
-            <ul class="dropdown">
-              <li>Quần jean</li>
-              <li>Quần kaki</li>
-            </ul>
-          </li>
-          <li>
-            PHỤ KIỆN
-            <ul class="dropdown">
-              <li>Thắt lưng</li>
-              <li>Giày</li>
+              <li *ngFor="let subCategory of category.subCategories">
+                {{ subCategory.name }}
+              </li>
             </ul>
           </li>
         </ul>

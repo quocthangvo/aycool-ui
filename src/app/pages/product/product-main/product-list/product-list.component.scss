@@ -12,6 +12,23 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    .filter {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .p-multiselect {
+            max-width: 150px;
+        }
+        button{
+            border: 1px solid grey;
+
+        }
+        .filter-item{
+            margin-right: 10px;
+        }
+    }
 }
 
 .p-datatable-header {

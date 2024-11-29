@@ -27,10 +27,11 @@ export class ProductComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.loadProducts();
+  }
 
-
-    // Lấy danh sách sản phẩm từ API
-    this.productService.getAllProducts(0, 20).subscribe((res) => {
+  loadProducts() {
+    this.productService.getAllProduct(0, 10).subscribe((res: any) => {
       this.products = res.data.productResponseList;
     });
   }

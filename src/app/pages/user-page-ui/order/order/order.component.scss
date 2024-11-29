@@ -1,0 +1,144 @@
+.user {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin: 80px 240px 160px 240px;
+
+    .side-bar {
+        align-items: start;
+     
+    }
+
+    .card {
+        width: 75%;
+
+        .status-list {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border: 1px solid var(--grey-dropdown-color);
+            margin-bottom: 1rem ;
+            padding:0 10px;
+            cursor: pointer;
+        }
+
+        .order-list{
+            padding: 1rem;
+            margin-top: 1rem;
+            border: 1px solid var(--grey-dropdown-color);
+        }
+    }
+
+    .filter {
+        position: relative;
+        /* Giữ vị trí cho icon */
+
+        width: 100%;
+        border-radius: none;
+
+
+        .p-inputtext {
+            width: 100%;
+            padding-left: 3.5rem;
+
+        }
+
+        i {
+            position: absolute;
+            left: 1rem;
+            /* Căn lề phải */
+            top: 50%;
+            /* Căn giữa theo chiều dọc */
+            transform: translateY(-50%);
+            /* Điều chỉnh vị trí */
+            font-size: 1.5rem;
+            /* Tùy chỉnh kích thước icon */
+            color: #888;
+            /* Màu sắc cho icon */
+            cursor: pointer;
+            /* Con trỏ trông giống nút */
+        }
+    }
+
+}
+
+.order-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    p{
+        margin: 10px ;
+    }
+    .status {
+        color: red;
+        text-transform: uppercase;
+        padding-left: 10px;
+        margin: 10px 0;
+        border-left: 1px solid #999;
+    }
+}
+
+.order-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #999;
+    padding-bottom:1rem ;
+    img {
+        width: 80px;
+        height: 80px;
+        margin-right: 20px;
+    }
+
+    .attribute {
+        color: grey;
+    }
+}
+
+.order-price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .sell-price {
+        text-decoration: line-through;
+        color: #999;
+        margin-right: 1rem;
+    }
+
+    .promotion-price {
+        font-size: 20px;
+        color: red;
+    }
+}
+
+.total {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    .total-price{
+        font-size: 20px;
+        color: red;
+        margin-left: 10px;
+    }
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .p-button {
+        width: 150px;
+        height: 40px;
+        border-radius: 99px;
+    }
+}
+.not-order{
+    text-align: center;
+    img{
+        width: 650px;
+        height: 500px;
+    }
+}

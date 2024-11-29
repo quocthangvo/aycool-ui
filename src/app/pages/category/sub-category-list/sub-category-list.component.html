@@ -30,8 +30,8 @@
     <ng-template pTemplate="body" let-categorys let-i="rowIndex">
       <tr>
         <td>{{ i + 1 }}</td>
-        <td>{{ categorys.category.name }}</td>
         <td>{{ categorys.name }}</td>
+        <td>{{ categorys.subCategoryNames }}</td>
 
         <td>
           <div class="actions">
@@ -43,8 +43,8 @@
             </i>
 
             <i
-              class="pi pi-user-edit"
-              style="font-size: 1.5rem; color: blue"
+              class="pi pi-pencil"
+              style="font-size: 1.5rem"
               (click)="onModelUpdate(categorys)"
             >
             </i>

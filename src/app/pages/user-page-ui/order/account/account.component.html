@@ -1,0 +1,52 @@
+<div class="account">
+  <div class="side-bar">
+    <app-side-bar />
+  </div>
+  <div class="profile">
+    <div class="title">
+      <h2>Hồ sơ của tôi</h2>
+      <p>Quản lý thông tin hồ sơ</p>
+    </div>
+    <div class="account-info">
+      <div class="info-left">
+        <div class="info-input">
+          <p>Tên đăng nhập</p>
+          <input type="text" pInputText [(ngModel)]="user.full_name" />
+        </div>
+
+        <div class="info-input">
+          <p>Email</p>
+          <input type="text" pInputText disabled [(ngModel)]="user.email" />
+        </div>
+
+        <div class="info-input">
+          <p>Ngày sinh</p>
+          <input type="date" pInputText [(ngModel)]="user.date_of_birth" />
+        </div>
+      </div>
+      <div class="info-right">
+        <img
+          src="https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png"
+          alt=""
+          width="100px"
+        />
+        <p-fileUpload
+          mode="basic"
+          chooseLabel="Choose"
+          chooseIcon="pi pi-upload"
+          name="demo[]"
+          url="https://www.primefaces.org/cdn/api/upload.php"
+          accept="image/*"
+          maxFileSize="1000000"
+        />
+        <p>Dụng lượng file tối đa 1 MB</p>
+        <p>Định dạng:.JPEG, .PNG</p>
+      </div>
+    </div>
+    <p-button
+      label="Cập nhật"
+      class="update-button"
+      (click)="updateUser()"
+    ></p-button>
+  </div>
+</div>

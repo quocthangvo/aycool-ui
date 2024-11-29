@@ -60,22 +60,6 @@ export class LoginComponent implements OnInit {
         next: (res: any) => {
           if (res.data && res.data.token) {
             this.tokenService.setToken(res.data.token); //lưu token
-            // console.log('token', token)
-            // this.userService.getUserInfo(token).subscribe({
-            //   next: (res: any) => {
-            //     this.userResponse = {
-            //       ...res,
-            //       date_of_birth: new Date(res.date_of_birth),
-            //     };
-            //     this.userService.saveUserInfoToLocalStorage(this.userResponse);
-            //   },
-            //   complete: () => {
-
-            //   },
-            //   error: (err: any) => {
-            //     this.messageService.add({ severity: 'error', summary: 'Lỗi', detail: 'Đã xảy ra lỗi. Vui lòng thử lại.' + err.message });
-            //   }
-            // });
 
             const userInfo = res.data.user;
             this.tokenService.setUserInfo(userInfo);
@@ -97,7 +81,7 @@ export class LoginComponent implements OnInit {
           }
         },
         error: (err) => {
-          this.messageService.add({ severity: 'error', summary: 'Lỗi', detail: 'Đã xảy ra lỗi. Vui lòng thử lại.' + err.message });
+          this.messageService.add({ severity: 'error', summary: 'Lỗi', detail: '' + err.error.message });
 
         }
       })

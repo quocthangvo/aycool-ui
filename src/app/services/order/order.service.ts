@@ -35,31 +35,54 @@ export class OrderService {
         return this.http.post<OrderDTO>(`${this.apiUrl}`, data, { headers: this.getAuthHeaders() })
     }
 
-    getAllOrders(page: number, limit: number): Observable<OrderDTO> {
-        const params = { page: page.toString(), limit: limit.toString() };
-        const options = {
-            params: params,
-            headers: this.getAuthHeaders(),
+    // getAllOrders(page: number, limit: number): Observable<OrderDTO> {
+    //     const params = { page: page.toString(), limit: limit.toString() };
+    //     const options = {
+    //         params: params,
+    //         headers: this.getAuthHeaders(),
 
-        };
+    //     };
 
-        return this.http.get<OrderDTO>(this.apiUrl, options);
-    }
+    //     return this.http.get<OrderDTO>(this.apiUrl, options);
+    // }
 
     getOrderById(id: number): Observable<any> {
         return this.http.get(`${this.apiUrl}/${id}`);
     }
 
-    deleteOrderById(id: number) {
-        return this.http.delete(`${this.apiUrl}/${id}`, { headers: this.getAuthHeaders() });
+    getOrderByUserId(id: number, status: string): Observable<any> {
+        return this.http.get(`${this.apiUrl}/user/${id}?status=${status}`);
     }
 
-    updateOrderById(id: number, userData: any) {
-        return this.http.put(`${this.apiUrl}/update/${id}`, userData, { headers: this.getAuthHeaders() });
-    }
     updateOrderStatus(orderId: number, status: string): Observable<any> {
         const payload = { status };
         return this.http.put<any>(`${this.apiUrl}/update/${orderId}`, payload, { headers: this.getAuthHeaders() });
+    }
+
+
+    getAllOrders(
+        page: number,
+        limit: number,
+        orderCode?: string,
+        status?: string,
+        orderDate?: string
+    ): Observable<any> {
+        const params: any = {
+            page: page.toString(),
+            limit: limit.toString(),
+        };
+
+        // Thêm các tham số lọc nếu có
+        if (orderCode) params.orderCode = orderCode;
+        if (status) params.status = status;
+        if (orderDate) params.orderDate = orderDate;
+
+        const options = {
+            params: params,
+            headers: this.getAuthHeaders(),
+        };
+
+        return this.http.get<any>(`${this.apiUrl}/all`, options); // Cập nhật URL API theo đúng endpoint
     }
 
 

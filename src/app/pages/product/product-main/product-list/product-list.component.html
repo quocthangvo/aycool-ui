@@ -9,6 +9,41 @@
     <ng-template pTemplate="caption">
       <div class="caption">
         <h1>Sản phẩm</h1>
+        <div class="filter">
+          <!-- Ô tìm kiếm -->
+          <input
+            type="text"
+            pInputText
+            placeholder="Tìm kiếm..."
+            [(ngModel)]="searchName"
+            class="filter-item"
+          />
+
+          <!-- Bộ lọc chất liệu -->
+          <p-dropdown
+            [(ngModel)]="selectedMaterial"
+            [options]="materials"
+            optionLabel="name"
+            optionValue="id"
+            placeholder="Chọn chất liệu"
+            class="filter-item"
+            filter="true"
+            filterBy="name"
+          >
+          </p-dropdown>
+
+          <p-button (click)="onFilterClick()" class="filter-item"
+            ><i class="pi pi-filter" style="font-size: 1rem"></i> Lọc</p-button
+          >
+          <p-button
+            (click)="clear()"
+            icon="pi pi-filter-slash"
+            styleClass="p-button-secondary"
+            class="filter-item"
+          >
+          </p-button>
+        </div>
+
         <p-button severity="contrast" routerLink="/admin/create-product">
           <i
             class="pi pi-plus"
@@ -31,7 +66,7 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-products let-i="rowIndex">
-      <tr>
+      <tr *ngIf="productList.length > 0">
         <td>{{ i + 1 }}</td>
         <td>
           <p-image
@@ -52,11 +87,6 @@
               alt="Ảnh"
               width="50px"
             />
-            <!-- <p-image
-              src="https://product.hstatic.net/1000026602/product/dsc03170_2dfd2355eeec459b8d7d634b0214d5ca.jpg"
-              alt="Ảnh"
-              width="50px"
-            /> -->
           </ng-template>
         </td>
 
@@ -77,8 +107,8 @@
             </i>
 
             <i
-              class="pi pi-user-edit"
-              style="font-size: 1.5rem; color: blue"
+              class="pi pi-pencil"
+              style="font-size: 1.5rem"
               (click)="onModelUpdate(products.id)"
             >
             </i>
@@ -86,7 +116,18 @@
         </td>
       </tr>
     </ng-template>
+    <div *ngIf="noResults" class="no-results">
+      <p>Không tìm thấy sản phẩm</p>
+    </div>
   </p-table>
+
+  <p-paginator
+    [totalRecords]="totalRecords"
+    [rows]="rowsPerPage"
+    [rowsPerPageOptions]="[10, 20, 30]"
+    (onPageChange)="onPageChange($event)"
+  >
+  </p-paginator>
 
   <app-product-detail-list
     [display]="showProductDialog"

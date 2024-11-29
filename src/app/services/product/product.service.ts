@@ -33,7 +33,7 @@ export class ProductService {
         return this.http.post<ProductDTO>(`${this.apiUrl}`, data, { headers: this.getAuthHeaders() })
     }
 
-    getAllProducts(page: number, limit: number): Observable<any> {
+    getAllProduct(page: number, limit: number): Observable<any> {
         const params = { page: page.toString(), limit: limit.toString() };
         const options = { headers: this.createHeaders(), params };
 
@@ -63,4 +63,26 @@ export class ProductService {
     getAllProductNotPage() {
         return this.http.get(`${this.apiUrl}/all`)
     }
+
+    getAllProducts(page: number, limit: number, name: string, materialId: number | null): Observable<any> {
+        const params: any = {
+            page: page.toString(),
+            limit: limit.toString(),
+        };
+
+        // Thêm tham số tìm kiếm và lọc nếu có
+        if (name) params.name = name;
+        if (materialId !== null && materialId !== undefined) { // Kiểm tra materialId là number và không phải null
+            params.materialId = materialId.toString(); // Convert to string for HTTP params
+        }
+
+        const options = {
+            headers: this.createHeaders(),
+            params: params,
+        };
+
+        return this.http.get<any>(`${this.apiUrl}/all`, options); // Cập nhật URL API cho đúng endpoint
+    }
+
+
 }
