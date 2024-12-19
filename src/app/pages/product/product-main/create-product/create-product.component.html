@@ -1,7 +1,7 @@
 <p-toast></p-toast>
 
 <div class="card">
-  <h1>Tạo sản phẩm</h1>
+  <h1>Thêm sản phẩm</h1>
 
   <form [formGroup]="productForm" (ngSubmit)="createProduct()" class="form">
     <div class="card-form">
@@ -70,7 +70,11 @@
       </div>
       <div class="input-form">
         <p>Mô tả</p>
-        <p-editor formControlName="description" [style]="{ height: '250px' }" />
+        <p-editor
+          formControlName="description"
+          [style]="{ height: '250px' }"
+          class="description-item"
+        />
       </div>
     </div>
     <div class="card-form-right">

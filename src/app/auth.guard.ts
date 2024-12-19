@@ -19,6 +19,20 @@ export class AuthGuard implements CanActivate {
             return false;
         }
     }
+    // canActivate(): boolean {
+    //     if (this.tokenService.isTokenValid()) {
+    //         const userRole = this.tokenService.getRole(); // Giả sử tokenService có phương thức này
+    //         if (userRole === 'ADMIN') {
+    //             this.router.navigateByUrl('admin'); // Chuyển hướng tới trang admin
+    //             return false; // Ngăn không cho đi tiếp, chỉ chuyển hướng
+    //         }
+    //         return true; // Token hợp lệ, không phải admin, cho phép truy cập
+    //     } else {
+    //         this.router.navigateByUrl('home'); // Chuyển hướng về trang home nếu token không hợp lệ
+    //         return false;
+    //     }
+    // }
+
 
     // canActivate(): boolean {
     //     const token = this.tokenService.getToken(); // Lấy token từ TokenService

@@ -96,13 +96,7 @@ export class ProductListComponent implements OnInit {
     this.loadProducts(this.currentPage, this.rowsPerPage); // Gọi lại loadProducts mà không có lọc
   }
 
-  // loadProducts(page: number, limit: number) {
-  //   this.productService.getAllProducts(page, limit).subscribe((res: any) => {
-  //     this.productList = res.data.productResponseList;
-  //     this.totalRecords = res.data.totalRecords;
-  //     this.totalPages = res.data.totalPages;
-  //   });
-  // }
+
   //phan trang
   onPageChange(event: any): void {
     this.currentPage = event.page; // Cập nhật trang hiện tại

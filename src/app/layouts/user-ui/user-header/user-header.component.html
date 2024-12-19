@@ -7,7 +7,7 @@
             <span class="pi pi-user" style="cursor: pointer"></span>
             <p>{{ userFullName }}</p>
             <div class="dropdown-menu" [class.open]="dropdownOpen">
-              <p routerLink="/account">Profile</p>
+              <p routerLink="/account">Thông tin cá nhân</p>
               <p routerLink="/order">Đơn mua</p>
               <p (click)="logout()">Đăng xuất</p>
             </div>
@@ -22,12 +22,12 @@
 
     <div class="layout">
       <div style="cursor: pointer">
-        <p-image
-          src="https://seeklogo.com/images/E/e-commerce-concept-logo-5146F23CC5-seeklogo.com.png"
-          alt="Image"
-          width="80"
-          [routerLink]="''"
-        />
+        <a href="/home"
+          ><p-image
+            src="https://www.pngall.com/wp-content/uploads/15/Cool-Logo-PNG-Photo.png"
+            alt="Image"
+            width="80"
+        /></a>
       </div>
 
       <div>
@@ -35,7 +35,10 @@
           <li *ngFor="let category of categories">
             <strong>{{ category.name }}</strong>
             <ul class="dropdown">
-              <li *ngFor="let subCategory of category.subCategories">
+              <li
+                *ngFor="let subCategory of category.subCategories"
+                (click)="onSubCategoryClick(subCategory.id)"
+              >
                 {{ subCategory.name }}
               </li>
             </ul>
@@ -45,9 +48,15 @@
 
       <div class="icon-button">
         <div class="search">
-          <input type="text" placeholder="Tìm kiếm..." pInputText />
-          <span class="pi pi-search" style="cursor: pointer"></span>
+          <input
+            type="text"
+            placeholder="Tìm kiếm..."
+            pInputText
+            [(ngModel)]="searchTerm"
+          />
+          <p-button icon="pi pi-search" (click)="onSearch()"></p-button>
         </div>
+
         <i class="pi pi-user" style="font-size: 1.5rem"></i>
 
         <div class="cart-icon">

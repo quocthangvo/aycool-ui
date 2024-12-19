@@ -1,0 +1,47 @@
+<div class="review">
+  <div class="star-total">
+    <div class="star">
+      <h2>ĐÁNH GIÁ SẢN PHẨM</h2>
+      <div class="star-evaluate">
+        <h2>{{ averageRating | number : "1.1-1" }}</h2>
+        <i class="pi pi-star-fill"></i>
+      </div>
+      <p>{{ totalRecords }} đánh giá</p>
+    </div>
+  </div>
+
+  <div class="review-total">
+    <div class="drop-down-list">
+      <p-dropdown optionLabel="name" placeholder="Sao" />
+    </div>
+    <div class="comment-total">
+      <div *ngFor="let review of reviews" class="cmt">
+        <!-- Hiển thị sao dựa trên đánh giá -->
+        <div style="color: #ffb402" class="star-evaluate">
+          <i
+            class="pi pi-star-fill"
+            *ngFor="let star of [].constructor(review.rating); let i = index"
+            [ngClass]="{ 'star-filled': i < review.rating }"
+          ></i>
+        </div>
+
+        <p class="user-name">{{ review.name }}</p>
+        <p>{{ review.product_name }}</p>
+        <div class="flex">
+          <p class="attribute" *ngFor="let detail of review.order_details">
+            {{ detail.productDetail.color.name }} /
+            {{ detail.productDetail.size.name }}
+          </p>
+        </div>
+
+        <p class="note">{{ review.comment }}</p>
+        <p class="date">{{ review.created_at | date : "dd/MM/yyyy HH:mm" }}</p>
+      </div>
+    </div>
+    <p-paginator
+      [totalRecords]="totalRecords"
+      [rows]="rowsPerPage"
+      (onPageChange)="onPageChange($event)"
+    ></p-paginator>
+  </div>
+</div>

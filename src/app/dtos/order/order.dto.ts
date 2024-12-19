@@ -1,3 +1,4 @@
+import { Order } from "../../models/order/order.model";
 
 export class OrderDTO {
 
@@ -7,6 +8,7 @@ export class OrderDTO {
     note: string;
     payment_method: string;
     selected_items: any[];
+    // totalAmount: number;
 
     constructor(data: any) {
 
@@ -15,7 +17,13 @@ export class OrderDTO {
         this.note = data.note;
         this.payment_method = data.payment_method;
         this.selected_items = data.selected_items;
+        // this.totalAmount = data.totalAmount;
 
     }
 
+}
+interface VNPayCallbackResponse {
+    code: string;
+    message: string;
+    data: Order; // Adjust based on the actual response data structure
 }

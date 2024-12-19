@@ -1,15 +1,16 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { SideBarComponent } from "./side-bar/side-bar.component";
+import { SideBarComponent } from "../side-bar/side-bar.component";
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { OrderService } from '../../../../services/order/order.service';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ReviewService } from '../../../../services/review/review.service';
 
 @Component({
   selector: 'app-order',
   standalone: true,
-  imports: [SideBarComponent, ButtonModule, InputTextModule, CommonModule],
+  imports: [SideBarComponent, ButtonModule, InputTextModule, CommonModule, RouterLink],
   templateUrl: './order.component.html',
   styleUrl: './order.component.scss',
   encapsulation: ViewEncapsulation.None
@@ -22,7 +23,8 @@ export class OrderComponent implements OnInit {
   constructor(
     private orderService: OrderService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private reviewService: ReviewService
   ) { }
 
   ngOnInit(): void {
@@ -46,6 +48,9 @@ export class OrderComponent implements OnInit {
               this.noOrdersMessage = 'Không có đơn hàng nào'; // Set the message when no orders found
             } else {
               this.noOrdersMessage = ''; // Clear the message if orders are found
+
+              //kt đánh giá
+              this.checkIfReviewed(userId);
             }
           }
         },
@@ -68,5 +73,16 @@ export class OrderComponent implements OnInit {
 
   formatPrice(price: number): string {
     return price ? price.toLocaleString('vi-VN') + 'đ' : '';
+  }
+
+  // hasReviewed: boolean = false;
+
+  checkIfReviewed(userId: number): void {
+    this.orders.forEach(order => {
+      this.reviewService.hasReviewed(order.id, userId).subscribe(reviewed => {
+        order.hasReviewed = reviewed;  // Add `hasReviewed` flag to each order
+        console.log(`Order ID: ${order.id}, Has Reviewed: ${order.hasReviewed}`);
+      });
+    });
   }
 }

@@ -2,7 +2,8 @@
     display: flex;
     justify-content: space-between;
     align-items: start;
-    margin: 80px 240px 160px 240px;
+    margin: 80px 200px 160px 200px;
+
 
     .side-bar {
         align-items: start;
@@ -67,6 +68,10 @@
     justify-content: space-between;
     align-items: center;
 
+    .status-payment{
+        color: #26aa99;
+    }
+
     p{
         margin: 10px ;
     }
@@ -85,6 +90,7 @@
     align-items: center;
     border-bottom: 1px solid #999;
     padding-bottom:1rem ;
+    cursor: pointer;
     img {
         width: 80px;
         height: 80px;

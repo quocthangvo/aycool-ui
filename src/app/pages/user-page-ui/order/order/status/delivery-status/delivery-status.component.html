@@ -1,0 +1,71 @@
+<div class="delivery-status">
+  <div
+    class="circle"
+    [ngClass]="{
+      active: getCurrentStatus() >= 1,
+      inactive: getCurrentStatus() < 1
+    }"
+  >
+    <div class="icon">
+      <i class="pi pi-receipt"></i>
+    </div>
+    <p>Đơn hàng đã đặt</p>
+    <!-- <p>{{ statusTimestamps[0] }}</p> -->
+  </div>
+
+  <div
+    class="circle"
+    [ngClass]="{
+      active: getCurrentStatus() >= 2 && status !== 'CANCELLED',
+      inactive: getCurrentStatus() < 2 || status === 'CANCELLED'
+    }"
+  >
+    <div class="icon">
+      <i class="pi pi-money-bill"></i>
+    </div>
+    <p>Đang xử lý</p>
+    <!-- <p>{{ statusTimestamps[1] }}</p> -->
+  </div>
+
+  <div
+    class="circle"
+    [ngClass]="{
+      active: getCurrentStatus() >= 3 && status !== 'CANCELLED',
+      inactive: getCurrentStatus() < 3 || status === 'CANCELLED'
+    }"
+  >
+    <div class="icon">
+      <i class="pi pi-truck"></i>
+    </div>
+    <p>Đang giao hàng</p>
+    <!-- <p>{{ statusTimestamps[2] }}</p> -->
+  </div>
+
+  <div
+    class="circle"
+    [ngClass]="{
+      active: getCurrentStatus() >= 4 && status !== 'CANCELLED',
+      inactive: getCurrentStatus() < 4 || status === 'CANCELLED'
+    }"
+  >
+    <div class="icon">
+      <i class="pi pi-download"></i>
+    </div>
+    <p>Đã nhận hàng</p>
+    <!-- <p>{{ statusTimestamps[3] }}</p> -->
+  </div>
+
+  <!-- <div
+    class="circle"
+    [ngClass]="{
+      active: getCurrentStatus() === 5 || status === 'CANCELLED',
+      inactive: getCurrentStatus() < 5
+    }"
+  >
+    <div class="icon">
+      <i class="pi pi-times"></i>
+    </div>
+    <p>Đã hủy</p>
+   
+  </div> -->
+</div>

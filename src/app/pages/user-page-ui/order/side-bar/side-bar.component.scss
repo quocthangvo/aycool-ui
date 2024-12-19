@@ -24,7 +24,13 @@
             cursor: pointer;
             i{
                 margin-right: 10px;
-            }
+            }  
+        }
+        .dashboard:hover{
+            color: var(--blue-color);
+        }
+        .dashboard.active-link {
+            color: var(--blue-color);
         }
     }
    

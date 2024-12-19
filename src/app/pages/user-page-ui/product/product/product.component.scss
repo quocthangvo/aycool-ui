@@ -3,13 +3,19 @@
     margin: 3rem auto; // Canh giữa nội dung
 
     // Đảm bảo hình ảnh giữ kích thước cố định
+
+
+    .product-item {
+        cursor: pointer;
+    }
+
     img {
-        width: 100%; 
-        height: 350px; 
-        max-width: 350px; 
+        width: 100%;
+        height: 350px;
+        max-width: 350px;
         border: 1px solid var(--grey-dropdown-color);
         border-radius: 10px;
-        object-fit: cover; 
+        object-fit: cover;
     }
 
     .p-carousel {
@@ -51,14 +57,20 @@
         }
     }
 
-    & .product-content {
+     .product-content {
         margin: 1rem;
         min-height: 60px;
-        
 
-        & .sell-price {
-            color: grey;
-            text-decoration: line-through;
+        .price {
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            margin-top: 1rem;
+
+            .sell-price {
+                color: grey;
+                text-decoration: line-through;
+            }
         }
     }
 }
@@ -110,12 +122,13 @@
             border: none;
             cursor: pointer;
             font-size: 1rem;
-            transition:  transform 0.3s ease;
+            transition: transform 0.3s ease;
             border-radius: 100px;
             align-items: center;
             display: flex;
             justify-content: center;
             align-items: center;
+
             i {
                 margin-left: 10px;
             }
@@ -123,7 +136,7 @@
             &:hover {
                 background-color: #2334b8;
                 transform: scale(1.1);
-                transition:transform 0.3s ease;
+                transition: transform 0.3s ease;
 
             }
         }
@@ -138,6 +151,10 @@
     h2 {
         padding-left: 80px;
         margin: 0;
+    }
+
+    .product-item {
+        cursor: pointer;
     }
 
     img {
@@ -190,12 +207,22 @@
         }
     }
 
-    & .product-content {
-        margin-top: 1rem;
+    // sản phẩm 
+    .product-content {
+        margin: 1rem;
+        min-height: 60px;
 
-        & .sell-price {
-            color: grey;
-            text-decoration: line-through;
+        .price {
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            margin-top: 1rem;
+
+            .sell-price {
+                color: grey;
+                text-decoration: line-through;
+            }
         }
+
     }
 }

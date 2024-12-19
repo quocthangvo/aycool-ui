@@ -1,0 +1,101 @@
+<div class="product-search">
+  <div class="category">
+    <h2>Sản phẩm</h2>
+    <p-dropdown
+      [options]="subCategories"
+      optionLabel="name"
+      [(ngModel)]="selectedsubCategory"
+      (onChange)="onSubCategorySelect(selectedsubCategory.id)"
+      placeholder="Chọn danh mục"
+    >
+    </p-dropdown>
+  </div>
+
+  <div class="product">
+    <!-- <div class="filter">
+      <p>Sắp xếp theo</p>
+      <p-dropdown optionLabel="name" placeholder="Select a City" />
+    </div> -->
+    <div class="product-content">
+      <div
+        class="product-item"
+        *ngFor="let product of products"
+        (click)="goToProductDetail(product.id)"
+      >
+        <img
+          *ngIf="
+            product.product_images && product.product_images[0]?.imageUrl;
+            else noImage
+          "
+          [src]="
+            'http://localhost:8080/uploads/' +
+            product.product_images[0]?.imageUrl
+          "
+          alt="Ảnh sản phẩm"
+        />
+        <ng-template #noImage>
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
+            alt=""
+          />
+        </ng-template>
+        <div class="content">
+          <p>{{ product.name }}</p>
+          <div class="price">
+            <p class="promotion-price">
+              {{
+                formatPrice(
+                  product.product_details[0]?.prices[0]?.promotionPrice ?? 900
+                )
+              }}
+            </p>
+            <p class="sell-price">
+              {{
+                formatPrice(
+                  product.product_details[0]?.prices[0]?.sellingPrice ?? 1000
+                )
+              }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="product-item">
+          <img
+            src="https://cdn.dribbble.com/users/2008722/screenshots/14987612/media/27566bddb4d08217c4407656144e8ac7.png?resize=400x0"
+            alt=""
+            width="80px"
+            height="100px"
+          />
+          <div class="content">
+            <p>Tên sản phẩm</p>
+            <div class="price">
+              <p class="promotion-price">Giá khuyến mãi</p>
+              <p class="sell-price">Giá bán</p>
+            </div>
+          </div>
+        </div>
+        <div class="product-item">
+          <img
+            src="https://cdn.dribbble.com/users/2008722/screenshots/14987612/media/27566bddb4d08217c4407656144e8ac7.png?resize=400x0"
+            alt=""
+            width="80px"
+            height="100px"
+          />
+          <div class="content">
+            <p>Tên sản phẩm</p>
+            <div class="price">
+              <p class="promotion-price">Giá khuyến mãi</p>
+              <p class="sell-price">Giá bán</p>
+            </div>
+          </div>
+        </div> -->
+    </div>
+  </div>
+</div>
+<p-paginator
+  [totalRecords]="totalRecords"
+  [rows]="rowsPerPage"
+  [rowsPerPageOptions]="[10, 20, 30]"
+  (onPageChange)="onPageChange($event)"
+>
+</p-paginator>

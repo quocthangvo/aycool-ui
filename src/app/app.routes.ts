@@ -26,7 +26,13 @@ import { AddressComponent } from './pages/user-page-ui/address/address/address.c
 import { OrderComponent } from './pages/user-page-ui/order/order/order.component';
 import { DashboardComponent } from './pages/home/dashboard/dashboard.component';
 import { AccountComponent } from './pages/user-page-ui/order/account/account.component';
-import { SideBarComponent } from './pages/user-page-ui/order/order/side-bar/side-bar.component';
+import { SideBarComponent } from './pages/user-page-ui/order/side-bar/side-bar.component';
+import { StatusComponent } from './pages/user-page-ui/order/order/status/status.component';
+import { ProductFilterComponent } from './pages/user-page-ui/product/product-filter/product-filter.component';
+import { ProductSearchComponent } from './pages/user-page-ui/product/product-search/product-search.component';
+import { EvaluateComponent } from './pages/user-page-ui/product/evaluate/evaluate.component';
+import { ReviewComponent } from './pages/user-page-ui/product/review/review.component';
+import { CommentComponent } from './pages/user-page-ui/order/comment/comment.component';
 
 
 
@@ -147,7 +153,30 @@ export const routes: Routes = [
             {
                 path: 'profile',
                 component: SideBarComponent
+            },
+            {
+                path: 'status/:id',
+                component: StatusComponent
+            },
+            {
+                // khi lọc sản phẩm
+                path: 'product-filter/:subCategoryId',
+                component: ProductFilterComponent
+            },
+            {
+                path: 'product-search',
+                component: ProductSearchComponent
+            },
+            {
+                path: 'review/:productDetailId',
+                component: ReviewComponent
+            },
+            {
+                path: 'comment/:orderId',
+                component: CommentComponent,
+
             }
+
 
         ]
     },

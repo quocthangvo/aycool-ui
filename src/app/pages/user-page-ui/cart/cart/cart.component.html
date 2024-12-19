@@ -39,10 +39,11 @@
             name="payment"
             value="COD"
             [(ngModel)]="paymentMethod"
+            [checked]="paymentMethod === 'COD'"
           />
           <img
             src="https://cdn-icons-png.flaticon.com/512/2897/2897853.png"
-            alt=""
+            alt="Cash On Delivery"
           />
           <p>Thanh toán khi nhận hàng</p>
         </label>
@@ -52,12 +53,13 @@
             type="radio"
             id="payment-card"
             name="payment"
-            value="CARD"
+            value="ONLINE_PAYMENT"
             [(ngModel)]="paymentMethod"
+            [checked]="paymentMethod === 'ONLINE_PAYMENT'"
           />
           <img
             src="https://cdn-icons-png.flaticon.com/512/5223/5223830.png"
-            alt=""
+            alt="Online Payment"
           />
           <p>Thanh toán qua ngân hàng</p>
         </label>
@@ -69,6 +71,14 @@
     <h2>Giỏ hàng</h2>
     <div class="title">
       <div class="product">
+        <input
+          type="checkbox"
+          [(ngModel)]="selectAll"
+          (change)="toggleSelectAll()"
+          style="width: 20px; height: 20px"
+          class="mr-2"
+        />
+
         <p>TẤT CẢ SẢN PHẨM</p>
         <p>XÓA TẤT CẢ</p>
       </div>

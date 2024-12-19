@@ -39,4 +39,6 @@ export class ColorService {
     updateColorById(id: number, userData: any) {
         return this.http.put(`${this.apiUrl}/update/${id}`, userData, { headers: this.getAuthHeaders() });
     }
+
+
 }

@@ -4,20 +4,29 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MessageService } from 'primeng/api';
 import { CartService } from '../../../../services/order/cart.service';
+import { EvaluateComponent } from "../evaluate/evaluate.component";
+import { ReviewComponent } from '../review/review.component';
+
 
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, ReviewComponent],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss'
 })
 export class ProductDetailComponent implements OnInit {
-  product: any;
+  product: any = {
+    product_images: [], // Đây là danh sách ảnh sản phẩm
+    // Đây là danh sách chi tiết sản phẩm
+  };
   productId: number = 0;
   cartItems: any[] = [];
   userId: number | null = null;
+
+  selectedImage: string | null = null;
+
 
   constructor(
     private productService: ProductService,
@@ -26,6 +35,10 @@ export class ProductDetailComponent implements OnInit {
     private cartService: CartService
   ) { }
   ngOnInit(): void {
+    this.loadImage();
+    if (this.product?.product_images?.length > 0) {
+      this.selectedImage = 'http://localhost:8080/uploads/' + this.product.product_images[0].imageUrl;
+    }
 
     this.cartService.cart$.subscribe((items) => {
       this.cartItems = items;  // Cập nhật giỏ hàng trên giao diện mỗi khi `cartSubject` thay đổi
@@ -264,5 +277,14 @@ export class ProductDetailComponent implements OnInit {
     } else {
       console.error('User information not found in localStorage.');
     }
+  }
+  loadImage(): void {
+    if (this.product?.product_images?.length > 0) {
+      this.selectedImage =
+        'http://localhost:8080/uploads/' + this.product.product_images[0].imageUrl;
+    }
+  }
+  selectImage(imageUrl: string): void {
+    this.selectedImage = 'http://localhost:8080/uploads/' + imageUrl;
   }
 }

@@ -51,7 +51,7 @@
     }
 
     .cart {
-        width: 40%;
+        width: 50%;
 
         .title {
             display: flex;
@@ -85,7 +85,7 @@
             align-items: center;
 
             .select-product{
-               
+               margin-right: 5px;
                 input{
                     width: 20px;
                     height: 20px;
@@ -104,8 +104,9 @@
 
             .content {
                 max-width: 150px;
-                margin-right: 10%;
+                // margin-right: 10%;
                 text-align: start;
+                margin-left: 10px;
                 i {
                     cursor: pointer;
                     color: red;
@@ -121,7 +122,7 @@
                 font-weight: bold;
                 border-radius: 99px;
                 border: 1px solid grey;
-                margin-left: 15%;
+                margin-left: 5%;
                 margin-right: 5%;
 
                 button {

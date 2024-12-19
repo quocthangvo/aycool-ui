@@ -1,31 +1,43 @@
 <div class="card">
   <p *ngIf="product && product.category">
     <a [routerLink]="'/home'" style="color: grey">Trang chủ</a> /
-    {{ product.category.name }}
+    {{ product.category }}
   </p>
 
   <div class="product">
     <div class="image" *ngIf="product?.product_images?.length > 0">
+      <!-- Danh sách ảnh -->
       <div class="image-list">
         <img
           *ngFor="let image of product.product_images"
           [src]="'http://localhost:8080/uploads/' + image.imageUrl"
           [alt]="product.name"
           class="product-image"
+          (click)="selectImage(image.imageUrl)"
+          [class.selected]="
+            selectedImage === 'http://localhost:8080/uploads/' + image.imageUrl
+          "
         />
       </div>
 
-      <img
-        *ngIf="
-          product?.product_images && product.product_images.length > 0;
-          else noImage
-        "
-        [src]="
-          'http://localhost:8080/uploads/' + product.product_images[0]?.imageUrl
-        "
-        alt="Ảnh sản phẩm"
-        width="50px"
-      />
+      <div class="big-image">
+        <img
+          *ngIf="
+            product?.product_images && product.product_images.length > 0;
+            else noImage
+          "
+          [src]="
+            selectedImage ||
+            (product?.product_images?.length > 0
+              ? 'http://localhost:8080/uploads/' +
+                product.product_images[0]?.imageUrl
+              : 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png')
+          "
+          alt="Ảnh sản phẩm"
+          width="50px"
+        />
+      </div>
+
       <ng-template #noImage>
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
@@ -90,9 +102,17 @@
             <i class="pi pi-cart-arrow-down" style="font-size: 1rem"></i>
           </button>
         </div>
-
-        <p [innerHTML]="product.description"></p>
       </div>
     </div>
   </div>
+  <div class="des-item">
+    <p>MÔ TẢ SẢN PHẨM</p>
+    <p [innerHTML]="product.description"></p>
+  </div>
+  <app-review
+    [reviews]="product.reviews"
+    [productDetails]="product.product_details"
+    [productName]="product.name"
+    [productId]="productId"
+  />
 </div>

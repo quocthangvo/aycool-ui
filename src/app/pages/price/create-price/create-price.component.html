@@ -30,6 +30,7 @@
         <ng-template pTemplate="header">
           <tr>
             <th>Id</th>
+            <th>Hình ảnh</th>
             <th>Tên sản phẩm</th>
             <th>Giá bán</th>
             <th>Giá khuyến mãi %</th>
@@ -40,6 +41,31 @@
         <ng-template pTemplate="body" let-detail let-i="rowIndex">
           <tr>
             <td>{{ i + 1 }}</td>
+            <td>
+              <ng-container
+                *ngIf="
+                  detail.product_id?.productImages?.length > 0;
+                  else noImage
+                "
+              >
+                <p-image
+                  [src]="
+                    'http://localhost:8080/uploads/' +
+                    detail.product_id?.productImages[0]?.imageUrl
+                  "
+                  alt="Ảnh sản phẩm"
+                  width="50px"
+                ></p-image>
+              </ng-container>
+              <ng-template #noImage>
+                <p-image
+                  src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
+                  alt="Ảnh không có"
+                  width="50px"
+                ></p-image>
+              </ng-template>
+            </td>
+
             <td>{{ detail.sku_name }}</td>
             <td>
               <input pInputText formControlName="selling_price" />

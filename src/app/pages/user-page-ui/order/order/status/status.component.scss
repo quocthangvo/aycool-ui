@@ -1,0 +1,190 @@
+$active-color: #2dc258;
+$inactive-color: #ddd;
+
+.user-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin: 80px 200px 160px 200px;
+}
+
+.order-status {
+    width: 75%;
+    border: 1px solid var(--grey-dropdown-color);
+    border-radius: 10px;
+    padding: 1rem;
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .header-right {
+            display: flex;
+            justify-content: start;
+            align-items: start;
+
+            p {
+                margin: 10px;
+            }
+
+            .status {
+                padding-left: 10px;
+                border-left: 1px solid #999;
+                color: red;
+            }
+        }
+    }
+
+
+
+    .content-status {
+
+        border-top: 1px solid #999;
+
+        // .delivery-status {
+        //     display: flex;
+        //     justify-content: space-between;
+        //     align-items: start;
+        //     padding: 2rem 0;
+
+        //     .circle {
+        //       width: 150px;
+        //       text-align: center;
+
+        //       .icon {
+        //         width: 60px;
+        //         height: 60px;
+        //         border-radius: 50%;
+        //         border: 5px solid $inactive-color;
+        //         display: flex;
+        //         justify-content: center;
+        //         align-items: center;
+        //         margin: 0 auto;
+        //         color: $inactive-color;
+
+        //         i {
+        //           font-size: 1.5rem;
+        //         }
+        //       }
+
+        //       p {
+        //         text-align: center;
+        //         font-size: 14px;
+        //       }
+
+        //       &.active {
+        //         .icon {
+        //           border-color: $active-color;
+        //           color: $active-color;
+        //         }
+        //       }
+
+        //       &.inactive {
+        //         .icon {
+        //           border-color: $inactive-color;
+        //           color: $inactive-color;
+        //         }
+        //       }
+        //     }
+        //   }
+        .cancelled-status{
+            font-size: 1.5rem;
+            color: red;
+           
+            .date{
+                font-size: 1rem;
+                color: #999;
+            }
+        }
+
+        .status-end {
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            padding: 1rem 0;
+            border-top: 1px solid #999;
+        }
+    }
+
+    .addresses{
+        border-top: 1px solid #999;
+        padding: 1rem 0;
+        h2{
+            margin: 0;
+        }
+    .footer-address {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .address-left {
+            width: 35%;
+            border-right: 1px solid #999;
+            margin-left: 1rem;
+        }
+
+        .address-right {
+            width: 60%;
+
+            .status {
+                p {
+                    display: flex;
+                    justify-content: start;
+                    align-items: center;
+
+                    i {
+                        margin-right: 1rem;
+                        color: #2dc258;
+                    }
+                }
+            }
+        }
+    }
+}
+
+    .product-status {
+        .product-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #999;
+            padding: 1rem 0;
+
+            .product-detail {
+                width: 60%;
+            }
+
+            .price {
+                display: flex;
+                justify-content: end;
+                align-items: center;
+
+                .sell-price {
+                    text-decoration: line-through;
+                    color: #999;
+                }
+
+                .promotion-price {
+                    color: red;
+                    margin-left: 10px;
+                }
+            }
+
+        }
+
+        .total-money {
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            border-top: 1px solid #999;
+            padding: 1rem 0;
+
+            .money {
+                font-size: 20px;
+                color: red;
+                margin-left: 10px;
+            }
+        }
+    }
+}

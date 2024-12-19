@@ -288,23 +288,30 @@
 
 .search {
   position: relative;
-
+  background-color: white;
+  border-radius: 10px;
   & .p-inputtext {
     padding-left: 2rem;
     min-width: 550px;
+    border: none;
+
   }
 
-  & .pi-search {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-    cursor: pointer;
- 
-    pointer-events: all;
-    padding: 20px;
-    color: black;
+  // & .p-button {
+  //   position: absolute;
+  //   right: 10px;
+  //   top: 50%;
+  //   transform: translateY(-50%);
+  //   pointer-events: none;
+  //   cursor: pointer;
+  //   border: none;
+  //   pointer-events: all;
+  //   padding: 20px;
+  //   color: black;
+  // }
+  .p-button{
+    border: none; 
+    background-color: transparent;
   }
 }
 

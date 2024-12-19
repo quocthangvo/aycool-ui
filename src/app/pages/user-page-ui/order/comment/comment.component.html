@@ -1,0 +1,69 @@
+<div class="review-page">
+  <div class="side-bar">
+    <app-side-bar />
+  </div>
+  <div class="review">
+    <div class="header">
+      <p style="cursor: pointer" (click)="goBack()">
+        <i class="pi pi-angle-left"> </i>Trở về
+      </p>
+
+      <h2>ĐÁNH GIÁ SẢN PHẨM</h2>
+    </div>
+
+    <div *ngIf="order?.order_details && order.order_details.length > 0">
+      <div *ngFor="let detail of order.order_details" class="product-detail">
+        <img
+          *ngIf="detail.image_url && detail.image_url.length > 0"
+          [src]="
+            'http://localhost:8080/uploads/' + detail.image_url[0]?.imageUrl
+          "
+          alt="Ảnh sản phẩm"
+          width="80px"
+        />
+        <div class="detail">
+          <p>
+            <strong>{{ detail.product_name }}</strong>
+          </p>
+          <p class="attribute">
+            Phân loại: {{ detail.color }}/{{ detail.size }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <p>Chọn sao</p>
+    <div class="rating">
+      <div style="cursor: pointer">
+        <i
+          *ngFor="let star of stars; let i = index"
+          [class.pi]="true"
+          [class.pi-star-fill]="i < rating"
+          [class.pi-star]="i >= rating"
+          style="font-size: 2rem; color: #ffb402"
+          (click)="setRating(i + 1)"
+        >
+        </i>
+      </div>
+    </div>
+    <div class="comment">
+      <textarea
+        rows="5"
+        cols="80"
+        maxlength="200"
+        pTextarea
+        placeholder="Đánh giá tối đa 200 ký tự"
+        [(ngModel)]="commentText"
+      ></textarea>
+    </div>
+
+    <div class="review-button">
+      <p-button
+        label="Đánh giá"
+        [rounded]="true"
+        severity="info"
+        (click)="submitReview()"
+      />
+    </div>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+.review-page{
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin: 80px 200px 160px 200px;
+    
+    .review{
+        width: 75%;
+        border: 1px solid var(--grey-dropdown-color);
+        border-radius: 10px;
+        padding: 1rem;
+        .header{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .product-detail{
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            .detail{
+                margin-left: 1rem;
+                .attribute{
+                    color: #999;
+                }
+            }
+        }
+        .rating{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            i{
+                margin-right: 10px;
+            }
+        }
+        .comment{
+           text-align: center;
+           margin-top: 1rem;
+           textarea{
+                font-size: 1rem;
+            }
+        }
+        .review-button{
+            text-align: end;
+            margin-top: 1rem;
+        }
+    }
+}

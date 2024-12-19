@@ -20,6 +20,10 @@ export class ProductComponent implements OnInit {
   productId: number = 0;
   responsiveOptions: any[] | undefined;
 
+  productShirts: any[] = [];  // Store products for Áo Nam
+  productPants: any[] = [];   // Store products for Quần Nam
+  productAccessories: any[] = []; // Store products for Phụ Kiện
+
   constructor(private productService: ProductService,
     private route: ActivatedRoute,
     private viewportScroller: ViewportScroller,
@@ -28,6 +32,9 @@ export class ProductComponent implements OnInit {
 
   ngOnInit() {
     this.loadProducts();
+    this.loadProductsByCategory(1);  // Load Áo Nam (Shirts)
+    this.loadProductsByCategory(2);  // Load Quần Nam (Pants)
+    this.loadProductsByCategory(3);  // Load Phụ Kiện (Accessories)
   }
 
   loadProducts() {
@@ -48,4 +55,15 @@ export class ProductComponent implements OnInit {
     return price ? price.toLocaleString('vi-VN') + 'đ' : '';
   }
 
+  loadProductsByCategory(categoryId: number) {
+    this.productService.getProductByCategory(0, 10, categoryId).subscribe((res: any) => {
+      if (categoryId === 1) {
+        this.productShirts = res.data.productResponseList; // Áo Nam
+      } else if (categoryId === 2) {
+        this.productPants = res.data.productResponseList; // Quần Nam
+      } else if (categoryId === 3) {
+        this.productAccessories = res.data.productResponseList; // Phụ Kiện
+      }
+    });
+  }
 }

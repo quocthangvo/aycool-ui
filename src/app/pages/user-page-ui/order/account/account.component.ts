@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FileUploadModule } from 'primeng/fileupload';
 import { InputTextModule } from 'primeng/inputtext';
-import { SideBarComponent } from "../order/side-bar/side-bar.component";
+import { SideBarComponent } from "../side-bar/side-bar.component";
 import { UserService } from '../../../../services/user/user.service';
 import { FormsModule } from '@angular/forms';
 import { DatePipe, formatDate } from '@angular/common';
@@ -58,7 +58,9 @@ export class AccountComponent implements OnInit {
         this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Cập nhật thành công' });
         // Cập nhật lại thông tin người dùng trong localStorage
         const updatedUserInfo = {
+          id: res.data.id,
           full_name: res.data.full_name,
+          email: res.data.email,
           date_of_birth: res.data.date_of_birth
         };
 

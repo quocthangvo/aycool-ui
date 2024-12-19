@@ -48,13 +48,13 @@
           <td>
             <p-image
               *ngIf="
-                product_details.image_url &&
-                  product_details.image_url[0]?.imageUrl;
+                product_details.product_id.productImages &&
+                  product_details.product_id.productImages[0]?.imageUrl;
                 else noImage
               "
               [src]="
                 'http://localhost:8080/uploads/' +
-                product_details.image_url[0]?.imageUrl
+                product_details.product_id.productImages[0]?.imageUrl
               "
               alt="Ảnh sản phẩm"
               width="50px"

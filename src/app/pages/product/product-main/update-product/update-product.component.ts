@@ -81,25 +81,102 @@ export class UpdateProductComponent implements OnInit {
     }
   }
 
+  // updateProduct() {
+  //   const productId = this.route.snapshot.paramMap.get('id');
+  //   if (productId) {
+  //     const id = +productId;
+  //     const updateData = this.productForm.value; // Lấy dữ liệu từ form
+
+  //     // Tạo FormData để gửi các trường thông tin và ảnh
+  //     const formData = new FormData();
+
+  //     // Thêm các trường thông tin sản phẩm vào FormData
+  //     for (let key in updateData) {
+  //       if (updateData.hasOwnProperty(key)) {
+  //         formData.append(key, updateData[key]);
+  //       }
+  //     }
+
+  //     // Thêm các tệp đã tải lên vào FormData
+  //     for (let file of this.uploadedFiles) {
+  //       formData.append('files', file, file.name); // Thêm tệp ảnh vào FormData
+  //     }
+
+  //     // Gọi API để tải ảnh lên trước
+  //     this.productService.uploadImageProduct(id, formData).subscribe({
+  //       next: (response) => {
+  //         this.messageService.add({ severity: 'info', summary: 'Thành công', detail: 'Tệp đã được tải lên.' });
+
+  //         // Sau khi tải ảnh thành công, gọi API cập nhật sản phẩm
+  //         this.productService.updateProductById(id, updateData).subscribe({
+  //           next: () => {
+  //             this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Cập nhật sản phẩm thành công!' });
+  //             this.router.navigate(['/admin/product']); // Điều hướng về trang sản phẩm
+  //           },
+  //           error: (error) => {
+  //             this.messageService.add({ severity: 'error', summary: 'Lỗi', detail: 'Cập nhật thất bại! ' + error.error.message });
+  //           }
+  //         });
+  //       },
+  //       error: (error) => {
+  //         this.messageService.add({ severity: 'error', summary: 'Lỗi', detail: 'Tải ảnh lên thất bại! ' + error.error.message });
+  //       }
+  //     });
+  //   }
+  // }
+
   updateProduct() {
     const productId = this.route.snapshot.paramMap.get('id');
     if (productId) {
       const id = +productId;
       const updateData = this.productForm.value; // Lấy dữ liệu từ form
 
-      // Gọi API để cập nhật sản phẩm
-      this.productService.updateProductById(id, updateData).subscribe({
-        next: () => {
+      // Tạo FormData để gửi các trường thông tin và ảnh (nếu có)
+      const formData = new FormData();
 
-          this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Cập nhật sản phẩm thành công!' });
-          this.router.navigate(['/admin/product']); // Điều hướng về trang sản phẩm
-
-        },
-        error: (error) => {
-          this.messageService.add({ severity: 'error', summary: 'Lỗi', detail: 'Cập nhật thất bại! ' + error.error.message });
+      // Thêm các trường thông tin sản phẩm vào FormData
+      for (let key in updateData) {
+        if (updateData.hasOwnProperty(key)) {
+          formData.append(key, updateData[key]);
         }
-      });
+      }
+
+      // Nếu có tệp đã tải lên, thêm vào FormData
+      if (this.uploadedFiles.length > 0) {
+        for (let file of this.uploadedFiles) {
+          formData.append('files', file, file.name); // Thêm tệp ảnh vào FormData
+        }
+
+        // Gọi API để tải ảnh lên
+        this.productService.uploadImageProduct(id, formData).subscribe({
+          next: (response) => {
+            this.messageService.add({ severity: 'info', summary: 'Thành công', detail: 'Tệp đã được tải lên.' });
+
+            // Sau khi tải ảnh thành công, gọi API cập nhật sản phẩm
+            this.updateProductInfo(id, updateData);
+          },
+          error: (error) => {
+            this.messageService.add({ severity: 'error', summary: 'Lỗi', detail: 'Tải ảnh lên thất bại! ' + error.error.message });
+          }
+        });
+      } else {
+        // Nếu không có ảnh, chỉ gọi API cập nhật sản phẩm
+        this.updateProductInfo(id, updateData);
+      }
     }
+  }
+
+  // Phương thức cập nhật sản phẩm
+  updateProductInfo(id: number, updateData: any) {
+    this.productService.updateProductById(id, updateData).subscribe({
+      next: () => {
+        this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Cập nhật sản phẩm thành công!' });
+        this.router.navigate(['/admin/product']); // Điều hướng về trang sản phẩm
+      },
+      error: (error) => {
+        this.messageService.add({ severity: 'error', summary: 'Lỗi', detail: 'Cập nhật thất bại! ' + error.error.message });
+      }
+    });
   }
 
 
@@ -140,5 +217,24 @@ export class UpdateProductComponent implements OnInit {
     this.materialService.getMaterialById(id).subscribe((material: Material) => {
       this.selectedMaterial = material;
     })
+  }
+
+  uploadedFiles: any[] = [];
+
+  onUpload(event: any) {
+    for (let file of event.files) {
+      this.uploadedFiles.push(file);
+    }
+    this.messageService.add({ severity: 'info', summary: 'Thành công', detail: 'Tệp đã được tải lên.' });
+    console.log('Các tệp đã tải lên:', this.uploadedFiles);
+  }
+
+  //xóa ảnh đã upload
+  removeFile(file: any) {
+    // Loại bỏ ảnh khỏi danh sách ảnh đã tải lên
+    const index = this.uploadedFiles.indexOf(file);
+    if (index !== -1) {
+      this.uploadedFiles.splice(index, 1);
+    }
   }
 }

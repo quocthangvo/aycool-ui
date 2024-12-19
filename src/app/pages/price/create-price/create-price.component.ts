@@ -16,13 +16,14 @@ import { ProductService } from '../../../services/product/product.service';
 import { TableModule } from 'primeng/table';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ProductDetailDTO } from '../../../dtos/product/product-detail.dto';
+import { ImageModule } from 'primeng/image';
 
 
 @Component({
   selector: 'app-create-price',
   standalone: true,
   imports: [FormsModule, InputTextModule, ButtonModule, ToastModule,
-    CommonModule, ReactiveFormsModule, DialogModule, CalendarModule, TableModule, MultiSelectModule],
+    CommonModule, ReactiveFormsModule, DialogModule, CalendarModule, TableModule, MultiSelectModule, ImageModule],
   providers: [DatePipe],
   templateUrl: './create-price.component.html',
   styleUrl: './create-price.component.scss',
@@ -109,7 +110,9 @@ export class CreatePriceComponent implements OnInit {
           // Giả sử API trả về một đối tượng với trường 'data'
           this.productList = res.data.map((item: any) => ({
             id: item.id,
-            sku_name: item.sku_name
+            sku_name: item.sku_name,
+            product_id: item.product_id, // Gán product_id nếu có
+            productImages: item.product_id?.productImages, // Gán productImages nếu có
           }));
         }
       },

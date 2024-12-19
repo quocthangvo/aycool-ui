@@ -1,0 +1,145 @@
+<div class="product-filter">
+  <div class="filter" [formGroup]="filterForm">
+    <!-- Color Filter -->
+    <div class="color">
+      <p>Màu sắc</p>
+      <div class="color-form">
+        <div class="color-item" *ngFor="let color of colors">
+          <p-radioButton
+            [formControlName]="'color'"
+            [value]="color.id"
+            label="{{ color.name }}"
+          ></p-radioButton>
+        </div>
+      </div>
+    </div>
+
+    <!-- Size Filter -->
+    <div class="size">
+      <p>Kích thước</p>
+      <div class="size-item" *ngFor="let size of sizes">
+        <p-checkbox
+          [formControlName]="'size'"
+          [value]="size.id"
+          label="{{ size.name }}"
+        ></p-checkbox>
+      </div>
+    </div>
+
+    <!-- Material Filter -->
+    <div class="material">
+      <p>Chất liệu</p>
+      <div class="checkbox-group" *ngFor="let material of materials">
+        <p-checkbox
+          [formControlName]="'material'"
+          [value]="material.id"
+          label="{{ material.name }}"
+        ></p-checkbox>
+      </div>
+    </div>
+
+    <p-button label="Lọc" icon="pi pi-filter"></p-button>
+  </div>
+
+  <div class="product-search">
+    <p><a href="/home" class="home-link">Trang chủ</a> / {{ category }}</p>
+    <h2>{{ sub_category_name }}</h2>
+    <div class="category">
+      <div *ngFor="let category of categories" class="category-item">
+        <img
+          src="https://cdn.dribbble.com/users/2008722/screenshots/14987612/media/27566bddb4d08217c4407656144e8ac7.png?resize=400x0"
+          alt="{{ category.name }}"
+        />
+        <p>{{ category.name }}</p>
+      </div>
+    </div>
+
+    <div class="product">
+      <div class="filter">
+        <p>Sắp xếp theo</p>
+        <p-dropdown optionLabel="name" placeholder="Giá" />
+      </div>
+      <div class="product-content">
+        <div
+          class="product-item"
+          *ngFor="let product of products"
+          (click)="goToProductDetail(product.id)"
+        >
+          <img
+            *ngIf="
+              product.product_images && product.product_images[0]?.imageUrl;
+              else noImage
+            "
+            [src]="
+              'http://localhost:8080/uploads/' +
+              product.product_images[0]?.imageUrl
+            "
+            alt="Ảnh sản phẩm"
+          />
+          <ng-template #noImage>
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
+              alt=""
+            />
+          </ng-template>
+          <div class="content">
+            <p>{{ product.name }}</p>
+            <div class="price">
+              <p class="promotion-price">
+                {{
+                  formatPrice(
+                    product.product_details[0]?.prices[0]?.promotionPrice ?? 900
+                  )
+                }}
+              </p>
+              <p class="sell-price">
+                {{
+                  formatPrice(
+                    product.product_details[0]?.prices[0]?.sellingPrice ?? 1000
+                  )
+                }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="product-item">
+          <img
+            src="https://cdn.dribbble.com/users/2008722/screenshots/14987612/media/27566bddb4d08217c4407656144e8ac7.png?resize=400x0"
+            alt=""
+            width="80px"
+            height="100px"
+          />
+          <div class="content">
+            <p>Tên sản phẩm</p>
+            <div class="price">
+              <p class="promotion-price">Giá khuyến mãi</p>
+              <p class="sell-price">Giá bán</p>
+            </div>
+          </div>
+        </div>
+        <div class="product-item">
+          <img
+            src="https://cdn.dribbble.com/users/2008722/screenshots/14987612/media/27566bddb4d08217c4407656144e8ac7.png?resize=400x0"
+            alt=""
+            width="80px"
+            height="100px"
+          />
+          <div class="content">
+            <p>Tên sản phẩm</p>
+            <div class="price">
+              <p class="promotion-price">Giá khuyến mãi</p>
+              <p class="sell-price">Giá bán</p>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>
+<p-paginator
+  [totalRecords]="totalRecords"
+  [rows]="rowsPerPage"
+  [rowsPerPageOptions]="[10, 20, 30]"
+  (onPageChange)="onPageChange($event)"
+>
+</p-paginator>

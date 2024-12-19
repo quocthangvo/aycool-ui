@@ -39,14 +39,39 @@
         <p-editor formControlName="description" [style]="{ height: '320px' }" />
       </div>
       <div class="input-form">
-        <p>Images</p>
+        <p>Ảnh</p>
         <p-fileUpload
-          mode="basic"
-          chooseLabel="Choose"
-          chooseIcon="pi pi-upload"
+          name="demo[]"
+          url="https://www.primefaces.org/cdn/api/upload.php"
+          (onUpload)="onUpload($event)"
+          [multiple]="true"
           accept="image/*"
           maxFileSize="1000000"
-        />
+          [auto]="true"
+          chooseLabel="Choose"
+          cancelLabel="Cancel"
+        >
+          <ng-template pTemplate="content">
+            <ul *ngIf="uploadedFiles.length">
+              <li *ngFor="let file of uploadedFiles">
+                <img
+                  [src]="file.objectURL"
+                  [alt]="file.name"
+                  width="50px"
+                  height="50px"
+                />
+                {{ file.name }}
+                <!-- - {{ file.size }} bytes -->
+
+                <i
+                  class="pi pi-times"
+                  (click)="removeFile(file)"
+                  style="font-size: 1.5rem"
+                ></i>
+              </li>
+            </ul>
+          </ng-template>
+        </p-fileUpload>
       </div>
     </form>
   </div>

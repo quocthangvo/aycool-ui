@@ -1,0 +1,125 @@
+.product-filter{
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin: 20px 80px 80px 80px;
+    .filter{
+        width: 20%;
+        text-align: start;
+        .color{
+            margin-bottom: 2rem;
+            .color-form{
+                display: flex;
+                align-items: start;
+                flex-wrap: wrap; /* Cho phép các phần tử quấn xuống dòng */
+                gap: 1rem;
+            }
+            
+            .color-item{
+                margin-right: 1rem;
+                text-align: center;
+                // width: calc(33.33% - 1rem);
+                .p-checkbox-box{
+                    border-radius: 99px;
+                } 
+                p{
+                    margin: 0;
+                    margin-top: 10px;
+                }
+            }
+          
+        }
+        .size{
+            margin-bottom: 2rem;
+
+            .size-item{
+                display: flex;
+                margin-bottom: 1rem;
+            }
+        }
+        .material{
+            margin-bottom: 2rem;
+            .checkbox-group {
+                display: flex;
+                margin-bottom: 1rem;
+                flex-direction: column;
+                
+            }
+              
+        }
+    }
+
+    .product-search{
+        width: 80%;
+        .home-link{
+            text-decoration: none;
+            color: #999;
+        }
+        .category{
+            display: flex;
+            justify-content: start;
+            align-items: center;
+    
+            .category-item{
+                margin-right: 1rem;
+                img{
+                    width: 100px;
+                    height: 150px;
+                    border-radius: 10px;
+                }
+            }
+        }
+        .product{
+            .filter{
+                display: flex;
+                justify-content: end;
+                align-items: center;
+                width: 100%;
+                p{
+                    margin-right: 10px;
+                }
+            }
+            .product-content{
+                display: flex;
+                justify-content: start;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 1rem;
+                .product-item{
+                    margin-top: 1rem;
+                    width: calc(25% - 1rem);
+                    cursor: pointer;
+                    img{
+                        width: 100%;
+                        height: 320px;
+                        border-radius: 10px;
+                    }
+
+                   .content{
+                    margin-left: 10px;
+                    .price{
+                        display: flex;
+                        justify-content: start;
+                        align-items: center;
+
+                       
+                        .promotion-price{
+                            font-size: 18px;
+                            font-weight: bold;
+                            margin: 0;
+                           
+                        }
+                        .sell-price{
+                            text-decoration: line-through;
+                            color: #999;
+                            margin: 0;
+                            margin-left: 1rem;
+                        }
+                    }
+                   }
+                   
+                }
+            }
+        }
+    }
+}

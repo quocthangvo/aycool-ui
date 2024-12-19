@@ -1,0 +1,33 @@
+<div class="side-bar">
+  <div class="account">
+    <div class="avatar">
+      <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBgCPQmyPHrOWxnUvbmQIRwOipjW8woZUreA&s"
+        alt=""
+      />
+    </div>
+    <div>
+      <p>Tên người dùng</p>
+      <p>Chỉnh sửa hồ sơ</p>
+    </div>
+  </div>
+  <div class="dashboard-list">
+    <div
+      class="dashboard"
+      routerLink="/account"
+      routerLinkActive="active-link "
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <i class="pi pi-user" style="font-size: 1rem; color: blue"></i>Tài khoản
+      của tôi
+    </div>
+    <div
+      class="dashboard"
+      routerLink="/order"
+      routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <i class="pi pi-clipboard" style="font-size: 1rem; color: red"></i>Đơn mua
+    </div>
+  </div>
+</div>

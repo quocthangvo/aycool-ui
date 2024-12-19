@@ -31,13 +31,20 @@
       <div class="order-title">
         <p>ID đơn hàng: {{ order.order_code }}</p>
         <div class="flex justify-content-between">
+          <p class="status-payment">
+            <i class="pi pi-receipt mr-1"></i>{{ order.status_display_payment }}
+          </p>
           <p>Trạng thái</p>
           <p class="status">{{ order.statusDisplayName }}</p>
         </div>
       </div>
 
       <!-- Loop through the order details (products in the order) -->
-      <div class="order-content" *ngFor="let detail of order.order_details">
+      <div
+        class="order-content"
+        *ngFor="let detail of order.order_details"
+        [routerLink]="['/status', order.id]"
+      >
         <div class="flex justify-content-center align-items-center">
           <img
             *ngIf="
@@ -82,10 +89,20 @@
       </div>
 
       <div class="footer">
-        <p>Ngày giao hàng: {{ order.shippingDate | date : "short" }}</p>
+        <p>Ngày đặt hàng: {{ order.order_date }}</p>
         <div>
-          <p-button label="Đánh giá" severity="contrast"></p-button>
+          <!-- Chỉ hiển thị nút Đánh giá nếu trạng thái là 'DELIVERED' -->
           <p-button
+            *ngIf="order.status === 'DELIVERED' && !order.hasReviewed"
+            label="Đánh giá"
+            severity="contrast"
+            [routerLink]="['/comment', order.id]"
+            routerLinkActive="active"
+          ></p-button>
+
+          <!-- Chỉ hiển thị nút Mua lại nếu trạng thái là 'DELIVERED' -->
+          <p-button
+            *ngIf="order.status === 'DELIVERED'"
             label="Mua lại"
             [outlined]="true"
             severity="contrast"

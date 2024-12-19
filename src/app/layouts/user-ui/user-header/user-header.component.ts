@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, Input } from '@angular/core';
+import { Component, HostListener, Input, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { ImageModule } from 'primeng/image';
@@ -11,15 +11,17 @@ import { UserService } from '../../../services/user/user.service';
 import { CartService } from '../../../services/order/cart.service';
 import { SubCategoryService } from '../../../services/category/sub-category.service';
 import { CategoryService } from '../../../services/category/category.service';
+import { ButtonModule } from 'primeng/button';
 
 
 @Component({
   selector: 'app-user-header',
   standalone: true,
   imports: [InputTextModule, FormsModule, ImageModule,
-    RouterLink, CommonModule, RouterModule],
+    RouterLink, CommonModule, RouterModule, ButtonModule],
   templateUrl: './user-header.component.html',
-  styleUrl: './user-header.component.scss'
+  styleUrl: './user-header.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class UserHeaderComponent {
   userFullName: string | null = null;
@@ -131,4 +133,21 @@ export class UserHeaderComponent {
     }
 
   }
+
+  onSubCategoryClick(subCategoryId: number) {
+    this.router.navigate(['/product-filter', subCategoryId]); // Navigate with subcategoryId as a route parameter
+    console.log('Subcategory ID:', subCategoryId);
+  }
+
+  searchTerm: string = '';
+  onSearch() {
+    if (this.searchTerm.trim()) {
+      // If search term is not empty, navigate to the product-search page with the search query parameter
+      this.router.navigate(['/product-search'], { queryParams: { search: this.searchTerm } });
+    } else {
+      // If search term is empty, navigate to the product-search page without query parameters
+      this.router.navigate(['/product-search']);
+    }
+  }
+
 }

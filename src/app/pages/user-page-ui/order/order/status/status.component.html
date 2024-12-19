@@ -1,0 +1,201 @@
+<div class="user-status">
+  <div class="side-bar">
+    <app-side-bar />
+  </div>
+  <div class="order-status">
+    <div class="header">
+      <p style="cursor: pointer" (click)="goBack()">
+        <i class="pi pi-angle-left"></i>Trở lại
+      </p>
+      <div>
+        <div class="header-right">
+          <p style="cursor: pointer">
+            <strong> Mã đơn hàng: </strong> {{ order?.order_code }}
+          </p>
+          <p class="status">{{ order?.statusDisplayName }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-status">
+      <!-- <div class="delivery-status">
+        <div
+          class="circle"
+          [ngClass]="{
+            active: getCurrentStatus() >= 1,
+            inactive: getCurrentStatus() < 1
+          }"
+        >
+          <div class="icon">
+            <i class="pi pi-receipt"></i>
+          </div>
+          <p>Đơn hàng đã đặt</p>
+          <p>{{ getTimestamps()[0] }}</p>
+        </div>
+
+        <div
+          class="circle"
+          [ngClass]="{
+            active: getCurrentStatus() >= 2,
+            inactive: getCurrentStatus() < 2
+          }"
+        >
+          <div class="icon">
+            <i class="pi pi-money-bill"></i>
+          </div>
+          <p>Đang xử lý</p>
+          <p>{{ getTimestamps()[1] }}</p>
+        </div>
+
+        <div
+          class="circle"
+          [ngClass]="{
+            active: getCurrentStatus() >= 3,
+            inactive: getCurrentStatus() < 3
+          }"
+        >
+          <div class="icon">
+            <i class="pi pi-truck"></i>
+          </div>
+          <p>Đang giao hàng</p>
+          <p>{{ getTimestamps()[2] }}</p>
+        </div>
+
+        <div
+          class="circle"
+          [ngClass]="{
+            active: getCurrentStatus() >= 4,
+            inactive: getCurrentStatus() < 4
+          }"
+        >
+          <div class="icon">
+            <i class="pi pi-download"></i>
+          </div>
+          <p>Đã nhận hàng</p>
+          <p>{{ getTimestamps()[3] }}</p>
+        </div>
+
+        <div
+          class="circle"
+          [ngClass]="{
+            active: getCurrentStatus() === 5,
+            inactive: getCurrentStatus() < 5
+          }"
+        >
+          <div class="icon">
+            <i class="pi pi-times"></i>
+          </div>
+          <p>Đã hủy</p>
+          <p>{{ getTimestamps()[4] }}</p>
+        </div>
+      </div> -->
+
+      <div *ngIf="order?.status === 'CANCELLED'" class="cancelled-status">
+        <p>Đơn hàng đã hủy</p>
+        <p *ngIf="order?.order_date" class="date">
+          Vào
+          {{ order.cancelled_date | date : "HH:mm MM/dd/yyyy " }}
+        </p>
+      </div>
+
+      <app-delivery-status
+        *ngIf="order?.status !== 'CANCELLED'"
+        [status]="order?.status"
+        [timestamps]="{
+          PENDING: order?.timestamps?.PENDING || '',
+          PROCESSING: order?.timestamps?.PROCESSING || '',
+          SHIPPED: order?.timestamps?.SHIPPED || '',
+          DELIVERED: order?.timestamps?.DELIVERED || '',
+          CANCELLED: order?.timestamps?.CANCELLED || ''
+        }"
+      ></app-delivery-status>
+
+      <div class="status-end">
+        <p-button
+          label="Đánh giá"
+          severity="contrast"
+          class="mr-3"
+          [routerLink]="['/comment', order.id]"
+        />
+        <p-button label="Mua lại" [outlined]="true" severity="contrast" />
+      </div>
+    </div>
+
+    <div class="addresses">
+      <h2>Địa chỉ nhận hàng</h2>
+      <div class="footer-address">
+        <div class="address-left" *ngIf="order?.address">
+          <p>{{ order.address.fullName }}</p>
+          <p>{{ order.address.phoneNumber }}</p>
+          <p>
+            {{ order.address.streetName }}, {{ order.address.ward }},
+            {{ order.address.district }}, {{ order.address.city }}
+          </p>
+        </div>
+        <div class="address-right">
+          <div class="status">
+            <p *ngIf="order?.order_date">
+              <i class="pi pi-check-circle"></i
+              >{{ formatDate(order.order_date) }} : Ngày đặt hàng
+            </p>
+            <p *ngIf="order?.processing_date">
+              <i class="pi pi-check-circle"></i>
+              {{ formatDate(order.processing_date) }} : Đang xử lý
+            </p>
+
+            <p *ngIf="order?.shipping_date">
+              <i class="pi pi-check-circle"></i>
+              {{ formatDate(order.shipping_date) }} : Đang giao hàng
+            </p>
+
+            <p *ngIf="order?.delivered_date">
+              <i class="pi pi-check-circle"></i>
+              {{ formatDate(order.delivered_date) }} : Đã giao hàng
+            </p>
+
+            <p *ngIf="order?.cancelled_date">
+              <i class="pi pi-check-circle"></i>
+              {{ formatDate(order.cancelled_date) }} : Đã hủy
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-status" *ngIf="order">
+      <div class="product-content" *ngFor="let detail of order.order_details">
+        <img
+          *ngIf="detail?.image_url && detail.image_url.length > 0; else noImage"
+          [src]="
+            'http://localhost:8080/uploads/' + detail.image_url[0]?.imageUrl
+          "
+          alt="Ảnh sản phẩm"
+          width="100px"
+        />
+        <ng-template #noImage>
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
+            alt=""
+          />
+        </ng-template>
+        <div class="product-detail">
+          <p>{{ detail.product_name }}</p>
+          <p>Phân loại: {{ detail.color }} / {{ detail.size }}</p>
+          <p>x{{ detail.quantity }}</p>
+        </div>
+        <div class="price">
+          <p class="sell-price">
+            {{ formatPrice(detail.price[0].sellingPrice) }}
+          </p>
+          <p class="promotion-price">
+            {{ formatPrice(detail.price[0].promotionPrice) }}
+          </p>
+        </div>
+      </div>
+      <div class="total-money">
+        <p>Thành tiền</p>
+        <p class="money">{{ formatPrice(order.total_money) }}</p>
+      </div>
+    </div>
+  </div>
+</div>

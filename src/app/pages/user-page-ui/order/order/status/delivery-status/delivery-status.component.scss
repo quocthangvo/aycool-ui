@@ -1,0 +1,69 @@
+$active-color: #2dc258;
+$inactive-color: #ddd;
+
+.delivery-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  padding: 2rem 0;
+  position: relative;
+  
+  .circle {
+    width: 150px;
+    text-align: center;
+    position: relative;
+
+    .icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 5px solid $inactive-color;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+      color: $inactive-color;
+
+      i {
+        font-size: 1.5rem;
+      }
+    }
+
+    p {
+      text-align: center;
+      font-size: 14px;
+    }
+
+    &.active {
+      .icon {
+        border-color: $active-color;
+        color: $active-color;
+      }
+    }
+
+    &.inactive {
+      .icon {
+        border-color: $inactive-color;
+        color: $inactive-color;
+      }
+    }
+
+    /* Add lines between circles */
+    &:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 27%;
+      left: 73%;
+      width: 100%;
+      height: 3px;
+      background-color: $inactive-color;
+    //   transform: translateY(-50%);
+    }
+
+    &.active::after {
+      background-color: $active-color; /* Line color for active state */
+    }
+
+     
+  }
+}
