@@ -18,13 +18,15 @@ import { ProductDetailListComponent } from "../../product-detail/product-detail-
 import { ProductDetailService } from '../../../../services/product/product-detail.service';
 import { PaginatorModule } from 'primeng/paginator';
 import { MaterialService } from '../../../../services/attribute/material.service';
+import { ReviewComponent } from "../../../user-page-ui/product/review/review.component";
+import { ReplyComponent } from "../reply/reply.component";
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
   imports: [TableModule, TagModule, RatingModule, CommonModule, ImageModule, ButtonModule,
     ConfirmDialogModule, DialogModule, InputTextModule, FileUploadModule, FormsModule,
-    RouterLink, DropdownModule, ProductDetailListComponent, PaginatorModule],
+    RouterLink, DropdownModule, ProductDetailListComponent, PaginatorModule, ReplyComponent],
   providers: [ConfirmationService],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss',
@@ -157,14 +159,19 @@ export class ProductListComponent implements OnInit {
     );
   }
 
-  showProductDialog = false;
-  selectedProductId: number | undefined;
-  // Mở dialog với thông tin chi tiết sản phẩm
+  showDialog = false;
+  showReviewDialog = false;
+  selectedProductId: number | null = null;
+
   // Mở dialog với thông tin chi tiết sản phẩm
   openDialog(productId: number) {
     this.selectedProductId = productId;
     console.log("id", productId);
-    this.showProductDialog = true;
+    this.showDialog = true;
   }
 
+  onReview(productId: number): void {
+    this.selectedProductId = productId; // Lưu lại ID sản phẩm
+    this.showReviewDialog = true; // Hiển thị dialog
+  }
 }

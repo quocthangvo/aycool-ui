@@ -27,7 +27,7 @@ import { UpdateProductDetailComponent } from "../update-product-detail/update-pr
 export class ProductDetailListComponent implements OnChanges {
 
   @Input() display: boolean = false; // Nhận trạng thái hiển thị từ Parent
-  @Input() productId: number | undefined; //nhận id product
+  @Input() productId: number | null = null; //nhận id product
   @Output() close = new EventEmitter<void>(); // Phát sự kiện đóng
 
   productDetailList: any[] = [];

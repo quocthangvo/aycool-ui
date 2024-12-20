@@ -112,6 +112,12 @@
               (click)="onModelUpdate(products.id)"
             >
             </i>
+            <i
+              class="pi pi-comment"
+              style="font-size: 1.5rem"
+              (click)="onReview(products.id)"
+            >
+            </i>
           </div>
         </td>
       </tr>
@@ -130,60 +136,14 @@
   </p-paginator>
 
   <app-product-detail-list
-    [display]="showProductDialog"
+    [display]="showDialog"
     [productId]="selectedProductId"
-    (close)="showProductDialog = false"
+    (close)="showDialog = false"
   ></app-product-detail-list>
-
-  <!-- <p-dialog
-    header="Cập nhật sản phẩm"
-    [(visible)]="displayUpdateDialog"
-    [modal]="true"
-    [closable]="false"
+  <app-reply
+    [display]="showReviewDialog"
+    [productId]="selectedProductId"
+    (close)="showReviewDialog = false"
   >
-    <div class="p-fluid">
-      <div class="p-field">
-        <p>Tên danh muc</p>
-        <input pInputText [(ngModel)]="selectedProduct.sub_category_name" />
-      </div>
-      <div class="p-field">
-        <p>Mã SKU</p>
-        <input pInputText [(ngModel)]="selectedProduct.sku" />
-      </div>
-      <div class="p-field">
-        <p>Tên sản phẩm</p>
-        <input pInputText [(ngModel)]="selectedProduct.name" />
-      </div>
-      <div class="p-field">
-        <p>Chất liệu</p>
-        <input pInputText [(ngModel)]="selectedProduct.material_name" />
-      </div>
-      <div class="p-field">
-        <p>Images</p>
-        <p-fileUpload
-          mode="basic"
-          chooseLabel="Choose"
-          chooseIcon="pi pi-upload"
-          accept="image/*"
-          maxFileSize="1000000"
-        />
-      </div>
-    </div>
-    <p-footer>
-      <button
-        pButton
-        label="Cancel"
-        icon="pi pi-times"
-        class="p-button-text"
-        (click)="cancelUpdate()"
-      ></button>
-      <button
-        pButton
-        label="Save"
-        icon="pi pi-check"
-        class="p-button-primary"
-        (click)="saveProduct()"
-      ></button>
-    </p-footer>
-  </p-dialog> -->
+  </app-reply>
 </div>

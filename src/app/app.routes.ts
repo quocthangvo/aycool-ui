@@ -174,7 +174,6 @@ export const routes: Routes = [
             {
                 path: 'comment/:orderId',
                 component: CommentComponent,
-
             }
 
 

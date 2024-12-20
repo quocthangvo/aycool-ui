@@ -46,11 +46,25 @@ export class ReviewService {
     }
 
     deleteReviewById(id: number) {
-        return this.http.delete(`${this.apiUrl}/${id}`, { headers: this.getAuthHeaders() });
+        return this.http.delete(`${this.apiUrl}/delete/${id}`, { headers: this.getAuthHeaders() });
     }
+
+    statusReview(id: number): Observable<any> {
+        const headers = this.getAuthHeaders();  // Lấy headers có chứa token
+        return this.http.put(`${this.apiUrl}/status/${id}`, null, { headers });
+    }
+
 
     hasReviewed(orderId: number, userId: number): Observable<boolean> {
         return this.http.get<boolean>(`${this.apiUrl}/hasReviewed/${orderId}/${userId}`);
     }
+
+    getAllReviews(productId: number, page: number, limit: number): Observable<any> {
+        const params = { page: page.toString(), limit: limit.toString() };
+        const options = { headers: this.createHeaders(), params };
+
+        return this.http.get(`${this.apiUrl}/all/${productId}`, options);
+    }
+
 
 }

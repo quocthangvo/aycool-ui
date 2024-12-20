@@ -1,0 +1,97 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<div>
+  <p-dialog
+    [(visible)]="display"
+    [modal]="true"
+    [closable]="false"
+    [draggable]="false"
+    [resizable]="false"
+    (onHide)="cancel()"
+    class="detail-dialog"
+  >
+    <div class="dialog-header">
+      <h2>Đánh giá sản phẩm</h2>
+      <div class="cancel-button" (click)="cancel()">
+        <i class="pi pi-times" style="font-size: 2rem"></i>
+      </div>
+    </div>
+
+    <!-- Conditional "No Reviews" Message -->
+    <div *ngIf="reviews.length === 0" class="not-data">
+      <p>Không có đánh giá nào.</p>
+    </div>
+    <!-- tên -->
+    <div *ngIf="reviews.length > 0" class="review-summary">
+      <p><strong>Sản phẩm: </strong>{{ reviews[0].product_name }}</p>
+      <p class="flex">
+        <strong>Tổng số sao: </strong>{{ averageRating | number : "1.1-1" }}
+        <i class="pi pi-star-fill" style="color: gold; font-size: 1rem"></i>
+      </p>
+    </div>
+    <!-- Reviews Table -->
+    <p-table
+      *ngIf="reviews.length > 0"
+      [value]="reviews"
+      responsiveLayout="stack"
+      [breakpoint]="'960px'"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      class="reply-table"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Id</th>
+          <th>Số sao</th>
+          <th>Nội dung đánh giá</th>
+          <th>Thời gian</th>
+          <th>Trạng thái</th>
+          <th>Thao tác</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-review let-i="rowIndex">
+        <tr>
+          <td>{{ i + 1 }}</td>
+          <td>
+            <!-- Display stars based on rating -->
+            <ng-container
+              *ngFor="let star of [].constructor(5); let index = index"
+            >
+              <i
+                *ngIf="index < review.rating"
+                class="pi pi-star-fill"
+                style="color: gold; font-size: 1rem"
+              ></i>
+              <i
+                *ngIf="index >= review.rating"
+                class="pi pi-star"
+                style="color: lightgray; font-size: 1rem"
+              ></i>
+            </ng-container>
+          </td>
+          <td class="comment">{{ review.comment }}</td>
+          <td>{{ review.updated_at | date : "dd/MM/yyyy HH:mm" }}</td>
+          <td>{{ review.status ? "Hiển thị" : "Ẩn" }}</td>
+
+          <td>
+            <div class="action">
+              <i
+                class="pi pi-trash"
+                style="color: red; cursor: pointer"
+                (click)="deleteReview($event, review.id)"
+              ></i>
+              <p-button
+                (click)="statusReview($event, review.id)"
+                class="btn btn-warning"
+                severity="secondary"
+              >
+                Ẩn
+              </p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-dialog>
+</div>
