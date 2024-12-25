@@ -1,0 +1,68 @@
+<p-confirmDialog />
+<div class="table">
+  <p-table
+    [value]="couponList"
+    responsiveLayout="stack"
+    [breakpoint]="'960px'"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="caption">
+      <div class="caption">
+        <h1>Mã giảm giá</h1>
+        <p-button severity="contrast" routerLink="/admin/create-coupon">
+          <i
+            class="pi pi-plus"
+            style="font-size: 1rem; margin-right: 0.5rem"
+          ></i>
+          Thêm giả giảm giá
+        </p-button>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Id</th>
+        <th>Mã</th>
+        <th>Giá trị</th>
+        <th>Kiểu giảm giá</th>
+        <th>Giá trị đơn hàng</th>
+        <th>Ngày bắt đầu</th>
+        <th>Ngày kết thúc</th>
+        <th>Số lượng</th>
+        <th>Trạng thái</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-coupons let-i="rowIndex">
+      <tr>
+        <td>{{ i + 1 }}</td>
+        <td>{{ coupons.code }}</td>
+        <td>{{ coupons.discountValue | number : "1.0-0" }}</td>
+        <td>{{ coupons.discountDescription }}</td>
+        <td>{{ formatPrice(coupons.minOrderValue) }}</td>
+        <td>{{ coupons.startDate | date : "dd/MM/yyyy" }}</td>
+        <td>{{ coupons.endDate | date : "dd/MM/yyyy" }}</td>
+        <td>{{ coupons.usageLimit }}</td>
+        <td>{{ coupons.status ? "Kích hoạt" : "Vô hiệu" }}</td>
+
+        <td>
+          <div class="actions">
+            <i
+              class="pi pi-trash"
+              style="font-size: 1.5rem; color: red"
+              (click)="onDelete(coupons.id, $event)"
+            >
+            </i>
+
+            <i
+              class="pi pi-pencil"
+              style="font-size: 1.5rem"
+              (click)="updateModel(coupons.id)"
+            >
+            </i>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

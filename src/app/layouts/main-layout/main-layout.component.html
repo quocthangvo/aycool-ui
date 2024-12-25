@@ -86,6 +86,15 @@
         <i class="pi pi-money-bill"></i>
         <p>Giá bán</p>
       </div>
+
+      <div
+        class="list"
+        (click)="couponList()"
+        [class.selected]="selectedIndex === 9"
+      >
+        <i class="pi pi-ticket"></i>
+        <p>Mã giảm giá</p>
+      </div>
     </div>
   </div>
 

@@ -94,4 +94,7 @@ export class MainLayoutComponent {
   priceList() {
     this.onSelect(8, '/admin/price')
   }
+  couponList() {
+    this.onSelect(9, '/admin/coupon')
+  }
 }

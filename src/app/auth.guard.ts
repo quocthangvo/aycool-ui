@@ -16,6 +16,7 @@ export class AuthGuard implements CanActivate {
             return true;
         } else {
             // this.router.navigateByUrl('home'); // Chuyển hướng về login nếu không có token
+
             return false;
         }
     }

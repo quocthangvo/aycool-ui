@@ -1,0 +1,32 @@
+.coupon{
+    margin: 20px 40px; 
+    .create-button {
+        margin-top: 20px;
+        display: flex;
+        justify-content: end;
+    }
+    .coupon-form{
+        max-width: 800px;
+        border-radius: 10px;
+        border: 1px solid var(--border-color);
+        padding: 1rem;
+        margin-top: 1rem;
+        .p-inputtext{
+            width: 100%;
+        }
+        .discount{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            .input-form{
+                width: 48%;
+                .p-inputtext{
+                    width: 100%;
+                }
+            }
+           
+        }
+    }
+}
+

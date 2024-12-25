@@ -167,6 +167,78 @@
   </div>
 </div>
 
+<div class="coupon">
+  <div></div>
+  <div class="coupon-right">
+    <div class="voucher">
+      <div class="icon">
+        <i class="pi pi-ticket" style="font-size: 1.5rem"></i>
+        <p>Voucher của shop</p>
+      </div>
+      <p (click)="openVoucherDialog()" class="click">Chọn voucher</p>
+    </div>
+    <div class="discount-item">
+      <p>Đã chọn: {{ appliedVoucher?.code || "Chưa chọn mã" }}</p>
+      <p *ngIf="appliedVoucher">
+        Giảm: {{ appliedVoucher.discountValue | number : "1.0-0" }}
+        {{ appliedVoucher.discountType === "PERCENT" ? "%" : "VND" }}
+      </p>
+    </div>
+  </div>
+</div>
+
+<p-dialog
+  header="Mã giảm giá"
+  [modal]="true"
+  [(visible)]="displayDialog"
+  [style]="{ width: '35rem' }"
+>
+  <div class="select-voucher">
+    <!-- Lặp qua danh sách voucher -->
+    <div *ngIf="vouchers && vouchers.length > 0; else noVoucher">
+      <div *ngFor="let voucher of vouchers" class="voucher-item">
+        <div class="code">
+          <strong>{{ voucher.code }}</strong>
+        </div>
+        <div class="content">
+          <p>{{ voucher.description }}</p>
+          <p>Số lượng: {{ voucher.usageLimit }}</p>
+          <p>
+            Sắp hết hạn:
+            {{ getExpirationDate(voucher.startDate, voucher.endDate) }}
+          </p>
+        </div>
+        <div class="radio-button">
+          <input
+            type="radio"
+            name="voucher"
+            [value]="voucher"
+            [(ngModel)]="selectedVoucher"
+            (click)="toggleVoucher(voucher)"
+          />
+        </div>
+      </div>
+      <div class="button">
+        <p-button
+          label="Trở lại"
+          severity="secondary"
+          (onClick)="closeDialog()"
+        ></p-button>
+        <p-button
+          label="Áp dụng"
+          (onClick)="applyVoucher()"
+          severity="primary"
+        ></p-button>
+      </div>
+    </div>
+
+    <!-- Hiển thị thông báo nếu không có voucher -->
+    <ng-template #noVoucher>
+      <p>Không có mã giảm giá nào hiện tại.</p>
+    </ng-template>
+  </div>
+</p-dialog>
+
 <div class="order">
   <div class="payment-content">
     <div class="flex justify-content-end align-items-center">
@@ -175,6 +247,7 @@
     </div>
     <div class="flex justify-content-end align-items-end">
       <p>Thành tiền:</p>
+
       <p>{{ formatPrice(totalPrice) }}</p>
     </div>
   </div>

@@ -46,8 +46,8 @@
         <td>
           {{ prices.product_detail_name }}_{{ prices.color }}_{{ prices.size }}
         </td>
-        <td>{{ prices.selling_price }}</td>
-        <td>{{ prices.promotion_price }}</td>
+        <td>{{ formatPrice(prices.selling_price) }}</td>
+        <td>{{ formatPrice(prices.promotion_price) }}</td>
         <td>{{ prices.start_date }}</td>
         <td>{{ prices.end_date }}</td>
 

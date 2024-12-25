@@ -1,0 +1,110 @@
+<div class="coupon">
+  <form [formGroup]="subCouponForm" (ngSubmit)="updateCoupon()">
+    <h1>Cập nhật mã giảm giá</h1>
+
+    <div class="coupon-form">
+      <div class="discount">
+        <div class="input-form">
+          <p>Mã</p>
+          <input pInputText type="text" formControlName="code" />
+          <div *ngIf="subCouponForm.get('code')?.invalid && submit">
+            <small class="error-message">Mã giảm giá không được để trống</small>
+          </div>
+        </div>
+        <div class="input-form">
+          <p>Số lượng</p>
+          <input pInputText type="text" formControlName="usageLimit" />
+          <div *ngIf="subCouponForm.get('usageLimit')?.invalid && submit">
+            <small class="error-message">Số lượng phải lớn hơn 0</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-form">
+        <p>Mô tả</p>
+        <textarea
+          pInputText
+          rows="2"
+          formControlName="description"
+          placeholder="Nhập mô tả..."
+        ></textarea>
+        <div *ngIf="subCouponForm.get('description')?.invalid && submit">
+          <small class="error-message">Mô tả không được để trống</small>
+        </div>
+      </div>
+
+      <div class="discount">
+        <div class="input-form">
+          <p>Kiểu giảm giá</p>
+          <select pInputText formControlName="discountType">
+            <option value="PERCENT">%</option>
+            <option value="FIXED_AMOUNT">VND</option>
+          </select>
+          <div *ngIf="subCouponForm.get('discountType')?.invalid && submit">
+            <small class="error-message"
+              >Kiểu giảm giá không được để trống</small
+            >
+          </div>
+        </div>
+
+        <div class="input-form">
+          <p>Giá trị</p>
+          <input pInputText type="text" formControlName="discountValue" />
+          <div *ngIf="subCouponForm.get('discountValue')?.invalid && submit">
+            <small class="error-message">Giá trị phải lớn hơn 0</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="discount">
+        <div class="input-form">
+          <p>Ngày bắt đầu</p>
+          <input pInputText type="date" formControlName="startDate" />
+          <div *ngIf="subCouponForm.get('startDate')?.invalid && submit">
+            <small class="error-message"
+              >Ngày bắt đầu không được để trống</small
+            >
+          </div>
+        </div>
+        <div class="input-form">
+          <p>Ngày kết thúc</p>
+          <input pInputText type="date" formControlName="endDate" />
+          <div *ngIf="subCouponForm.get('endDate')?.invalid && submit">
+            <small class="error-message"
+              >Ngày kết thúc không được để trống</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="input-form">
+        <p>Giá trị đơn hàng</p>
+        <input pInputText type="text" formControlName="minOrderValue" />
+        <div *ngIf="subCouponForm.get('minOrderValue')?.invalid && submit">
+          <small class="error-message">Giá trị đơn hàng phải lớn hơn 0</small>
+        </div>
+      </div>
+
+      <div class="input-form">
+        <p>Trạng thái</p>
+        <select pInputText formControlName="status">
+          <option [value]="true">Kích hoạt</option>
+          <option [value]="false">Hủy kích hoạt</option>
+        </select>
+        <div *ngIf="subCouponForm.get('status')?.invalid && submit">
+          <small class="error-message">Trạng thái không được để trống</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="create-button">
+      <p-button
+        label="Hủy"
+        (click)="cancel()"
+        [text]="true"
+        [plain]="true"
+      ></p-button>
+      <p-button label="Lưu" type="submit" class="submit"></p-button>
+    </div>
+  </form>
+</div>

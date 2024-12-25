@@ -33,6 +33,9 @@ import { ProductSearchComponent } from './pages/user-page-ui/product/product-sea
 import { EvaluateComponent } from './pages/user-page-ui/product/evaluate/evaluate.component';
 import { ReviewComponent } from './pages/user-page-ui/product/review/review.component';
 import { CommentComponent } from './pages/user-page-ui/order/comment/comment.component';
+import { CouponListComponent } from './pages/coupon/coupon-list/coupon-list.component';
+import { CreateCouponComponent } from './pages/coupon/create-coupon/create-coupon.component';
+import { UpdateCouponComponent } from './pages/coupon/update-coupon/update-coupon.component';
 
 
 
@@ -112,7 +115,19 @@ export const routes: Routes = [
             {
                 path: 'create-price',
                 component: CreatePriceComponent
-            }
+            },
+            {
+                path: 'coupon',
+                component: CouponListComponent
+            },
+            {
+                path: 'create-coupon',
+                component: CreateCouponComponent
+            },
+            {
+                path: 'update-coupon/:id',
+                component: UpdateCouponComponent
+            },
         ]
     },
     {

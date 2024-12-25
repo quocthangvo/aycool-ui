@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: start;
-    margin: 80px;
+    margin: 40px 80px;
 
     .address {
         width: 60%;
@@ -168,6 +168,75 @@
 
     }
 
+}
+
+.coupon{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    margin-bottom: 80px;
+   
+    .coupon-right{
+        width: 40%;
+        border: 1px solid var(--grey-dropdown-color);
+        margin-right: 80px;
+        .voucher{
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        
+            .icon{
+                display: flex;
+                justify-content: start;
+                align-items: center;
+                margin-right: 5rem;
+                i{
+                    margin-right: 5px;
+                    color: red;
+                }
+            }
+            .click{
+                cursor: pointer;
+                color: blue;
+                font-weight: bold;
+                transition: color 0.3s ease, font-weight 0.3s ease;
+            }
+           
+            
+        }
+        .discount-item{
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+           
+        }
+    }
+    
+}
+.select-voucher{
+ 
+    .voucher-item{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--grey-dropdown-color);
+        padding: 10px;
+        .content{
+            margin: 0 10px;
+            p{
+                width: 250px;
+                margin:5px 0;
+            }
+        }
+        .radio-button{
+            input{
+                width: 20px;
+                height: 20px;   
+            }
+        }
+    }
 }
 
 .order {

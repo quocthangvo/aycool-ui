@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
       this.authService.onLogin(loginData).subscribe({
         next: (res: any) => {
           if (res.data && res.data.token) {
-            this.tokenService.setToken(res.data.token); //lưu token
+            this.tokenService.setToken(res.data.token); // Lưu token và thời gian hết hạn
 
             const userInfo = res.data.user;
             this.tokenService.setUserInfo(userInfo);
@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit {
             if (role === 'ADMIN') {
               this.router.navigateByUrl('/admin'); // Đường dẫn tới `MainLayoutComponent`
             } else if (role === 'USER') {
-              this.router.navigateByUrl('/'); // Đường dẫn tới `UserLayoutComponent`
+              this.router.navigateByUrl('/home'); // Đường dẫn tới `UserLayoutComponent`
             }
 
 

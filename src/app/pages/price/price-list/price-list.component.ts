@@ -73,4 +73,7 @@ export class PriceListComponent implements OnInit {
     // this.sortOrder = selectElement.value;  // Cập nhật giá trị sortOrder
     this.loadPrices(this.currentPage, this.rowsPerPage);
   }
+  formatPrice(price: number): string {
+    return price ? price.toLocaleString('vi-VN') + 'đ' : '';
+  }
 }
