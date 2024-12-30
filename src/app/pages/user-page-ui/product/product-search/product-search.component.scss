@@ -15,11 +15,13 @@
         }
     }
     .product{
+        margin-bottom: 1rem;
         .filter{
             display: flex;
             justify-content: end;
             align-items: center;
             width: 100%;
+            
             p{
             margin-right: 1rem;
 
@@ -31,10 +33,13 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 1rem;
+            
             .product-item{
                 margin-top: 1rem;
                 width: calc(20% - 1rem);
                 cursor: pointer;
+                height: 350px;
+                margin-bottom: 6rem;
                 img{
                     width: 100%;
                     height: 350px;
@@ -43,6 +48,13 @@
 
                .content{
                 margin-left: 10px;
+                .product_name{
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2; /* Giới hạn hiển thị chỉ 2 dòng */
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
                 .price{
                     display: flex;
                     justify-content: start;
@@ -66,5 +78,8 @@
                
             }
         }
+    }
+    .p-paginator{
+        
     }
 }

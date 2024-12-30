@@ -12,12 +12,14 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { RouterLink } from '@angular/router';
 import { PaginatorModule } from 'primeng/paginator';
 import { TreeSelectModule } from 'primeng/treeselect';
+import { ImageModule } from 'primeng/image';
 
 @Component({
   selector: 'app-price-list',
   standalone: true,
   imports: [TableModule, CommonModule, ButtonModule,
-    ConfirmDialogModule, DialogModule, InputTextModule, FormsModule, CreatePriceComponent, RouterLink, PaginatorModule, TreeSelectModule],
+    ConfirmDialogModule, DialogModule, InputTextModule, FormsModule,
+    RouterLink, PaginatorModule, TreeSelectModule, ImageModule],
   providers: [ConfirmationService],
   templateUrl: './price-list.component.html',
   styleUrl: './price-list.component.scss',
@@ -36,7 +38,7 @@ export class PriceListComponent implements OnInit {
   rowsPerPage: number = 10; // Số đơn hàng mỗi trang
   currentPage: number = 0; // Trang hiện tại
 
-  sortOrder: string = "";
+  sortOrder: string = ""; // Sắp xếp theo ngày tạo
   // Các tùy chọn sắp xếp
   sortOptions: any[] = [
     { label: 'Giá: Mặc định', value: '' },

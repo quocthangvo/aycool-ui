@@ -64,9 +64,9 @@
         <p>Tên</p>
         <input pInputText id="name" [(ngModel)]="selectedSubCategory.name" />
       </div>
-      <p *ngIf="selectedSubCategory?.category">
+      <p *ngIf="selectedSubCategory">
         <strong>Danh mục hiện tại: </strong>
-        {{ selectedSubCategory.category.name }}
+        {{ selectedSubCategory.category_name }}
         <!-- Hiển thị tên danh mục hiện tại -->
       </p>
       <div class="select-form">
@@ -75,8 +75,10 @@
           placeholder="Chọn"
           [options]="categoryNodes"
           appendTo="body"
-          (onNodeSelect)="onCategorySelect($event)"
+          optionLabel="category_name"
+          optionValue="id"
           [(ngModel)]="selectedSubCategory.category_id"
+          (onChange)="onCategorySelect($event)"
         />
       </div>
     </div>

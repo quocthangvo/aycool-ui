@@ -5,6 +5,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { OrderService } from '../../../../../services/order/order.service';
 import { CommonModule, DatePipe, Location } from '@angular/common';
 import { DeliveryStatusComponent } from "./delivery-status/delivery-status.component";
+import { ReviewService } from '../../../../../services/review/review.service';
 
 @Component({
   selector: 'app-status',
@@ -22,7 +23,8 @@ export class StatusComponent implements OnInit {
     private orderService: OrderService,
     private route: ActivatedRoute,
     private location: Location,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private reviewService: ReviewService
   ) {
 
   }
@@ -41,6 +43,16 @@ export class StatusComponent implements OnInit {
     this.orderService.getOrderById(id).subscribe(
       (res) => {
         this.order = res.data; // Gán dữ liệu đơn hàng
+        // Kiểm tra nếu chưa có thuộc tính hasReviewed, có thể gán giá trị mặc định
+        const userId = this.order.user_id; // Giả sử `userId` có trong đơn hàng
+        if (userId) {
+          this.checkIfReviewed(userId); // Kiểm tra đơn hàng đã được đánh giá chưa
+        }
+
+        // Kiểm tra nếu chưa có thuộc tính hasReviewed, có thể gán giá trị mặc định
+        if (this.order && this.order.hasReviewed === undefined) {
+          this.order.hasReviewed = false;  // Mặc định là chưa đánh giá
+        }
       },
       (error) => {
         console.error('Lỗi khi lấy thông tin đơn hàng:', error);
@@ -83,5 +95,18 @@ export class StatusComponent implements OnInit {
   //   if (!date) return '';
   //   return this.datePipe.transform(date, 'dd/MM/yyyy HH:mm') || '';
   // }
+  // Kiểm tra xem đơn hàng đã đánh giá chưa
+  checkIfReviewed(userId: number): void {
+    this.reviewService.hasReviewed(this.order.id, userId).subscribe(
+      (reviewed) => {
+        this.order.hasReviewed = reviewed;  // Cập nhật trạng thái đã đánh giá cho đơn hàng
+        console.log(`Order ID: ${this.order.id}, Has Reviewed: ${this.order.hasReviewed}`);
+      },
+      (error) => {
+        console.error('Lỗi khi kiểm tra đánh giá:', error);
+      }
+    );
+  }
+
 
 }

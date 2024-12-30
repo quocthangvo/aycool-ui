@@ -38,7 +38,7 @@ export class ProductFilterComponent implements OnInit, OnDestroy {
   products: any[] = [];
   private sub: any;
 
-  totalRecords: number = 0; // Tổng số đơn hàng
+  totalRecords: number = 10; // Tổng số đơn hàng
   totalPages: number = 0; // Tổng số trang
   rowsPerPage: number = 10; // Số đơn hàng mỗi trang
   currentPage: number = 0; // Trang hiện tại
@@ -55,10 +55,14 @@ export class ProductFilterComponent implements OnInit, OnDestroy {
     private router: Router,
   ) {
     this.filterForm = this.fb.group({
-      color: new FormControl(null), // Danh sách màu sắc
-      size: new FormControl([]), // Danh sách kích thước
-      material: new FormControl([]), // Danh sách chất liệu
+      color: [null],
+      size: [[]],  // Mảng trống cho kích thước
+      material: [[]]  // Mảng trống cho chất liệu
     });
+  }
+
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe(); // Hủy đăng ký nếu có
   }
 
   ngOnInit(): void {
@@ -70,39 +74,82 @@ export class ProductFilterComponent implements OnInit, OnDestroy {
     this.sub = this.route.paramMap.subscribe((params) => {
       this.subCategoryId = +params.get('subCategoryId')!;
       console.log('Subcategory ID:', this.subCategoryId);
-      this.loadProducts(null, [], []);  // Tải lại sản phẩm khi subCategoryId thay đổi
+      this.loadProducts();  // Tải lại sản phẩm khi subCategoryId thay đổi
     });
 
 
+
+    // Theo dõi sự thay đổi trong filter form và tải lại sản phẩm khi có thay đổi
+    this.filterForm.valueChanges.subscribe(() => {
+      this.loadProducts();
+    });
+
+    // Lấy tham số lọc từ URL nếu có
+    // this.route.queryParamMap.subscribe(params => {
+    //   const colorId = params.get('color_id');
+    //   const sizeIds = params.get('size_ids') ? params.get('size_ids')?.split(',') : [];
+    //   const materialIds = params.get('material_ids') ? params.get('material_ids')?.split(',') : [];
+
+    //   // Cập nhật giá trị bộ lọc từ URL
+    //   this.filterForm.patchValue({
+    //     color: colorId,
+    //     size: sizeIds,
+    //     material: materialIds
+    //   });
+
+    //   // Tải lại sản phẩm với tham số lọc từ URL
+    //   this.loadProducts();
+    // });
+
   }
 
-  ngOnDestroy(): void {
-    this.sub?.unsubscribe(); // Hủy đăng ký nếu có
-  }
+
 
 
   // Chỉnh sửa phương thức loadProducts để không tải lại theo subCategoryId
-  loadProducts(colorId: number | null = null, sizeId: number[] = [], materialId: number[] = []): void {
-    if (!this.subCategoryId) return; // If subCategoryId is not valid, don't make the API call
+  loadProducts() {
+    if (!this.subCategoryId) return;
 
-    // API call with selected filter parameters
+
+
+    // Cập nhật URL khi có thay đổi bộ lọc
+    const colorId: number = this.filterForm.value.color;
+    const sizeIds: number[] = this.filterForm.value.size || [];  // Đảm bảo sizeIds là một mảng số
+    const materialIds: number[] = this.filterForm.value.material || [];  // Đảm bảo materialIds là mảng số
+
+    // Lấy tên tương ứng với ID
+    const colorName = this.colors.find(color => color.id === colorId)?.name || '';
+    const sizeNames = sizeIds.map(sizeId => this.sizes.find(size => size.id === sizeId)?.name || '').join(',');
+    const materialNames = materialIds.map(materialId => this.materials.find(material => material.id === materialId)?.name || '').join(',');
+
+    // Cập nhật URL với tên thay vì ID
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        color_id: colorName || null,
+        size_ids: sizeNames || null,
+        material_ids: materialNames || null
+      },
+      queryParamsHandling: 'merge'  // Giữ lại các tham số khác trong URL
+    });
+
+    // Gọi API với ID (vì API vẫn cần ID để lọc)
     this.productService.getProductBySubCategory(
       this.currentPage,
       this.rowsPerPage,
       this.subCategoryId,
       colorId,
-      sizeId,
-      materialId
+      sizeIds,
+      materialIds
     ).subscribe(response => {
       this.products = response?.data?.productResponseList || [];
       this.category = this.products.length > 0 ? this.products[0].category : ''; // lấy category
       this.sub_category_name = this.products.length > 0 ? this.products[0].sub_category_name : ''; // lấy subcategory
-      // Lấy tất cả các subCategories từ các sản phẩm và loại bỏ danh mục trùng lặp
-      // const allSubCategories = this.products.map(product => product.category.subCategories).flat();
-      // this.categories = Array.from(new Set(allSubCategories.map(a => a.id)))
-      //   .map(id => allSubCategories.find(a => a.id === id));
+      this.totalRecords = response?.data?.totalRecords || 0;  // Cập nhật tổng số sản phẩm
     });
+
   }
+
 
 
   loadCategories() {
@@ -148,6 +195,30 @@ export class ProductFilterComponent implements OnInit, OnDestroy {
   onPageChange(event: any): void {
     this.currentPage = event.page; // Cập nhật trang hiện tại
     this.rowsPerPage = event.rows; // Cập nhật số dòng mỗi trang
-    this.loadProducts(null, [], []); // Tải lại sản phẩm với trang mới
+    this.loadProducts(); // Tải lại sản phẩm với trang mới
   }
+  cancel() {
+    // Reset lại các giá trị trong filterForm
+    this.filterForm.patchValue({
+      color: null,
+      size: [],
+      material: []
+    });
+
+    // Cập nhật URL, xóa các tham số bộ lọc
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        color_id: null,
+        size_ids: null,
+        material_ids: null
+      },
+      queryParamsHandling: 'merge'  // Giữ lại các tham số khác trong URL
+    });
+
+    // Tải lại sản phẩm với các bộ lọc đã bị xóa
+    this.loadProducts();
+  }
+
+
 }

@@ -1,9 +1,9 @@
 
 export class ReviewDTO {
 
-    rating: number;
-    comment: string;
-    product_id: number;
+    rating: number[];
+    comment: string[];
+    product_id: number[];
     order_id: number;
     user_id: number;
 

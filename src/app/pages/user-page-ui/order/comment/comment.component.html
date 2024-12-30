@@ -2,7 +2,7 @@
   <div class="side-bar">
     <app-side-bar />
   </div>
-  <div class="review">
+  <!-- <div class="review">
     <div class="header">
       <p style="cursor: pointer" (click)="goBack()">
         <i class="pi pi-angle-left"> </i>Trở về
@@ -64,6 +64,158 @@
         severity="info"
         (click)="submitReview()"
       />
+    </div>
+  </div> -->
+
+  <!-- <div
+    class="review"
+    *ngIf="order?.order_details && order.order_details.length > 0"
+  >
+    <div class="header">
+      <p style="cursor: pointer" (click)="goBack()">
+        <i class="pi pi-angle-left"> </i>Trở về
+      </p>
+
+      <h2>ĐÁNH GIÁ SẢN PHẨM</h2>
+    </div>
+    <div
+      *ngFor="let detail of order.order_details; let i = index"
+      class="product-detail"
+    >
+      <div class="product-detail-item">
+        <img
+          *ngIf="detail.image_url && detail.image_url.length > 0"
+          [src]="
+            'http://localhost:8080/uploads/' + detail.image_url[0]?.imageUrl
+          "
+          alt="Ảnh sản phẩm"
+          width="80px"
+        />
+        <div class="detail">
+          <p>
+            <strong>{{ detail.product_name }}</strong>
+          </p>
+          <p class="attribute">
+            Phân loại: {{ detail.color }}/{{ detail.size }}
+          </p>
+        </div>
+      </div>
+
+      <p>Chọn sao</p>
+      <div class="rating">
+        <div style="cursor: pointer">
+          <i
+            *ngFor="let star of stars; let j = index"
+            [class.pi]="true"
+            [class.pi-star-fill]="j <div detail.rating"
+            [class.pi-star]="j >= detail.rating"
+            style="font-size: 2rem; color: #ffb402"
+            (click)="setRating(i, j + 1)"
+          ></i>
+        </div>
+      </div>
+
+      <div class="comment">
+        <textarea
+          rows="5"
+          cols="80"
+          maxlength="200"
+          pTextarea
+          placeholder="Đánh giá tối đa 200 ký tự"
+          [(ngModel)]="detail.comment"
+        ></textarea>
+      </div>
+    </div>
+
+    <div class="review-button">
+      <p-button
+        label="Gửi đánh giá"
+        [rounded]="true"
+        severity="info"
+        (click)="submitReview()"
+      ></p-button>
+    </div>
+  </div> -->
+
+  <div
+    class="review"
+    *ngIf="order?.order_details && order.order_details.length > 0"
+  >
+    <div class="header">
+      <p style="cursor: pointer" (click)="goBack()">
+        <i class="pi pi-angle-left"> </i>Trở về
+      </p>
+
+      <h2>ĐÁNH GIÁ SẢN PHẨM</h2>
+    </div>
+
+    <div
+      *ngFor="let group of groupedOrderDetails; let i = index"
+      class="product-detail"
+    >
+      <div class="product-detail-item">
+        <div class="product-image">
+          <!-- Hiển thị 1 hình ảnh đầu tiên nếu có -->
+          <img
+            *ngIf="
+              group.details[0]?.image_url &&
+              group.details[0]?.image_url.length > 0
+            "
+            [src]="
+              'http://localhost:8080/uploads/' +
+              group.details[0].image_url[0]?.imageUrl
+            "
+            alt="Ảnh sản phẩm"
+            width="80px"
+          />
+        </div>
+        <div class="detail">
+          <p>
+            <strong>{{ group.details[0]?.product_name }}</strong>
+          </p>
+          <p class="attribute">
+            Phân loại:
+            <span *ngFor="let detail of group.details; let i = index">
+              {{ detail.color }}/{{ detail.size }}
+              <span *ngIf="i < group.details.length - 1">, </span>
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <p>Chọn sao</p>
+      <div class="rating">
+        <div style="cursor: pointer">
+          <i
+            *ngFor="let star of stars; let j = index"
+            [class.pi]="true"
+            [class.pi-star-fill]="j < group.rating"
+            [class.pi-star]="j >= group.rating"
+            style="font-size: 2rem; color: #ffb402"
+            (click)="setRating(i, j + 1)"
+          ></i>
+        </div>
+      </div>
+
+      <div class="comment">
+        <textarea
+          rows="5"
+          cols="80"
+          maxlength="200"
+          pTextarea
+          placeholder="Đánh giá tối đa 200 ký tự"
+          [(ngModel)]="group.comment"
+        ></textarea>
+      </div>
+    </div>
+
+    <div class="review-button">
+      <p-button
+        label="Gửi đánh giá"
+        [rounded]="true"
+        severity="info"
+        (click)="submitReview()"
+      ></p-button>
     </div>
   </div>
 </div>

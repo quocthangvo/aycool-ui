@@ -4,6 +4,7 @@ import { environment } from '../../environments/environments';
 import { TokenService } from '../auth/token.service';
 import { Observable } from 'rxjs';
 import { OrderDTO } from '../../dtos/order/order.dto';
+import { ApplyCouponDTO } from '../../dtos/order/apply-coupon.dto';
 
 
 
@@ -85,5 +86,9 @@ export class OrderService {
         return this.http.get<any>(`${this.apiUrl}/all`, options); // Cập nhật URL API theo đúng endpoint
     }
 
+    applyCoupon(data: ApplyCouponDTO): Observable<any> {
+
+        return this.http.post<any>(`${this.apiUrl}/apply-coupon`, data, { headers: this.getAuthHeaders() });
+    }
 
 }

@@ -144,21 +144,30 @@
 
       <div class="price">
         <p
-          *ngIf="item.product_detail_id.prices[0].promotionPrice"
+          *ngIf="getLatestPrice(item.product_detail_id.prices)?.promotionPrice"
           class="font-bold"
         >
-          {{ formatPrice(item.product_detail_id.prices[0].promotionPrice) }}
+          {{
+            formatPrice(
+              getLatestPrice(item.product_detail_id.prices)?.promotionPrice
+            )
+          }}
         </p>
         <p class="sell-price">
-          {{ formatPrice(item.product_detail_id.prices[0].sellingPrice) }}
+          {{
+            formatPrice(
+              getLatestPrice(item.product_detail_id.prices)?.sellingPrice
+            )
+          }}
         </p>
         <p class="total-price">
           {{
             formatPrice(
-              item.product_detail_id.prices[0].promotionPrice
-                ? item.product_detail_id.prices[0].promotionPrice *
+              getLatestPrice(item.product_detail_id.prices)?.promotionPrice
+                ? getLatestPrice(item.product_detail_id.prices)
+                    ?.promotionPrice * item.quantity
+                : getLatestPrice(item.product_detail_id.prices)?.sellingPrice *
                     item.quantity
-                : item.product_detail_id.prices[0].sellingPrice * item.quantity
             )
           }}
         </p>
@@ -178,7 +187,7 @@
       <p (click)="openVoucherDialog()" class="click">Chọn voucher</p>
     </div>
     <div class="discount-item">
-      <p>Đã chọn: {{ appliedVoucher?.code || "Chưa chọn mã" }}</p>
+      <p>{{ appliedVoucher?.code || "Chưa chọn mã" }}</p>
       <p *ngIf="appliedVoucher">
         Giảm: {{ appliedVoucher.discountValue | number : "1.0-0" }}
         {{ appliedVoucher.discountType === "PERCENT" ? "%" : "VND" }}
@@ -186,7 +195,7 @@
     </div>
   </div>
 </div>
-
+<!-- hien thị danh sách voucher -->
 <p-dialog
   header="Mã giảm giá"
   [modal]="true"
@@ -196,7 +205,15 @@
   <div class="select-voucher">
     <!-- Lặp qua danh sách voucher -->
     <div *ngIf="vouchers && vouchers.length > 0; else noVoucher">
-      <div *ngFor="let voucher of vouchers" class="voucher-item">
+      <div
+        *ngFor="let voucher of vouchers"
+        class="voucher-item"
+        [ngClass]="{
+          disabled:
+            !hasSelectedProducts() ||
+            calculateTotalPrice() < voucher.minOrderValue
+        }"
+      >
         <div class="code">
           <strong>{{ voucher.code }}</strong>
         </div>
@@ -205,10 +222,11 @@
           <p>Số lượng: {{ voucher.usageLimit }}</p>
           <p>
             Sắp hết hạn:
-            {{ getExpirationDate(voucher.startDate, voucher.endDate) }}
+            {{ getExpirationDate(voucher.endDate) }}
           </p>
         </div>
         <div class="radio-button">
+          <!-- Vô hiệu hóa radio button nếu không có sản phẩm nào được chọn -->
           <input
             type="radio"
             name="voucher"
@@ -245,10 +263,19 @@
       <p>Tổng:</p>
       <p style="font-size: 1rem">{{ getTotalQuantity() }} sản phẩm</p>
     </div>
-    <div class="flex justify-content-end align-items-end">
+    <div class="total-price">
       <p>Thành tiền:</p>
 
-      <p>{{ formatPrice(totalPrice) }}</p>
+      <p
+        [ngClass]="{
+          strikethrough: discountedPrice && discountedPrice !== totalPrice
+        }"
+      >
+        {{ formatPrice(totalPrice) }}
+      </p>
+      <div *ngIf="discountedPrice && discountedPrice !== totalPrice">
+        <p class="discounted-price">{{ formatPrice(discountedPrice) }}</p>
+      </div>
     </div>
   </div>
   <button (click)="placeOrder()">ĐẶT HÀNG</button>

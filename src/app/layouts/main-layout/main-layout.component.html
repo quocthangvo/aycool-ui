@@ -71,15 +71,6 @@
 
       <div
         class="list"
-        (click)="orderList()"
-        [class.selected]="selectedIndex === 7"
-      >
-        <i class="pi pi-cart-minus"></i>
-        <p>Đơn hàng</p>
-      </div>
-
-      <div
-        class="list"
         (click)="priceList()"
         [class.selected]="selectedIndex === 8"
       >
@@ -94,6 +85,15 @@
       >
         <i class="pi pi-ticket"></i>
         <p>Mã giảm giá</p>
+      </div>
+
+      <div
+        class="list"
+        (click)="orderList()"
+        [class.selected]="selectedIndex === 7"
+      >
+        <i class="pi pi-cart-minus"></i>
+        <p>Đơn hàng</p>
       </div>
     </div>
   </div>

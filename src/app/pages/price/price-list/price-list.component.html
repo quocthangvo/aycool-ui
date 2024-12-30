@@ -32,6 +32,7 @@
     <ng-template pTemplate="header">
       <tr>
         <th>Id</th>
+        <th>Hình ảnh</th>
         <th>Tên</th>
         <th>Giá bán</th>
         <th>Giá khuyến mãi</th>
@@ -43,6 +44,26 @@
     <ng-template pTemplate="body" let-prices let-i="rowIndex">
       <tr>
         <td>{{ i + 1 }}</td>
+        <td>
+          <p-image
+            *ngIf="
+              prices.image_url && prices.image_url[0]?.image_url;
+              else noImage
+            "
+            [src]="
+              'http://localhost:8080/uploads/' + prices.image_url[0]?.image_url
+            "
+            alt="Ảnh sản phẩm"
+            width="50px"
+          ></p-image>
+          <ng-template #noImage>
+            <p-image
+              src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
+              alt="Ảnh"
+              width="50px"
+            />
+          </ng-template>
+        </td>
         <td>
           {{ prices.product_detail_name }}_{{ prices.color }}_{{ prices.size }}
         </td>

@@ -123,11 +123,24 @@
     display: flex;
     justify-content: end;
     align-items: center;
-    .total-price{
+    .total-price {
+        margin: 0 10px;
+      }
+    
+      .discounted {
+        color: #999;
+        text-decoration: line-through;
+      }
+    
+      .no-discount {
+        color: red;
+        font-size: 20px;
+      }
+    
+      .total-price-discount {
         font-size: 20px;
         color: red;
-        margin-left: 10px;
-    }
+      }
 }
 
 .footer {

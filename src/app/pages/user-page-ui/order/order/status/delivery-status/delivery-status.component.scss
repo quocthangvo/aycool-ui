@@ -7,7 +7,7 @@ $inactive-color: #ddd;
   align-items: start;
   padding: 2rem 0;
   position: relative;
-  
+
   .circle {
     width: 150px;
     text-align: center;
@@ -53,17 +53,52 @@ $inactive-color: #ddd;
       content: '';
       position: absolute;
       top: 27%;
-      left: 100%;
-      width: 100%;
+      left: 70%;
+      width: 107%;
       height: 3px;
       background-color: $inactive-color;
-    //   transform: translateY(-50%);
+      /* Optional: If you want to use translate for centering */
+      // transform: translateY(-50%);
     }
+    
+    /* Màn hình di động (Dưới 600px) */
+    @media (max-width: 600px) {
+      .element:not(:last-child)::after {
+        left: 50%;
+        width: 100%;
+      }
+    }
+    
+    /* Màn hình máy tính bảng (Dưới 1024px) */
+    @media (max-width: 1024px) {
+      .element:not(:last-child)::after {
+        left: 55%;
+        width: 120%;
+      }
+    }
+    
+    /* Màn hình máy tính (Từ 1024px đến 1919px) */
+    @media (min-width: 1024px) and (max-width: 1919px) {
+      .element:not(:last-child)::after {
+        left: 70%;
+        width: 150%;
+      }
+    }
+    
+    /* Màn hình cực lớn (Trên 1920px) */
+    @media (min-width: 1919px) {
+      .element:not(:last-child)::after {
+        left: 75%;
+        width: 180%;
+      }
+    }
+    
 
     &.active::after {
-      background-color: $active-color; /* Line color for active state */
+      background-color: $active-color;
+      /* Line color for active state */
     }
 
-     
+
   }
 }

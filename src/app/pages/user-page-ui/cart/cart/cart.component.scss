@@ -237,6 +237,17 @@
             }
         }
     }
+    /* Lớp CSS để vô hiệu hóa voucher-item */
+.voucher-item.disabled {
+    opacity: 0.5; /* Làm mờ phần tử */
+    pointer-events: none; /* Tắt sự kiện click */
+  }
+  
+  /* Đảm bảo rằng các phần tử bên trong cũng bị vô hiệu hóa */
+  .voucher-item.disabled .radio-button input {
+    cursor: not-allowed; /* Thay đổi con trỏ chuột khi hover */
+  }
+  
 }
 
 .order {
@@ -265,6 +276,17 @@
             color: var(--blue-color);
             font-weight: bold;
         }
+        .total-price{
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            .strikethrough{
+                text-decoration: line-through;
+                color: #999; 
+                margin-right: 10px;
+            }
+        }
+       
     }
 
     button {

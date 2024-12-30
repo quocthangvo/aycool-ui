@@ -38,7 +38,8 @@
       </div>
     </div>
 
-    <p-button label="Lọc" icon="pi pi-filter"></p-button>
+    <p-button label="Bỏ lọc" icon="pi pi-filter-slash" (click)="cancel()">
+    </p-button>
   </div>
 
   <div class="product-search">
@@ -60,6 +61,9 @@
         <p-dropdown optionLabel="name" placeholder="Giá" />
       </div>
       <div class="product-content">
+        <div *ngIf="products.length === 0" class="no-product">
+          <p>Không có sản phẩm nào</p>
+        </div>
         <div
           class="product-item"
           *ngFor="let product of products"
@@ -102,36 +106,6 @@
             </div>
           </div>
         </div>
-        <!-- <div class="product-item">
-          <img
-            src="https://cdn.dribbble.com/users/2008722/screenshots/14987612/media/27566bddb4d08217c4407656144e8ac7.png?resize=400x0"
-            alt=""
-            width="80px"
-            height="100px"
-          />
-          <div class="content">
-            <p>Tên sản phẩm</p>
-            <div class="price">
-              <p class="promotion-price">Giá khuyến mãi</p>
-              <p class="sell-price">Giá bán</p>
-            </div>
-          </div>
-        </div>
-        <div class="product-item">
-          <img
-            src="https://cdn.dribbble.com/users/2008722/screenshots/14987612/media/27566bddb4d08217c4407656144e8ac7.png?resize=400x0"
-            alt=""
-            width="80px"
-            height="100px"
-          />
-          <div class="content">
-            <p>Tên sản phẩm</p>
-            <div class="price">
-              <p class="promotion-price">Giá khuyến mãi</p>
-              <p class="sell-price">Giá bán</p>
-            </div>
-          </div>
-        </div> -->
       </div>
     </div>
   </div>

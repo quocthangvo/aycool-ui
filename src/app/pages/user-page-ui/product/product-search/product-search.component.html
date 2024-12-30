@@ -40,7 +40,7 @@
           />
         </ng-template>
         <div class="content">
-          <p>{{ product.name }}</p>
+          <p class="product_name">{{ product.name }}</p>
           <div class="price">
             <p class="promotion-price">
               {{
@@ -59,43 +59,13 @@
           </div>
         </div>
       </div>
-      <!-- <div class="product-item">
-          <img
-            src="https://cdn.dribbble.com/users/2008722/screenshots/14987612/media/27566bddb4d08217c4407656144e8ac7.png?resize=400x0"
-            alt=""
-            width="80px"
-            height="100px"
-          />
-          <div class="content">
-            <p>Tên sản phẩm</p>
-            <div class="price">
-              <p class="promotion-price">Giá khuyến mãi</p>
-              <p class="sell-price">Giá bán</p>
-            </div>
-          </div>
-        </div>
-        <div class="product-item">
-          <img
-            src="https://cdn.dribbble.com/users/2008722/screenshots/14987612/media/27566bddb4d08217c4407656144e8ac7.png?resize=400x0"
-            alt=""
-            width="80px"
-            height="100px"
-          />
-          <div class="content">
-            <p>Tên sản phẩm</p>
-            <div class="price">
-              <p class="promotion-price">Giá khuyến mãi</p>
-              <p class="sell-price">Giá bán</p>
-            </div>
-          </div>
-        </div> -->
     </div>
   </div>
+  <p-paginator
+    [totalRecords]="totalRecords"
+    [rows]="rowsPerPage"
+    [rowsPerPageOptions]="[10, 20, 30]"
+    (onPageChange)="onPageChange($event)"
+  >
+  </p-paginator>
 </div>
-<p-paginator
-  [totalRecords]="totalRecords"
-  [rows]="rowsPerPage"
-  [rowsPerPageOptions]="[10, 20, 30]"
-  (onPageChange)="onPageChange($event)"
->
-</p-paginator>

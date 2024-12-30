@@ -44,7 +44,7 @@ export class SubCategoryListComponent {
 
   ngOnInit(): void {
     this.loadCategorys();
-    // this.loadCategoryOptions();
+    this.loadCategoryOptions();
   }
 
   loadCategorys() {
@@ -55,19 +55,24 @@ export class SubCategoryListComponent {
 
   loadCategoryOptions() {
     this.categoryService.getAllCategories().subscribe((res: any) => {
-      // Ánh xạ dữ liệu trả về vào categoryNodes
-      // this.categoryNodes = res.data.map((category: Category) => ({
-      //   label: category.name, // Tên danh mục
-      //   value: category.id    // ID danh mục
-
-      // }));
-      this.categoryList = res.data;
+      this.categoryNodes = res.data.map((category: any) => ({
+        id: category.id, // ID của danh mục cha
+        category_name: category.name, // Tên danh mục cha
+      }));
     });
   }
+
+
   onCategorySelect(event: any) {
-    const categoryId = event.node.value; // Lấy ID từ danh mục đã chọn
-    this.selectedSubCategory.category_id = categoryId; // Cập nhật category_id cho subcategory
+    const selectedCategory = this.categoryNodes.find(node => node.id === event.value);
+
+    if (selectedCategory) {
+      this.selectedSubCategory.category_id = selectedCategory.id; // ID danh mục cha
+      this.selectedSubCategory.category_name = selectedCategory.category_name; // Tên danh mục cha
+    }
   }
+
+
 
 
   onDelete(id: number, event: Event) {

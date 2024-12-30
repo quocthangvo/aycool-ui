@@ -1,6 +1,6 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -35,9 +35,8 @@ export class CreatePriceComponent implements OnInit {
   submit = false;
   minDate: Date = new Date();
   productList: any[] = [];
-  selectedProductDetail: any[] = [];
+  selectedProductDetails: any[] = [];
 
-  productDetails: any[] = []; // lưu ds sản phẩm đã chọn
 
 
   constructor(
@@ -50,12 +49,13 @@ export class CreatePriceComponent implements OnInit {
     private datePipe: DatePipe,
   ) {
     this.priceForm = this.fb.group({
-      selectedProductDetail: ['', [Validators.required]],
-      selling_price: ['', [Validators.required]],
-      // promotionDiscount: [0, [Validators.min(0), Validators.max(100)]], // Giảm giá phần trăm
-      promotion_price: [0, [Validators.min(0), Validators.max(100)]],
-      start_date: [[], [Validators.required]],
-      end_date: [''],
+      // selectedProductDetail: ['', [Validators.required]],
+      // selling_price: ['', [Validators.required]],
+      // promotion_price: [0, [Validators.min(0), Validators.max(100)]],
+      // start_date: [[], [Validators.required]],
+      // end_date: [''],
+      selectedProductDetail: [[], Validators.required], // Multi-select products
+      prices: this.fb.array([]) // Dynamic form array for product details
     });
 
   }
@@ -67,73 +67,13 @@ export class CreatePriceComponent implements OnInit {
 
   }
 
-  get selected() {
-    return this.priceForm.get('selectedProductDetail')
+  get prices(): FormArray {
+    return this.priceForm.get('prices') as FormArray;
   }
 
-  get productDetail() {
-    return this.priceForm.get('product_detail_id');
+  cancel() {
+    this.router.navigateByUrl("/admin/price");
   }
-  get sellingPrice() {
-    return this.priceForm.get('selling_price');
-  }
-  get promotionPrice() {
-    return this.priceForm.get('promotion_price')
-  }
-  get startDate() {
-    return this.priceForm.get('start_date')
-  }
-  get endDate() {
-    return this.priceForm.get('end_date')
-  }
-
-
-
-  // loadProductDetails() {
-  //   this.productDetailService.getAllProductDetailsNoId().subscribe((res: any) => {
-  //     // Ánh xạ dữ liệu trả về
-  //     //   this.productList = res.data.map((productDetail: ProductDetail) => ({
-  //     //     label: productDetail.sku_name,
-  //     //     value: productDetail.id,
-  //     //     data: productDetail
-  //     //   }));
-
-  //     // });
-  //     this.productDetails = res.data;
-  //   });
-  // }
-
-  loadProductDetails() {
-    this.productDetailService.getAllProductDetailsNoId().subscribe(
-      (res: any) => {
-        if (res && res.data) {
-          // Giả sử API trả về một đối tượng với trường 'data'
-          this.productList = res.data.map((item: any) => ({
-            id: item.id,
-            sku_name: item.sku_name,
-            product_id: item.product_id, // Gán product_id nếu có
-            productImages: item.product_id?.productImages, // Gán productImages nếu có
-          }));
-        }
-      },
-      (error) => {
-        console.error('Lỗi khi gọi API:', error);
-      }
-    );
-  }
-
-  onProductSelectChange(event: any) {
-    // Lấy ID của các sản phẩm đã chọn
-    const selectedIds = event.value;
-
-    // Lọc các sản phẩm đã chọn từ danh sách sản phẩm
-    this.selectedProductDetail = this.productList.filter(product =>
-      selectedIds.includes(product.id)
-    );
-
-    console.log('Sản phẩm đã chọn:', this.selectedProductDetail);
-  }
-
 
 
   // Tính toán giá khuyến mãi khi giảm giá thay đổi
@@ -149,59 +89,128 @@ export class CreatePriceComponent implements OnInit {
   }
 
 
+  loadProductDetails() {
+    this.productDetailService.getAllProductDetailsNoId().subscribe(
+      (res: any) => {
+        if (res && res.data) {
+          this.productList = res.data.map((item: any) => ({
+            id: item.id,
+            sku_name: item.sku_name,
+            product_id: item.product_id,
+            productImages: item.product_id?.productImages,
+          }));
+        }
+      },
+      (error) => {
+        console.error('Lỗi khi gọi API:', error);
+      }
+    );
+  }
 
+  //sản phẩm đã chọn
+  onProductSelectChange(event: any) {
+    const selectedIds = event.value;
 
+    // Xóa các sản phẩm không được chọn khỏi prices array
+    const updatedProducts = this.productList.filter((product) =>
+      selectedIds.includes(product.id)
+    );
+
+    this.prices.clear();
+    updatedProducts.forEach((product) => {
+      this.prices.push(
+        this.fb.group({
+          product_detail_id: [product.id],
+          selling_price: ['', Validators.required],
+          promotion_price: [0, [Validators.min(0), Validators.max(100)]],
+          start_date: [null, Validators.required],
+          end_date: [null],
+        })
+      );
+    });
+
+    this.selectedProductDetails = updatedProducts;
+  }
+
+  //tạo giá
+  async createPrice() {
+    this.submit = true;
+
+    this.priceForm.markAllAsTouched();
+
+    if (this.priceForm.invalid) {
+      console.log('Form không hợp lệ.');
+      return;
+    }
+
+    const priceDTOs = this.prices.value.map((price: any) => ({
+      product_detail_id: price.product_detail_id,
+      selling_price: price.selling_price,
+      promotion_price: price.promotion_price || 0,
+      start_date: this.datePipe.transform(price.start_date, 'yyyy-MM-dd'),
+      end_date: this.datePipe.transform(price.end_date, 'yyyy-MM-dd') || null,
+    }));
+
+    try {
+      for (const priceDTO of priceDTOs) {
+        await this.priceService.createPrice(priceDTO).toPromise();
+      }
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Thành công',
+        detail: 'Thêm giá thành công.',
+      });
+      this.router.navigateByUrl('/admin/price');
+    } catch (error) {
+      console.error('Lỗi khi thêm giá:', error);
+    }
+  }
 
 
   // Hàm gửi yêu cầu thêm giá qua API
   // Cập nhật hàm createPrice
-  async createPrice() {
-    this.submit = true;
-    // Kiểm tra xem có sản phẩm được chọn không
-    if (this.priceForm.invalid || this.selectedProductDetail.length === 0) {
-      console.log('Form không hợp lệ hoặc chưa chọn sản phẩm');
-      return;
-    }
+  // async createPrice() {
+  //   this.submit = true;
+  //   // Kiểm tra xem có sản phẩm được chọn không
+  //   if (this.priceForm.invalid || this.selectedProductDetail.length === 0) {
+  //     console.log('Form không hợp lệ hoặc chưa chọn sản phẩm');
+  //     return;
+  //   }
 
 
-    let promotionPrice = this.priceForm.value.promotion_price;
+  //   let promotionPrice = this.priceForm.value.promotion_price;
 
-    // Ensure promotion_price is not null, default to 0 if not provided
-    if (promotionPrice === null || promotionPrice === undefined || isNaN(promotionPrice)) {
-      promotionPrice = 0;  // Set to 0 if promotion_price is null or undefined
-    }
-    const startDate = this.datePipe.transform(this.priceForm.value.start_date, 'yyyy-MM-dd');
-    const endDate = this.datePipe.transform(this.priceForm.value.end_date, 'yyyy-MM-dd') || null;
+  //   // Ensure promotion_price is not null, default to 0 if not provided
+  //   if (promotionPrice === null || promotionPrice === undefined || isNaN(promotionPrice)) {
+  //     promotionPrice = 0;  // Set to 0 if promotion_price is null or undefined
+  //   }
+  //   const startDate = this.datePipe.transform(this.priceForm.value.start_date, 'yyyy-MM-dd');
+  //   const endDate = this.datePipe.transform(this.priceForm.value.end_date, 'yyyy-MM-dd') || null;
 
-    // Tạo mảng PriceDTO từ selectedProductDetail
-    const priceDTOs = this.selectedProductDetail.map((product) => {
-      return new PriceDTO({
-        product_detail_id: product.id,
-        selling_price: this.priceForm.value.selling_price,
-        promotion_price: promotionPrice,
-        start_date: startDate,
-        end_date: endDate  // Nếu không có end_date, để null
-      });
-    });
+  //   // Tạo mảng PriceDTO từ selectedProductDetail
+  //   const priceDTOs = this.selectedProductDetail.map((product) => {
+  //     return new PriceDTO({
+  //       product_detail_id: product.id,
+  //       selling_price: this.priceForm.value.selling_price,
+  //       promotion_price: promotionPrice,
+  //       start_date: startDate,
+  //       end_date: endDate  // Nếu không có end_date, để null
+  //     });
+  //   });
 
-    // Gửi yêu cầu POST đến API
-    try {
-      for (const priceDTO of priceDTOs) {
-        const response = await this.priceService.createPrice(priceDTO).toPromise();
-        console.log('Thêm giá thành công:', response);
-        this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Thêm giá thành công.' });
-        this.router.navigateByUrl("/admin/price")
-      }
-    } catch (error) {
-      console.error('Lỗi khi thêm giá:', error);
-      // Xử lý lỗi, ví dụ: thông báo lỗi cho người dùng
-    }
-  }
+  //   // Gửi yêu cầu POST đến API
+  //   try {
+  //     for (const priceDTO of priceDTOs) {
+  //       const response = await this.priceService.createPrice(priceDTO).toPromise();
+  //       console.log('Thêm giá thành công:', response);
+  //       this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Thêm giá thành công.' });
+  //       this.router.navigateByUrl("/admin/price")
+  //     }
+  //   } catch (error) {
+  //     console.error('Lỗi khi thêm giá:', error);
+  //     // Xử lý lỗi, ví dụ: thông báo lỗi cho người dùng
+  //   }
+  // }
 
-
-
-  cancel() {
-    this.router.navigateByUrl("/admin/price");
-  }
 
 }

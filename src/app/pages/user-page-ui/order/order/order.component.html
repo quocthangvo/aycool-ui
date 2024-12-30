@@ -85,7 +85,23 @@
 
       <div class="total">
         <p>Thành tiền:</p>
-        <p class="total-price">{{ formatPrice(order.total_money) }}</p>
+        <p
+          class="total-price"
+          [ngClass]="{
+            discounted: order.total_money_after_discount,
+            'no-discount': !order.total_money_after_discount
+          }"
+        >
+          <!-- nếu có coupon thì hiển thị giá sau khi giảm giá, k có thì hiển thị tổng -->
+
+          {{ formatPrice(order.total_money) }}
+        </p>
+        <p
+          *ngIf="order.total_money_after_discount"
+          class="total-price-discount"
+        >
+          {{ formatPrice(order.total_money_after_discount) }}
+        </p>
       </div>
 
       <div class="footer">

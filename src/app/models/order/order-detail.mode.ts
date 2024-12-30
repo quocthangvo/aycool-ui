@@ -8,6 +8,8 @@ interface OrderDetail {
     product_name: string;
     size: string;
     color: string;
+    rating?: number;  // Rating for the product
+    comment?: string;
 }
 
 interface SelectedOrderDetails {

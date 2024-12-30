@@ -115,9 +115,25 @@ export class ProductDetailComponent implements OnInit {
     this.updatePrice();
   }
 
-  price: number = 19000; // Giá bán hoặc giá khuyến mãi
-  promotionPrice: number | null = 20000; // Lưu giá khuyến mãi
+  price: number = 120000; // Giá bán hoặc giá khuyến mãi
+  promotionPrice: number | null = 150000; // Lưu giá khuyến mãi
   // Cập nhật giá khi người dùng chọn màu sắc và kích thước
+  // updatePrice() {
+  //   if (this.selectedColor && this.selectedSize) {
+  //     const selectedProductDetail = this.product.product_details.find(
+  //       (detail: any) =>
+  //         detail.color?.name === this.selectedColor && detail.size?.name === this.selectedSize
+  //     );
+
+  //     if (selectedProductDetail) {
+  //       const priceDetails = selectedProductDetail.prices[0];
+  //       this.promotionPrice = priceDetails.promotionPrice; // Ensure this is not null or undefined
+  //       this.price = priceDetails.sellingPrice; // Fallback to selling price if no promotion price
+  //     }
+
+  //   }
+  // }
+
   updatePrice() {
     if (this.selectedColor && this.selectedSize) {
       const selectedProductDetail = this.product.product_details.find(
@@ -126,11 +142,18 @@ export class ProductDetailComponent implements OnInit {
       );
 
       if (selectedProductDetail) {
-        const priceDetails = selectedProductDetail.prices[0];
-        this.promotionPrice = priceDetails.promotionPrice; // Ensure this is not null or undefined
-        this.price = priceDetails.sellingPrice; // Fallback to selling price if no promotion price
-      }
+        // Sắp xếp danh sách giá theo createdAt giảm dần
+        const sortedPrices = selectedProductDetail.prices.sort(
+          (a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
 
+        // Lấy giá mới nhất từ danh sách đã sắp xếp
+        if (sortedPrices.length > 0) {
+          const latestPrice = sortedPrices[0];
+          this.promotionPrice = latestPrice.promotionPrice ?? null; // Giá khuyến mãi
+          this.price = latestPrice.sellingPrice; // Giá bán
+        }
+      }
     }
   }
 

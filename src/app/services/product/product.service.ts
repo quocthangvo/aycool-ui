@@ -84,37 +84,64 @@ export class ProductService {
         return this.http.get<any>(`${this.apiUrl}/all`, options); // Cập nhật URL API cho đúng endpoint
     }
 
-    getProductBySubCategory(page: number, limit: number, subCategoryId: number,
-        colorId: number | null, sizeId: number[] | null, materialId: number[] | null) {
+    // getProductBySubCategory(page: number, limit: number, subCategoryId: number,
+    //     color_id: number | null, size_ids: number[] | null, material_ids: number[] | null) {
 
-        const params: any = {
+    //     const params: any = {
+    //         page: page.toString(),
+    //         limit: limit.toString(),
+    //         subCategoryId: subCategoryId.toString(), // Lọc theo subCategoryId trước
+
+    //     };
+
+    //     // Chỉ thêm các bộ lọc nếu có giá trị
+    //     if (color_id !== null && color_id !== undefined) {
+    //         params.colorId = color_id.toString();  // Lọc theo color nếu có
+    //     }
+
+    //     if (size_ids && size_ids.length > 0) {
+    //         params.sizeId = size_ids.join(',');  // Lọc theo size nếu có
+    //     }
+
+    //     if (material_ids && material_ids.length > 0) {
+    //         params.materialId = material_ids.join(',');  // Lọc theo material nếu có
+    //     }
+
+    //     const options = {
+    //         headers: this.createHeaders(),
+    //         params: params,
+    //     };
+
+    //     // Gọi API với các tham số đã chuẩn bị
+    //     return this.http.get<any>(`${this.apiUrl}/sub_category/${subCategoryId}`, options);
+    // }
+    getProductBySubCategory(
+        page: number,
+        limit: number,
+        subCategoryId: number,
+        colorId: number | null,
+        sizeIds: number[],
+        materialIds: number[]
+    ) {
+        const params: { [key: string]: string } = {
             page: page.toString(),
             limit: limit.toString(),
-            subCategoryId: subCategoryId.toString(), // Lọc theo subCategoryId trước
-
+            // Only add color_id if it's not null
+            ...(colorId !== null && { color_id: colorId.toString() }),
+            // Only add size_ids if sizeIds array is not empty
+            ...(sizeIds.length > 0 && { size_ids: sizeIds.join(',') }),
+            // Only add material_ids if materialIds array is not empty
+            ...(materialIds.length > 0 && { material_ids: materialIds.join(',') })
         };
-
-        // Chỉ thêm các bộ lọc nếu có giá trị
-        if (colorId !== null && colorId !== undefined) {
-            params.colorId = colorId.toString();  // Lọc theo color nếu có
-        }
-
-        if (sizeId && sizeId.length > 0) {
-            params.sizeId = sizeId.join(',');  // Lọc theo size nếu có
-        }
-
-        if (materialId && materialId.length > 0) {
-            params.materialId = materialId.join(',');  // Lọc theo material nếu có
-        }
-
         const options = {
             headers: this.createHeaders(),
             params: params,
         };
 
-        // Gọi API với các tham số đã chuẩn bị
         return this.http.get<any>(`${this.apiUrl}/sub_category/${subCategoryId}`, options);
     }
+
+
 
     getProductBySearchAndSubCategory(page: number, limit: number, name: string, subCategoryId: number) {
         const params: any = {

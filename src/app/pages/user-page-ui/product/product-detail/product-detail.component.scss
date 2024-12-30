@@ -39,11 +39,34 @@
             }
 
             .big-image{
-                width: 500px;
-                height: 450px;
+                width: 450px;
+                height: 500px;
                 border: 1px solid var(--grey-dropdown-color);
                 border-radius: 1rem;
 
+            }
+            
+            @media (max-width: 768px) {
+                .big-image {
+                    width: 300px; /* Giảm chiều rộng */
+                    height: 350px; /* Giảm chiều cao */
+                }
+            }
+            
+            /* Màn hình nhỏ hơn 480px (mobile rất nhỏ) */
+            @media (max-width: 480px) {
+                .big-image {
+                    width: 250px; /* Thêm giảm chiều rộng */
+                    height: 300px; /* Thêm giảm chiều cao */
+                }
+            }
+            
+            /* Màn hình lớn hơn hoặc bằng 1920px (desktop rộng) */
+            @media (min-width: 1920px) {
+                .big-image {
+                    width: 500px;
+                    height: 550px;
+                }
             }
             img {
                 width: 100%;

@@ -75,7 +75,9 @@
       <tr>
         <td>{{ i + 1 }}</td>
         <td>{{ orders.name }}</td>
-        <td (click)="showOrderDetails(orders.id)">{{ orders.order_code }}</td>
+        <td (click)="showOrderDetails(orders.id)" style="cursor: pointer">
+          {{ orders.order_code }}
+        </td>
         <td>
           <ng-container
             *ngFor="let orderDetail of orders.order_details; let j = index"

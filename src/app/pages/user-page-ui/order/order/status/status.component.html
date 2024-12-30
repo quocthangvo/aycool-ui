@@ -110,8 +110,9 @@
         }"
       ></app-delivery-status>
 
-      <div class="status-end">
+      <div class="status-end" *ngIf="order">
         <p-button
+          *ngIf="order.status === 'DELIVERED' && !order.hasReviewed"
           label="Đánh giá"
           severity="contrast"
           class="mr-3"
