@@ -1,101 +1,122 @@
-.review{
+.review {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+
+  .star-total {
+    width: 25%;
     display: flex;
-    justify-content: space-between;
-    align-items: start;
-    .star-total{
-        width: 25%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        .star{
-            background-color: var(--grey-dropdown-color);
-            text-align: center;
-            width: 300px;
-            border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+
+    .star {
+      background-color: var(--grey-dropdown-color);
+      text-align: center;
+      width: 300px;
+      border-radius: 10px;
+    }
+
+    .star-evaluate {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #ffb402;
+
+      h2 {
+        margin: 0;
+      }
+
+      i {
+        font-size: 1rem;
+        margin-left: 5px;
+
+      }
+    }
+  }
+
+  .review-total {
+    width: 70%;
+
+    .drop-down-list {
+      margin-bottom: 2rem;
+      display: flex;
+      .p-dropdown {
+        width: 200px;
+        border-radius: 99px;
+      }
+
+      .select {
+        padding: 1rem 2rem;
+        border: 1px solid #999;
+        border-radius: 99px;
+        margin-left: 10px;
+      }
+    }
+
+    .comment-total {
+      display: flex;
+      flex-wrap: wrap;
+      /* Allow items to wrap to next line */
+      gap: 10px;
+
+      .cmt {
+        width: 48%;
+        padding: 15px;
+        border-top: 1px solid #999;
+        padding-top: 1rem;
+
+        p {
+          margin: 5px 0;
         }
-        .star-evaluate{
+
+        .user-name {
+          font-weight: bold;
+        }
+
+        .attribute {
           display: flex;
-          justify-content: center;
-          align-items: center;
-          color: #ffb402;
-          
-          h2{
-            margin: 0;
-          }
-            i{
-                font-size: 1rem;
-                margin-left: 5px;
-    
-            }
+          justify-content: start;
+          color: #999;
+          margin-right: 10px;
         }
-    }
-    .review-total{
-        width: 70%;
-        .drop-down-list{
-            margin-bottom: 2rem;
-           
-            .p-dropdown{
-                width: 200px;
-                border-radius: 99px;
-            }
-        }
-        .comment-total {
-            display: flex;
-            flex-wrap: wrap; /* Allow items to wrap to next line */
-            gap: 10px; 
-           
-          .cmt {
-            width: 48%; 
-            padding: 15px;  
-            border-top: 1px solid #999;
-            padding-top: 1rem;
-            p {
-                margin: 5px 0;
-              }
-              .user-name{
-                    font-weight: bold;
-              }
-              .attribute{
-                display: flex;
-                justify-content: start;
-                color: #999;
-                margin-right: 10px;
-              }
-              .date{
-                color: #999;
-                font-size: 14px;
-              }
-          }
-          
-          .note {
-            font-style: italic;
-           
-            padding: 1rem 0;
-          }
-          @media (max-width: 768px) {
-            .cmt {
-              width: 100%; /* On small screens, each comment takes full width */
-            }
-          }
-         
-          .star-evaluate{
-            display: flex;
-            justify-content: start;
-            align-items: center;
-            color: #ffb402;   
 
-            i{
-              margin-right: 5px;
-            }
-          }
+        .date {
+          color: #999;
+          font-size: 14px;
+        }
+      }
 
+      .note {
+        font-style: italic;
+
+        padding: 1rem 0;
+      }
+
+      @media (max-width: 768px) {
+        .cmt {
+          width: 100%;
+          /* On small screens, each comment takes full width */
         }
-          
-        .p-paginator{
-          margin-bottom: 80px;
+      }
+
+      .star-evaluate {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        color: #ffb402;
+
+        i {
+          margin-right: 5px;
         }
+      }
+
     }
 
-   
-    
+    .p-paginator {
+      margin-bottom: 80px;
+    }
+  }
+
+
+
 }

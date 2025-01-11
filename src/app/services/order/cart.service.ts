@@ -33,33 +33,6 @@ export class CartService {
         localStorage.setItem('cart', JSON.stringify(cartItems));
     }
 
-    // getCartItems(): any[] {
-    //     return this.cartItemsSubject.value;
-    // }
-
-    // addToCart(cartItem: any) {
-    //     const cartItems = this.cartItemsSubject.value;
-
-    //     // Kiểm tra nếu sản phẩm đã tồn tại trong giỏ hàng
-    //     const existingItemIndex = cartItems.findIndex(
-    //         (item: any) =>
-    //             item.id === cartItem.id &&
-    //             item.color === cartItem.color &&
-    //             item.size === cartItem.size
-    //     );
-
-    //     if (existingItemIndex !== -1) {
-    //         // Nếu sản phẩm đã tồn tại, tăng số lượng lên
-    //         cartItems[existingItemIndex].quantity += cartItem.quantity;
-    //     } else {
-    //         // Nếu sản phẩm chưa tồn tại, thêm sản phẩm mới vào giỏ
-    //         cartItems.push(cartItem);
-    //     }
-
-    //     // Lưu giỏ hàng vào localStorage và cập nhật lại giỏ hàng trong service
-    //     localStorage.setItem('cart', JSON.stringify(cartItems));
-    //     this.cartItemsSubject.next(cartItems); // Cập nhật giỏ hàng
-    // }
 
 
 

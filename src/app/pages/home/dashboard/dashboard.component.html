@@ -1,1 +1,42 @@
-<p>dashboard works!</p>
+<div class="dashboard">
+  <div class="card-total">
+    <div class="card">
+      <i class="pi pi-receipt" style="color: blue"></i>
+      <div>
+        <p>Đơn hàng hôm nay</p>
+        <p class="total" style="color: blue">{{ paidOrder }} đơn hàng</p>
+      </div>
+    </div>
+    <div class="card">
+      <i class="pi pi-dollar" style="color: orange"></i>
+      <div>
+        <p>Doanh thu hôm nay</p>
+        <p class="total" style="color: orange">{{ formatPrice(money) }}</p>
+      </div>
+    </div>
+    <div class="card">
+      <i class="pi pi-money-bill" style="color: green"></i>
+      <div>
+        <p>Tổng doanh thu</p>
+        <p class="total" style="color: green">{{ formatPrice(totalMoney) }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="statistical">
+    <div class="revenue">
+      <div class="option">
+        <h2>DOANH THU</h2>
+        <select name="time" id="time" class="time">
+          <option value="Ngày">Ngày</option>
+          <option value="Hôm nay">Hôm nay</option>
+        </select>
+      </div>
+      <div>
+        <div class="total-money-order">
+          <p>{{ formatPrice(totalMoney) }}</p>
+          <p>{{ totalOrders }} đơn hàng</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

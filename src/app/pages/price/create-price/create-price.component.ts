@@ -23,7 +23,8 @@ import { ImageModule } from 'primeng/image';
   selector: 'app-create-price',
   standalone: true,
   imports: [FormsModule, InputTextModule, ButtonModule, ToastModule,
-    CommonModule, ReactiveFormsModule, DialogModule, CalendarModule, TableModule, MultiSelectModule, ImageModule],
+    CommonModule, ReactiveFormsModule, DialogModule, CalendarModule,
+    TableModule, MultiSelectModule, ImageModule],
   providers: [DatePipe],
   templateUrl: './create-price.component.html',
   styleUrl: './create-price.component.scss',
@@ -150,6 +151,8 @@ export class CreatePriceComponent implements OnInit {
       start_date: this.datePipe.transform(price.start_date, 'yyyy-MM-dd'),
       end_date: this.datePipe.transform(price.end_date, 'yyyy-MM-dd') || null,
     }));
+
+    console.log("ds", priceDTOs)
 
     try {
       for (const priceDTO of priceDTOs) {

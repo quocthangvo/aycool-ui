@@ -1,0 +1,71 @@
+<p-confirmDialog />
+<div class="table">
+  <p-table
+    [value]="warehouseList"
+    responsiveLayout="stack"
+    [breakpoint]="'960px'"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="caption">
+      <div class="caption">
+        <h1>Kho</h1>
+
+        <p-button severity="contrast" routerLink="/admin/create-warehouse">
+          <i
+            class="pi pi-plus"
+            style="font-size: 1rem; margin-right: 0.5rem"
+          ></i>
+          Nhập kho
+        </p-button>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Id</th>
+        <th>Hình ảnh</th>
+        <th>Tên</th>
+        <th>Giá nhập</th>
+        <th>Số lượng</th>
+        <th>Số lượng bán</th>
+        <th>Số lượng còn</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-warehouse let-i="rowIndex">
+      <tr>
+        <td>{{ i + 1 }}</td>
+        <td>
+          <p-image
+            *ngIf="
+              warehouse.product_detail?.product_id?.productImages?.length > 0 &&
+                warehouse.product_detail.product_id.productImages[0]?.imageUrl;
+              else noImage
+            "
+            [src]="
+              'http://localhost:8080/uploads/' +
+              warehouse.product_detail.product_id.productImages[0].imageUrl
+            "
+            alt="Ảnh sản phẩm"
+            width="50px"
+          ></p-image>
+          <ng-template #noImage>
+            <p-image
+              src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
+              alt="Ảnh"
+              width="50px"
+            />
+          </ng-template>
+        </td>
+
+        <td>{{ warehouse.product_detail.sku_name }}</td>
+        <td>{{ formatPrice(warehouse.price) }}</td>
+        <td>{{ warehouse.quantity }}</td>
+        <td>{{ warehouse.sell_quantity }}</td>
+        <td>{{ warehouse.remaining_quantity }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-paginator> </p-paginator>
+</div>

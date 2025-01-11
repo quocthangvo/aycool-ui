@@ -10,10 +10,14 @@
     </div>
 
     <div class="sidebar-list">
-      <!-- <div class="list">
-        <i class="pi pi-sort-down" style="font-size: 1.5rem"></i>
-        <p>Dashboard</p>
-      </div> -->
+      <div
+        class="list"
+        (click)="homeList()"
+        [class.selected]="selectedIndex === 10"
+      >
+        <i class="pi pi-home" style="font-size: 1.5rem"></i>
+        <p>Tổng quan</p>
+      </div>
       <div
         class="list"
         (click)="userList()"
@@ -69,6 +73,14 @@
         <p>Sản phẩm</p>
       </div>
 
+      <div
+        class="list"
+        (click)="warehouseList()"
+        [class.selected]="selectedIndex === 11"
+      >
+        <i class="pi pi-warehouse"></i>
+        <p>Kho</p>
+      </div>
       <div
         class="list"
         (click)="priceList()"

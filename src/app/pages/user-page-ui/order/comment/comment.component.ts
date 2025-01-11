@@ -98,7 +98,6 @@ export class CommentComponent implements OnInit {
   //   }
   // }
 
-
   // submitReview(): void {
   //   if (!this.order || !this.order.order_details) {
   //     console.error('No order details available');
@@ -128,71 +127,6 @@ export class CommentComponent implements OnInit {
   //   );
   // }
 
-
-
-
-  // Chọn sao khi người dùng click vào sao
-  // setRating(rating: number): void {
-  //   this.rating = rating;
-  // }
-
-  // Gửi đánh giá
-  // submitReview(): void {
-  //   if (this.userId === null) {
-  //     console.error('User ID is missing');
-  //     return;
-  //   }
-
-  //   // Ensure product_id is not null before submitting
-  //   if (this.productId === null) {
-  //     console.error('Product ID is missing');
-  //     return;
-  //   }
-
-  //   const reviewData = {
-  //     rating: this.rating,
-  //     comment: this.commentText,
-  //     product_id: this.productId, // Sử dụng productId đã lấy từ order_details
-  //     order_id: this.orderId,
-  //     user_id: this.userId,
-  //   };
-  //   console.log('Review Data:', reviewData);
-
-  //   this.reviewService.createReview(reviewData).subscribe(
-  //     (response) => {
-  //       this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Đánh giá thành công' });
-  //       this.goBack();
-  //     },
-  //     (error) => {
-  //       console.error('Error submitting review:', error);
-  //     }
-  //   );
-  // }
-  // submitReview(): void {
-  //   if (!this.order || !this.order.order_details) {
-  //     console.error('No order details available');
-  //     return;
-  //   }
-
-  //   const reviews = this.order.order_details.map((detail: any) => ({
-  //     rating: detail.rating,
-  //     comment: detail.comment,
-  //     product_id: detail.product_id,
-  //     order_id: this.orderId,
-  //     user_id: this.userId,
-  //   }));
-
-  //   console.log('Reviews:', reviews);
-  //   this.reviewService.createReview(reviews).subscribe(
-  //     (response) => {
-  //       this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Đánh giá thành công' });
-  //       this.goBack();
-  //     },
-  //     (error) => {
-  //       console.error('Error submitting reviews:', error);
-  //     }
-  //   );
-  // }
 
   groupedOrderDetails: any[] = [];
 
@@ -228,12 +162,26 @@ export class CommentComponent implements OnInit {
       });
     }
   }
+  group = {
+    comment: '' // Dữ liệu bình luận của người dùng
+  };
+  show = false;
 
   submitReview(): void {
+    this.show = true;
     if (!this.order || !this.order.order_details) {
       console.error('No order details available');
       return;
     }
+
+    // Validate if the comment has at least 3 words
+    const minWords = 3;
+    const wordCount = this.groupedOrderDetails.some(group => group.comment.split(/\s+/).filter(Boolean).length >= minWords);
+
+    if (!wordCount) {
+      return;
+    }
+
 
     // Prepare payload for review submission
     const reviewsPayload = new ReviewDTO({
@@ -256,4 +204,9 @@ export class CommentComponent implements OnInit {
       }
     );
   }
+
+  getWordCount(comment: string): number {
+    return comment.split(/\s+/).filter(Boolean).length;
+  }
+
 }

@@ -121,12 +121,28 @@ export class TokenService {
         return false;
     }
 
-    // // Kiểm tra tính hợp lệ của tokene
     // isTokenValid(): boolean {
     //     const token = this.getToken();
-
-    //     return !!token; // Trả về true nếu có token
+    //     if (token) {
+    //         try {
+    //             // Giải mã token (nếu sử dụng JWT)
+    //             const decodedToken = this.decodeToken(token);
+    //             const currentTime = Math.floor(Date.now() / 1000);
+    //             if (decodedToken.exp && decodedToken.exp > currentTime) {
+    //                 return true; // Token hợp lệ
+    //             }
+    //         } catch (error) {
+    //             console.error('Token không hợp lệ:', error);
+    //         }
+    //     }
+    //     return false; // Token không hợp lệ hoặc không tồn tại
     // }
+
+    // private decodeToken(token: string): any {
+    //     const payload = token.split('.')[1];
+    //     return JSON.parse(atob(payload));
+    // }
+
 
 
 }

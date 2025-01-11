@@ -91,4 +91,15 @@ export class OrderService {
         return this.http.post<any>(`${this.apiUrl}/apply-coupon`, data, { headers: this.getAuthHeaders() });
     }
 
+    getTotalMoneyOrder() {
+        return this.http.get(`${this.apiUrl}/total-money-order`, { headers: this.getAuthHeaders() });
+    }
+
+    // theo ngày hôm nay
+    getTotalMoneyByDate() {
+        return this.http.get(`${this.apiUrl}/paid-order`, { headers: this.getAuthHeaders() });
+    }
+    getTotalPaidOrderByDate() {
+        return this.http.get(`${this.apiUrl}/date-order`, { headers: this.getAuthHeaders() });
+    }
 }

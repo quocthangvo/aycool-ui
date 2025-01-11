@@ -79,6 +79,16 @@ export class AddressComponent implements OnInit {
     if (this.addressForm.valid) {
       const formData = this.addressForm.value;
       // Add the user_id to the form data
+
+      // Tìm và gán tên thay vì mã cho city, district, ward
+      const selectedCity = this.cities.find(city => city.Id === formData.city);
+      const selectedDistrict = this.districts.find(district => district.Id === formData.district);
+      const selectedWard = this.wards.find(ward => ward.Id === formData.ward);
+
+      formData.city = selectedCity ? selectedCity.Name : '';
+      formData.district = selectedDistrict ? selectedDistrict.Name : '';
+      formData.ward = selectedWard ? selectedWard.Name : '';
+
       formData.user_id = this.user_id;
 
       console.log("Creating with data:", formData);
@@ -92,7 +102,7 @@ export class AddressComponent implements OnInit {
               detail: 'Tạo mới thành công'
             });
             this.close.emit(); // Đóng dialog sau khi thành công
-
+            this.loadAddresses();
           } else {
             this.messageService.add({
               severity: 'error',
@@ -141,4 +151,22 @@ export class AddressComponent implements OnInit {
       this.addressForm.patchValue({ ward: '' });
     }
   }
+
+  addresses: any[] = []; // Danh sách địa chỉ
+
+  loadAddresses() {
+    if (this.user_id !== null) {
+      this.addressService.getAllAddressByUserId(this.user_id).subscribe({
+        next: (res: any) => {
+          this.addresses = res.data;
+        },
+        error: (err: any) => {
+          console.error("Error loading addresses:", err);
+        }
+      });
+    } else {
+      console.error("User ID is null");
+    }
+  }
+
 }

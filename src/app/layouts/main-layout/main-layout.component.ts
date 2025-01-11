@@ -97,4 +97,10 @@ export class MainLayoutComponent {
   couponList() {
     this.onSelect(9, '/admin/coupon')
   }
+  homeList() {
+    this.onSelect(10, '/admin/dashboard')
+  }
+  warehouseList() {
+    this.onSelect(11, '/admin/warehouse')
+  }
 }

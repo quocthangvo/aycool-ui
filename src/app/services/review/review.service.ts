@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environments';
 import { TokenService } from '../auth/token.service';
@@ -65,6 +65,26 @@ export class ReviewService {
 
         return this.http.get(`${this.apiUrl}/all/${productId}`, options);
     }
+
+
+
+    getAllReviewFilter(page: number, limit: number, productId: number, rating?: number | null): Observable<any> {
+        const params: any = {
+            page: page.toString(),
+            limit: limit.toString(),
+        };
+
+        // Chỉ thêm rating vào params nếu có giá trị
+        if (rating !== undefined && rating !== null) {
+            params.rating = rating.toString(); // Chuyển rating thành chuỗi
+        }
+
+        const options = { headers: this.createHeaders(), params };
+
+        return this.http.get(`${this.apiUrl}/all_filter/${productId}`, options);  // Sửa URL nếu cần
+    }
+
+
 
 
 }

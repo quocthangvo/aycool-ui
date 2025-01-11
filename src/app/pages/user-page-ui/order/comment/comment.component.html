@@ -185,7 +185,7 @@
 
       <p>Chọn sao</p>
       <div class="rating">
-        <div style="cursor: pointer">
+        <div style="cursor: pointer" class="rating-star">
           <i
             *ngFor="let star of stars; let j = index"
             [class.pi]="true"
@@ -194,6 +194,12 @@
             style="font-size: 2rem; color: #ffb402"
             (click)="setRating(i, j + 1)"
           ></i>
+        </div>
+        <div
+          *ngIf="show && group.rating === 0"
+          style="color: red; font-size: 14px"
+        >
+          Cần đánh giá sao.
         </div>
       </div>
 
@@ -206,16 +212,30 @@
           placeholder="Đánh giá tối đa 200 ký tự"
           [(ngModel)]="group.comment"
         ></textarea>
+        <div class="validator">
+          <div
+            *ngIf="show && getWordCount(group.comment) < 3"
+            style="color: red; font-size: 14px"
+          >
+            Bình luận phải có ít nhất 3 từ.
+          </div>
+          <div
+            *ngIf="show && group.comment.length > 200"
+            style="color: red; font-size: 14px"
+          >
+            Bình luận không được vượt quá 200 ký tự.
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="review-button">
-      <p-button
-        label="Gửi đánh giá"
-        [rounded]="true"
-        severity="info"
-        (click)="submitReview()"
-      ></p-button>
+      <div class="review-button">
+        <p-button
+          label="Gửi đánh giá"
+          [rounded]="true"
+          severity="info"
+          (click)="submitReview()"
+        ></p-button>
+      </div>
     </div>
   </div>
 </div>

@@ -36,6 +36,8 @@ export class OrderDetailService {
     }
 
 
-
+    getTopSellingProducts(): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/top3-selling`);
+    }
 
 }

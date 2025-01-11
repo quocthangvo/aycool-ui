@@ -65,8 +65,8 @@
           <p>Không có sản phẩm nào</p>
         </div>
         <div
-          class="product-item"
           *ngFor="let product of products"
+          class="product-item"
           (click)="goToProductDetail(product.id)"
         >
           <img
@@ -92,14 +92,16 @@
               <p class="promotion-price">
                 {{
                   formatPrice(
-                    product.product_details[0]?.prices[0]?.promotionPrice ?? 900
+                    product.product_details[0]?.prices[0]?.promotionPrice ??
+                      120000
                   )
                 }}
               </p>
               <p class="sell-price">
                 {{
                   formatPrice(
-                    product.product_details[0]?.prices[0]?.sellingPrice ?? 1000
+                    product.product_details[0]?.prices[0]?.sellingPrice ??
+                      150000
                   )
                 }}
               </p>
@@ -113,7 +115,6 @@
 <p-paginator
   [totalRecords]="totalRecords"
   [rows]="rowsPerPage"
-  [rowsPerPageOptions]="[10, 20, 30]"
   (onPageChange)="onPageChange($event)"
 >
 </p-paginator>

@@ -41,16 +41,73 @@
             <div class="font-semibold">
               {{
                 formatPrice(
-                  product.product_details[0]?.prices[0]?.promotionPrice ?? 900
+                  product.product_details[0]?.prices[0]?.promotionPrice ??
+                    120000
                 )
               }}
             </div>
             <div class="ml-5 sell-price">
               {{
                 formatPrice(
-                  product.product_details[0]?.prices[0]?.sellingPrice ?? 1000
+                  product.product_details[0]?.prices[0]?.sellingPrice ?? 150000
                 )
               }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
+</div>
+
+<!-- sản phẩm bán chạy -->
+<div class="list-shirt">
+  <div>
+    <h2>SẢN PHẨM BÁN CHẠY</h2>
+  </div>
+  <p-carousel
+    [value]="topProducts"
+    [numVisible]="5"
+    [numScroll]="5"
+    [circular]="true"
+    [responsiveOptions]="responsiveOptions"
+    autoplayInterval="0"
+    [showIndicators]="false"
+  >
+    <ng-template let-product pTemplate="item">
+      <div
+        class="product-item"
+        (click)="navigateToProductDetail(product.product_id)"
+      >
+        <!-- Display the first image, if available -->
+        <img
+          *ngIf="product.imageUrl"
+          [src]="'http://localhost:8080/uploads/' + product.imageUrl"
+          alt="Ảnh sản phẩm"
+          width="50px"
+        />
+        <!-- Fallback image if no image found -->
+        <ng-template #noImage>
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
+            alt="Không có ảnh"
+          />
+        </ng-template>
+
+        <div class="product-content">
+          <div class="mb-2">
+            {{ product.product_name }}
+          </div>
+          <div class="flex align-items-center">
+            <div class="flex align-items-center">
+              <div class="price">
+                <div class="font-semibold">
+                  {{ formatPrice(product.price?.promotionPrice ?? 120000) }}
+                </div>
+                <div class="ml-5 sell-price">
+                  {{ formatPrice(product.price?.sellingPrice ?? 150000) }}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -118,16 +175,16 @@
                 <div class="font-semibold">
                   {{
                     formatPrice(
-                      product.product_details[0]?.prices[0]?.sellingPrice ??
-                        1000
+                      product.product_details[0]?.prices[0]?.promotionPrice ??
+                        120000
                     )
                   }}
                 </div>
                 <div class="ml-5 sell-price">
                   {{
                     formatPrice(
-                      product.product_details[0]?.prices[0]?.promotionPrice ??
-                        900
+                      product.product_details[0]?.prices[0]?.sellingPrice ??
+                        150000
                     )
                   }}
                 </div>
@@ -196,21 +253,23 @@
             </div>
             <div class="flex align-items-center">
               <div class="flex align-items-center">
-                <div class="font-semibold">
-                  {{
-                    formatPrice(
-                      product.product_details[0]?.prices[0]?.sellingPrice ??
-                        1000
-                    )
-                  }}
-                </div>
-                <div class="ml-5 sell-price">
-                  {{
-                    formatPrice(
-                      product.product_details[0]?.prices[0]?.promotionPrice ??
-                        900
-                    )
-                  }}
+                <div class="price">
+                  <div class="font-semibold">
+                    {{
+                      formatPrice(
+                        product.product_details[0]?.prices[0]?.promotionPrice ??
+                          120000
+                      )
+                    }}
+                  </div>
+                  <div class="ml-5 sell-price">
+                    {{
+                      formatPrice(
+                        product.product_details[0]?.prices[0]?.sellingPrice ??
+                          150000
+                      )
+                    }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -277,21 +336,90 @@
             </div>
             <div class="flex align-items-center">
               <div class="flex align-items-center">
-                <div class="font-semibold">
-                  {{
-                    formatPrice(
-                      product.product_details[0]?.prices[0]?.sellingPrice ??
-                        1000
-                    )
-                  }}
+                <div class="price">
+                  <div class="font-semibold">
+                    {{
+                      formatPrice(
+                        product.product_details[0]?.prices[0]?.promotionPrice ??
+                          120000
+                      )
+                    }}
+                  </div>
+                  <div class="ml-5 sell-price">
+                    {{
+                      formatPrice(
+                        product.product_details[0]?.prices[0]?.sellingPrice ??
+                          150000
+                      )
+                    }}
+                  </div>
                 </div>
-                <div class="ml-5 sell-price">
-                  {{
-                    formatPrice(
-                      product.product_details[0]?.prices[0]?.promotionPrice ??
-                        900
-                    )
-                  }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-carousel>
+  </div>
+</div>
+
+<div>
+  <div class="list-shirt">
+    <div>
+      <h2 class="">SẢN PHẨM KHO</h2>
+    </div>
+    <p-carousel
+      [value]="purchase"
+      [numVisible]="5"
+      [numScroll]="5"
+      [circular]="true"
+      [showIndicators]="false"
+    >
+      <ng-template let-product pTemplate="item">
+        <div
+          class="product-item"
+          (click)="navigateToProductDetail(product.productId?.id)"
+        >
+          <img
+            *ngIf="product.productId?.product_images?.length > 0; else noImage"
+            [src]="
+              'http://localhost:8080/uploads/' +
+              product?.productId?.product_images[0].imageUrl
+            "
+            alt="Ảnh sản phẩm"
+            width="50px"
+          />
+          <ng-template #noImage>
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
+              alt="Image not found"
+              width="50px"
+            />
+          </ng-template>
+
+          <div class="product-content">
+            <div class="mb-2">
+              {{ product?.productId.name }}
+            </div>
+            <div class="flex align-items-center">
+              <div class="flex align-items-center">
+                <div class="price">
+                  <div class="font-semibold">
+                    {{
+                      formatPrice(
+                        product?.productId?.product_details[0]?.prices[0]
+                          ?.promotionPrice ?? 120000
+                      )
+                    }}
+                  </div>
+                  <div class="ml-5 sell-price">
+                    {{
+                      formatPrice(
+                        product?.productId?.product_details[0]?.prices[0]
+                          ?.sellingPrice ?? 150000
+                      )
+                    }}
+                  </div>
                 </div>
               </div>
             </div>

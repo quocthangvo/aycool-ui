@@ -78,4 +78,38 @@ export class PriceListComponent implements OnInit {
   formatPrice(price: number): string {
     return price ? price.toLocaleString('vi-VN') + 'đ' : '';
   }
+  onDelete(id: number, event: Event) {
+    console.log('Price ID to delete:', id);
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: 'Bạn có muốn xóa giá này không?',
+      header: 'Xác nhận',
+      icon: 'pi pi-info-circle',
+      acceptIcon: "none",
+      rejectIcon: "none",
+      acceptButtonStyleClass: "p-button-danger p-button-text",
+      rejectButtonStyleClass: "p-button-text p-button-text",
+      accept: () => {
+        this.priceService.deletePriceById(id).subscribe(
+          (res: any) => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Thành công',
+              detail: 'Xóa thành công'
+            });
+            this.loadPrices(this.currentPage, this.rowsPerPage);
+          },
+          (error: any) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Lỗi',
+              detail: '' + error.error.message
+            });
+          }
+        );
+      },
+
+    });
+  }
+
 }

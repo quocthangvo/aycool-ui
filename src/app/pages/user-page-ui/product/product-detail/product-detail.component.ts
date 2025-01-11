@@ -117,22 +117,7 @@ export class ProductDetailComponent implements OnInit {
 
   price: number = 120000; // Giá bán hoặc giá khuyến mãi
   promotionPrice: number | null = 150000; // Lưu giá khuyến mãi
-  // Cập nhật giá khi người dùng chọn màu sắc và kích thước
-  // updatePrice() {
-  //   if (this.selectedColor && this.selectedSize) {
-  //     const selectedProductDetail = this.product.product_details.find(
-  //       (detail: any) =>
-  //         detail.color?.name === this.selectedColor && detail.size?.name === this.selectedSize
-  //     );
-
-  //     if (selectedProductDetail) {
-  //       const priceDetails = selectedProductDetail.prices[0];
-  //       this.promotionPrice = priceDetails.promotionPrice; // Ensure this is not null or undefined
-  //       this.price = priceDetails.sellingPrice; // Fallback to selling price if no promotion price
-  //     }
-
-  //   }
-  // }
+  // quantityAvailable: number | null = null; // Số lượng của sản phẩm theo lựa chọn
 
   updatePrice() {
     if (this.selectedColor && this.selectedSize) {
@@ -142,6 +127,8 @@ export class ProductDetailComponent implements OnInit {
       );
 
       if (selectedProductDetail) {
+        // Cập nhật số lượng
+        // this.quantityAvailable = selectedProductDetail.quantity;
         // Sắp xếp danh sách giá theo createdAt giảm dần
         const sortedPrices = selectedProductDetail.prices.sort(
           (a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()

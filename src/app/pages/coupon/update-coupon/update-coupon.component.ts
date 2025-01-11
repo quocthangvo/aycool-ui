@@ -55,15 +55,93 @@ export class UpdateCouponComponent {
   }
 
 
+  // updateCoupon(): void {
+  //   this.submit = true;
+
+  //   if (this.subCouponForm.valid && this.couponId !== null) {
+  //     // Lấy giá trị từ form
+  //     const updatedCoupon: CouponDTO = { ...this.subCouponForm.value };
+  //     // Đảm bảo ngày bắt đầu và ngày kết thúc là chuỗi theo định dạng yyyy-MM-dd
+  //     updatedCoupon.start_date = this.subCouponForm.get('startDate')?.value;
+  //     updatedCoupon.end_date = this.subCouponForm.get('endDate')?.value;
+
+  //     // Đảm bảo rằng các trường không thay đổi sẽ giữ lại giá trị cũ
+  //     const currentCoupon = this.subCouponForm.getRawValue(); // Lấy tất cả giá trị hiện tại của form (bao gồm cả giá trị cũ)
+
+  //     // Nếu trường nào không thay đổi, giữ lại giá trị cũ
+  //     if (!this.subCouponForm.get('code')?.dirty) {
+  //       updatedCoupon.code = currentCoupon.code; // Giữ giá trị cũ của mã
+  //     }
+  //     if (!this.subCouponForm.get('description')?.dirty) {
+  //       updatedCoupon.description = currentCoupon.description; // Giữ giá trị cũ của mô tả
+  //     }
+  //     if (!this.subCouponForm.get('discountType')?.dirty) {
+  //       updatedCoupon.discount_type = currentCoupon.discountType; // Giữ giá trị cũ của discountType
+  //     }
+  //     if (!this.subCouponForm.get('discountValue')?.dirty) {
+  //       updatedCoupon.discount_value = currentCoupon.discountValue; // Giữ giá trị cũ của discountValue
+  //     }
+  //     if (!this.subCouponForm.get('minOrderValue')?.dirty) {
+  //       updatedCoupon.min_order_value = currentCoupon.minOrderValue; // Giữ giá trị cũ của minOrderValue
+  //     }
+  //     if (!this.subCouponForm.get('startDate')?.dirty) {
+  //       updatedCoupon.start_date = currentCoupon.startDate; // Giữ giá trị cũ của startDate
+  //     }
+  //     if (!this.subCouponForm.get('endDate')?.dirty) {
+  //       updatedCoupon.end_date = currentCoupon.endDate; // Giữ giá trị cũ của endDate
+  //     }
+  //     if (!this.subCouponForm.get('usageLimit')?.dirty) {
+  //       updatedCoupon.usage_limit = currentCoupon.usageLimit; // Giữ giá trị cũ của usageLimit
+  //     }
+  //     if (!this.subCouponForm.get('status')?.dirty) {
+  //       updatedCoupon.status = currentCoupon.status; // Giữ giá trị cũ của status
+  //     }
+
+  //     // Gọi API cập nhật
+  //     this.couponService.updateCouponById(this.couponId, updatedCoupon).subscribe(
+  //       (response) => {
+  //         this.messageService.add({
+  //           severity: 'success',
+  //           summary: 'Cập nhật thành công',
+  //           detail: 'Mã giảm giá đã được cập nhật'
+  //         });
+  //         this.router.navigateByUrl('/admin/coupon'); // Redirect to coupon list after update
+  //       },
+  //       (error) => {
+  //         this.messageService.add({
+  //           severity: 'error',
+  //           summary: 'Cập nhật thất bại',
+  //           detail: 'Có lỗi xảy ra khi cập nhật mã giảm giá'
+  //         });
+  //       }
+  //     );
+  //   }
+  // }
+
+
+  cancel(): void {
+    this.router.navigateByUrl('/admin/coupon');
+  }
+
   updateCoupon(): void {
     this.submit = true;
 
     if (this.subCouponForm.valid && this.couponId !== null) {
       // Lấy giá trị từ form
       const updatedCoupon: CouponDTO = { ...this.subCouponForm.value };
+
       // Đảm bảo ngày bắt đầu và ngày kết thúc là chuỗi theo định dạng yyyy-MM-dd
       updatedCoupon.start_date = this.subCouponForm.get('startDate')?.value;
       updatedCoupon.end_date = this.subCouponForm.get('endDate')?.value;
+
+      // Kiểm tra nếu ngày hiện tại trừ ngày kết thúc = 0, thì cập nhật trạng thái thành false
+      const currentDate = new Date();
+      const endDate = new Date(updatedCoupon.end_date);
+
+      // Kiểm tra nếu ngày hiện tại >= ngày kết thúc
+      if (currentDate.setHours(0, 0, 0, 0) >= endDate.setHours(0, 0, 0, 0)) {
+        updatedCoupon.status = false;  // Cập nhật trạng thái thành false nếu coupon đã hết hạn
+      }
 
       // Đảm bảo rằng các trường không thay đổi sẽ giữ lại giá trị cũ
       const currentCoupon = this.subCouponForm.getRawValue(); // Lấy tất cả giá trị hiện tại của form (bao gồm cả giá trị cũ)
@@ -118,8 +196,4 @@ export class UpdateCouponComponent {
     }
   }
 
-
-  cancel(): void {
-    this.router.navigateByUrl('/admin/coupon');
-  }
 }

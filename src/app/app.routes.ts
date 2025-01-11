@@ -36,11 +36,19 @@ import { CommentComponent } from './pages/user-page-ui/order/comment/comment.com
 import { CouponListComponent } from './pages/coupon/coupon-list/coupon-list.component';
 import { CreateCouponComponent } from './pages/coupon/create-coupon/create-coupon.component';
 import { UpdateCouponComponent } from './pages/coupon/update-coupon/update-coupon.component';
+import { WarehouseListComponent } from './pages/admin-page-ui/warehouse/warehouse-list/warehouse-list.component';
+import { CreateWarehouseComponent } from './pages/admin-page-ui/warehouse/create-warehouse/create-warehouse.component';
 
 
 
 
 export const routes: Routes = [
+    {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full' // Đảm bảo chỉ chuyển hướng khi đường dẫn hoàn toàn trống.
+    },
+
     {
         path: 'loading',
         component: LoadingComponent
@@ -59,11 +67,11 @@ export const routes: Routes = [
         canActivate: [AuthGuard], // Bảo vệ nếu đã đăng nhập
         // data: { roles: ['ADMIN'] },
         children: [
-            // {
-            //     path: '', // Nếu không chỉ định component hoặc redirect, sẽ xảy ra lỗi giao diện
-            //     redirectTo: 'dashboard', // Điều hướng đến một component chính (ví dụ: Dashboard)
-            //     pathMatch: 'full'
-            // },
+            {
+                path: 'admin', // Nếu không chỉ định component hoặc redirect, sẽ xảy ra lỗi giao diện
+                redirectTo: 'dashboard', // Điều hướng đến một component chính (ví dụ: Dashboard)
+                // pathMatch: 'full'
+            },
             {
                 path: 'dashboard',
                 component: DashboardComponent
@@ -128,6 +136,14 @@ export const routes: Routes = [
                 path: 'update-coupon/:id',
                 component: UpdateCouponComponent
             },
+            {
+                path: 'warehouse',
+                component: WarehouseListComponent
+            },
+            {
+                path: 'create-warehouse',
+                component: CreateWarehouseComponent
+            }
         ]
     },
     {
@@ -194,16 +210,11 @@ export const routes: Routes = [
 
         ]
     },
-    {
-        path: '**',
-        redirectTo: 'home' // Chuyển hướng khi đường dẫn không tồn tại.
-    }
     // {
-    //     path: '**', // Đường dẫn không hợp lệ
-    //     redirectTo: '/vn', // Chuyển hướng main nếu có token
-    //     // pathMatch: 'full'
-
+    //     path: '**',
+    //     redirectTo: 'home' // Chuyển hướng khi đường dẫn không tồn tại.
     // }
+
 
 
 ];

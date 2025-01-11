@@ -60,6 +60,7 @@ export class CartComponent {
     // this.calculateTotal();
     this.loadCoupon();
 
+
   }
 
   // coupon

@@ -12,7 +12,17 @@
 
   <div class="review-total">
     <div class="drop-down-list">
-      <p-dropdown optionLabel="name" placeholder="Sao" />
+      <p>Lọc</p>
+      <select
+        [(ngModel)]="selectedRating"
+        (change)="onRatingChange($event)"
+        class="select"
+      >
+        <option value="Lọc" disabled selected>-- Lọc --</option>
+        <option *ngFor="let option of ratingOptions" [value]="option.value">
+          {{ option.label }}
+        </option>
+      </select>
     </div>
     <div class="comment-total">
       <div *ngFor="let review of reviews" class="cmt">

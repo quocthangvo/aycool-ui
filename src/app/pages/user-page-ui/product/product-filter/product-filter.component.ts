@@ -38,9 +38,9 @@ export class ProductFilterComponent implements OnInit, OnDestroy {
   products: any[] = [];
   private sub: any;
 
-  totalRecords: number = 10; // Tổng số đơn hàng
-  totalPages: number = 0; // Tổng số trang
-  rowsPerPage: number = 10; // Số đơn hàng mỗi trang
+  totalRecords: number = 100; // Tổng số đơn hàng
+  // totalPages: number = 0; // Tổng số trang
+  rowsPerPage: number = 30; // Số đơn hàng mỗi trang
   currentPage: number = 0; // Trang hiện tại
 
 
@@ -110,8 +110,6 @@ export class ProductFilterComponent implements OnInit, OnDestroy {
   loadProducts() {
     if (!this.subCategoryId) return;
 
-
-
     // Cập nhật URL khi có thay đổi bộ lọc
     const colorId: number = this.filterForm.value.color;
     const sizeIds: number[] = this.filterForm.value.size || [];  // Đảm bảo sizeIds là một mảng số
@@ -145,6 +143,8 @@ export class ProductFilterComponent implements OnInit, OnDestroy {
       this.products = response?.data?.productResponseList || [];
       this.category = this.products.length > 0 ? this.products[0].category : ''; // lấy category
       this.sub_category_name = this.products.length > 0 ? this.products[0].sub_category_name : ''; // lấy subcategory
+
+
       this.totalRecords = response?.data?.totalRecords || 0;  // Cập nhật tổng số sản phẩm
     });
 

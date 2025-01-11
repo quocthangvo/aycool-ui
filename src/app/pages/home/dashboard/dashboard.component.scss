@@ -1,0 +1,59 @@
+.dashboard{
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin: 40px 0;
+    .card-total{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 60%;
+        .card{
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            padding: 10px 20px;
+            border: 1px solid #999;
+            width: 250px;
+            background-color: #fff;
+          
+            i{
+                margin-right: 1rem;
+                font-size: 2rem;
+            }
+            p{
+                margin: 0;
+                margin-bottom: 5px;
+            }
+            .total{
+                font-size: 1.5rem;
+                margin: 0;
+            }
+        }
+    }
+
+    .statistical{
+        width: 35%;
+        border: 1px solid #999;
+        background-color: #fff;
+        height: 100%;
+        padding: 1rem;
+        .option{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .time{
+                padding: 10px 70px 10px 10px;
+                border-radius: 10px;
+                text-align: start;
+            }
+        }
+        .total-money-order{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 1rem;
+        }
+       
+    }
+}

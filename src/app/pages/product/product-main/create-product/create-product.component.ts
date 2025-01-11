@@ -25,6 +25,7 @@ import { SizeService } from '../../../../services/attribute/size.service';
 import { Color } from '../../../../models/attribute/color.model';
 import { Size } from '../../../../models/attribute/size.model';
 import { TreeSelectModule } from 'primeng/treeselect';
+import e from 'express';
 
 
 @Component({
@@ -45,13 +46,11 @@ export class CreateProductComponent implements OnInit {
   sizeNodes: any[] = [];
 
   selectedSubCategoryName: any;
-  // selectedMaterial: any;
-  // selectedColor: number[] = [];
-  // selectedSize: any;
-
 
   productForm: FormGroup;
   submit = false;
+
+
 
 
   constructor(
@@ -71,8 +70,8 @@ export class CreateProductComponent implements OnInit {
       material_id: ['', [Validators.required]],
       description: [''],
       colors: [[], [Validators.required]],
-      sizes: [[], [Validators.required]]
-
+      sizes: [[], [Validators.required]],
+      quantity: this.fb.group({})
     });
   }
 
@@ -82,6 +81,7 @@ export class CreateProductComponent implements OnInit {
     this.loadColorOptions();
     this.loadSizeOptions();
   }
+
 
   get name() {
     return this.productForm.get('name');
@@ -136,9 +136,9 @@ export class CreateProductComponent implements OnInit {
         label: color.name,
         value: color.id,
       }));
+      console.log("Color Nodes:", this.colorNodes);
     });
   }
-
 
   //size
   loadSizeOptions() {
@@ -149,6 +149,7 @@ export class CreateProductComponent implements OnInit {
         value: size.id,
         description: size.description
       }));
+      console.log("Size Nodes:", this.sizeNodes);
     });
   }
 
@@ -159,6 +160,8 @@ export class CreateProductComponent implements OnInit {
       const formData: ProductDTO = this.productForm.value;
       formData.colors = formData.colors.map((color: any) => color.value);
       formData.sizes = formData.sizes.map((size: any) => size.value);
+
+
 
       console.log("Create with data:", formData);
 
@@ -225,6 +228,7 @@ export class CreateProductComponent implements OnInit {
     if (selectedCategory) {
       this.selectedSubCategoryName = selectedCategory.label; // Cập nhật tên danh mục vào biến selectedCategoryName
     }
+
   }
 
 
@@ -236,6 +240,10 @@ export class CreateProductComponent implements OnInit {
       this.uploadedFiles.splice(index, 1);
     }
   }
+
+
+
+
 
 }
 

@@ -11,15 +11,30 @@ import { Observable } from 'rxjs';
 export class AuthGuard implements CanActivate {
     constructor(private tokenService: TokenService, private router: Router, private authService: AuthService) { }
 
-    canActivate(): boolean {
-        if (this.tokenService.isTokenValid()) {
-            return true;
-        } else {
-            // this.router.navigateByUrl('home'); // Chuyển hướng về login nếu không có token
+    // canActivate(): boolean {
+    //     if (this.tokenService.isTokenValid()) {
+    //         return true;
+    //     } else {
+    //         // this.router.navigateByUrl('home'); // Chuyển hướng về login nếu không có token
+    //         return false;
+    //     }
+    // }
+    // canActivate(): boolean {
+    //     if (this.tokenService.isTokenValid()) {
+    //         const role = this.tokenService.getRole();
+    //         if (role === 'ADMIN') {
+    //             this.router.navigateByUrl('/admin'); // Điều hướng Admin về Dashboard
+    //         } else if (role === 'USER') {
+    //             this.router.navigateByUrl('/home'); // Điều hướng User về Home
+    //         }
+    //         return true;
+    //     } else {
+    //         this.router.navigateByUrl('/home'); // Không có token thì về trang chủ
+    //         return false;
+    //     }
+    // }
 
-            return false;
-        }
-    }
+
     // canActivate(): boolean {
     //     if (this.tokenService.isTokenValid()) {
     //         const userRole = this.tokenService.getRole(); // Giả sử tokenService có phương thức này
@@ -35,18 +50,18 @@ export class AuthGuard implements CanActivate {
     // }
 
 
-    // canActivate(): boolean {
-    //     const token = this.tokenService.getToken(); // Lấy token từ TokenService
+    canActivate(): boolean {
+        const token = this.tokenService.getToken(); // Lấy token từ TokenService
 
-    //     if (token) {
-    //         // Nếu có token, cho phép truy cập vào route
-    //         return true;
-    //     } else {
-    //         // Nếu không có token, chuyển hướng về trang login
-    //         this.router.navigateByUrl('home');
-    //         return false;
-    //     }
-    // }
+        if (token) {
+            // Nếu có token, cho phép truy cập vào route
+            return true;
+        } else {
+            // Nếu không có token, chuyển hướng về trang login
+            // this.router.navigateByUrl('home');
+            return false;
+        }
+    }
 
     // canActivate(
     //     route: ActivatedRouteSnapshot,

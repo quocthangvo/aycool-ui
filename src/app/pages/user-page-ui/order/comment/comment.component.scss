@@ -35,15 +35,19 @@
             }
         }
 
-        .rating {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            i {
-                margin-right: 10px;
+        .rating{
+            text-align: center;
+            .rating-star {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 5px;
+                i {
+                    margin-right: 10px;
+                }
             }
         }
+      
 
         .comment {
             text-align: center;

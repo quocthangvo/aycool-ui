@@ -97,7 +97,16 @@
         </td>
 
         <td>{{ orders.order_date }}</td>
-        <td>{{ orders.total_money }}</td>
+        <td>
+          {{
+            formatPrice(
+              orders.total_money_after_discount > 0
+                ? orders.total_money_after_discount
+                : orders.total_money
+            )
+          }}
+        </td>
+
         <!-- <td>{{ orders.statusDisplayName }}</td> -->
         <td>
           <p-dropdown

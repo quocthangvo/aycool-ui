@@ -11,7 +11,7 @@ export class CouponDTO {
     start_date: string;  // Đổi kiểu dữ liệu từ Date sang string
     end_date: string;    // Đổi kiểu dữ liệu từ Date sang string
     usage_limit: number;
-    status: string
+    status: boolean;
     constructor(data: any) {
 
         this.code = data.code;
@@ -24,7 +24,7 @@ export class CouponDTO {
         this.end_date = this.formatDate(data.end_date);
 
         this.usage_limit = data.usage_limit;
-        this.status = data.status;
+        this.status = data.status === 'true';
 
     }
     // Hàm chuyển đổi Date thành chuỗi yyyy-MM-dd

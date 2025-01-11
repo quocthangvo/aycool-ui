@@ -1,0 +1,139 @@
+<div class="card">
+  <h1>Nhập giá</h1>
+  <form [formGroup]="purchaseForm" (ngSubmit)="createPurchase()" class="form">
+    <div class="card-form">
+      <div class="input-form">
+        <p>Sản phẩm</p>
+        <p-multiSelect
+          [options]="productList"
+          formControlName="selectedProductDetail"
+          placeholder="Chọn sản phẩm"
+          display="chip"
+          [showClear]="true"
+          optionLabel="sku_name"
+          optionValue="id"
+          (onChange)="onProductSelectChange($event)"
+        ></p-multiSelect>
+        <p
+          *ngIf="
+            submit &&
+            purchaseForm.get('selectedProductDetail')?.hasError('required')
+          "
+          class="validator"
+        >
+          Cần chọn sản phẩm
+        </p>
+      </div>
+
+      <div *ngIf="purchase.controls.length > 0">
+        <p-table [value]="purchase.controls">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Id</th>
+              <th>Hình ảnh</th>
+              <th>Tên sản phẩm</th>
+              <th>Số lượng</th>
+              <th>Giá nhập</th>
+              <th></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-group let-i="rowIndex">
+            <tr [formGroup]="group">
+              <td>{{ i + 1 }}</td>
+              <td>
+                <ng-container
+                  *ngIf="
+                    selectedProductDetails[i]?.product_id?.productImages
+                      ?.length > 0;
+                    else noImage
+                  "
+                >
+                  <p-image
+                    [src]="
+                      'http://localhost:8080/uploads/' +
+                      selectedProductDetails[i]?.product_id?.productImages[0]
+                        ?.imageUrl
+                    "
+                    alt="Ảnh sản phẩm"
+                    width="50px"
+                  >
+                  </p-image>
+                </ng-container>
+                <ng-template #noImage>
+                  <p-image
+                    src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
+                    alt="Ảnh không có"
+                    width="50px"
+                  >
+                  </p-image>
+                </ng-template>
+              </td>
+              <td>{{ selectedProductDetails[i]?.sku_name }}</td>
+              <td>
+                <input type="number" formControlName="quantity" pInputText />
+                <div class="validator">
+                  <p
+                    *ngIf="
+                      group.get('quantity').hasError('required') &&
+                      group.get('quantity').touched
+                    "
+                    style="font-size: 14px"
+                  >
+                    Bắt buộc
+                  </p>
+                  <p
+                    *ngIf="
+                      group.get('quantity').hasError('min') &&
+                      group.get('quantity').touched
+                    "
+                    style="font-size: 14px"
+                  >
+                    Số lượng phải lớn hơn 0.
+                  </p>
+                </div>
+              </td>
+              <td>
+                <input pInputText formControlName="price" />
+                <div class="validator">
+                  <p
+                    *ngIf="
+                      group.get('price').hasError('required') &&
+                      group.get('price').touched
+                    "
+                    style="font-size: 14px"
+                  >
+                    Bắt buộc
+                  </p>
+                  <p
+                    *ngIf="
+                      group.get('price').hasError('min') &&
+                      group.get('price').touched
+                    "
+                    style="font-size: 14px"
+                  >
+                    Giá bán phải lớn hơn 0.
+                  </p>
+                </div>
+              </td>
+              <td>
+                <button (click)="removeProduct(i)" type="button" class="remove">
+                  X
+                </button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+
+    <div class="button-create">
+      <p-button
+        label="Hủy"
+        (click)="cancel()"
+        [text]="true"
+        [plain]="true"
+      ></p-button>
+      <p-button label="Thêm" type="submit" class="submit"></p-button>
+    </div>
+  </form>
+</div>

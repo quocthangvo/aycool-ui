@@ -78,7 +78,9 @@ export class ProductDetailListComponent implements OnChanges {
               summary: 'Thành công',
               detail: 'Xóa thành công'
             });
-            this.loadProductDetails(id);
+            if (this.productId) {
+              this.loadProductDetails(this.productId); // Use the correct productId
+            }
           },
           (error: any) => {
             this.messageService.add({
@@ -90,7 +92,7 @@ export class ProductDetailListComponent implements OnChanges {
         );
       },
       reject: () => {
-        // this.loadProductDetails();
+        // this.loadProductDetails(id);
       }
     });
   }
