@@ -139,15 +139,33 @@ export class UserHeaderComponent {
     console.log('Subcategory ID:', subCategoryId);
   }
 
-  searchTerm: string = '';
+
+
+  searchTerm: string = ''; // Từ khóa tìm kiếm
   onSearch() {
     if (this.searchTerm.trim()) {
-      // If search term is not empty, navigate to the product-search page with the search query parameter
+      // Nếu từ khóa tìm kiếm không rỗng, điều hướng đến trang /product-search với query search
       this.router.navigate(['/product-search'], { queryParams: { search: this.searchTerm } });
     } else {
-      // If search term is empty, navigate to the product-search page without query parameters
+      // Nếu từ khóa tìm kiếm rỗng, điều hướng đến trang /product-search mà không có query parameter
       this.router.navigate(['/product-search']);
     }
+  }
+
+
+  // giá mới nhất
+  getLatestPrice(prices: any[]): any {
+    if (!prices || prices.length === 0) {
+      return null; // Không có giá nào trong danh sách
+    }
+
+    // Sắp xếp danh sách giá theo createdAt giảm dần
+    const sortedPrices = prices.sort((a: any, b: any) => {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
+
+    // Trả về giá đầu tiên (mới nhất)
+    return sortedPrices[0];
   }
 
 }

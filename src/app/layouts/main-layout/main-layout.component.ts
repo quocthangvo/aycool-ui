@@ -22,9 +22,9 @@ export class MainLayoutComponent {
 
   ngOnInit() {
     this.items = [
-      { label: 'Profile', icon: 'pi pi-user', command: () => this.goToProfile() },
-      { label: 'Settings', icon: 'pi pi-cog', command: () => this.goToSettings() },
-      { label: 'Logout', icon: 'pi pi-sign-out', command: () => this.logout() },
+      { label: 'Thông tin', icon: 'pi pi-user', command: () => this.goToProfile() },
+      { label: 'Cài đặt', icon: 'pi pi-cog', command: () => this.goToSettings() },
+      { label: 'Đăng xuất', icon: 'pi pi-sign-out', command: () => this.logout() },
     ];
 
     // Khôi phục chỉ mục đã chọn từ localStorage nếu có
@@ -102,5 +102,14 @@ export class MainLayoutComponent {
   }
   warehouseList() {
     this.onSelect(11, '/admin/warehouse')
+  }
+  pruchaseList() {
+    this.onSelect(12, '/admin/purchase')
+  }
+
+  isDropdownWarehouse = false;
+
+  toggleDropdownWarehouse() {
+    this.isDropdownWarehouse = !this.isDropdownWarehouse;
   }
 }

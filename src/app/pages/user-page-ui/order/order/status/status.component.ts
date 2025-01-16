@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { SideBarComponent } from "../../side-bar/side-bar.component";
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { OrderService } from '../../../../../services/order/order.service';
-import { CommonModule, DatePipe, Location } from '@angular/common';
+import { CommonModule, DatePipe, Location, ViewportScroller } from '@angular/common';
 import { DeliveryStatusComponent } from "./delivery-status/delivery-status.component";
 import { ReviewService } from '../../../../../services/review/review.service';
 
@@ -24,7 +24,9 @@ export class StatusComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private datePipe: DatePipe,
-    private reviewService: ReviewService
+    private reviewService: ReviewService,
+    private router: Router,
+    private viewportScroller: ViewportScroller
   ) {
 
   }
@@ -108,5 +110,10 @@ export class StatusComponent implements OnInit {
     );
   }
 
-
+  navigateToProductDetail(productId: number): void {
+    this.router.navigate(['/product-detail', productId]).then(() => {
+      // Scroll to the top of the page after navigation
+      this.viewportScroller.scrollToPosition([0, 0]);
+    });
+  }
 }

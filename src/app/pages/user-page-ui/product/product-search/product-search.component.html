@@ -9,27 +9,27 @@
       placeholder="Chọn danh mục"
     >
     </p-dropdown>
+    <p-button severity="secondary" (click)="clearFilters()">
+      <i class="pi pi-filter-slash"> Xóa</i>
+    </p-button>
   </div>
 
   <div class="product">
-    <!-- <div class="filter">
-      <p>Sắp xếp theo</p>
-      <p-dropdown optionLabel="name" placeholder="Select a City" />
-    </div> -->
     <div class="product-content">
       <div
         class="product-item"
         *ngFor="let product of products"
-        (click)="goToProductDetail(product.id)"
+        (click)="goToProductDetail(product.productId.id)"
       >
         <img
           *ngIf="
-            product.product_images && product.product_images[0]?.imageUrl;
+            product.productId.product_images &&
+              product.productId.product_images[0]?.imageUrl;
             else noImage
           "
           [src]="
             'http://localhost:8080/uploads/' +
-            product.product_images[0]?.imageUrl
+            product.productId.product_images[0]?.imageUrl
           "
           alt="Ảnh sản phẩm"
         />
@@ -40,19 +40,21 @@
           />
         </ng-template>
         <div class="content">
-          <p class="product_name">{{ product.name }}</p>
+          <p class="product_name">{{ product.productId.name }}</p>
           <div class="price">
             <p class="promotion-price">
               {{
                 formatPrice(
-                  product.product_details[0]?.prices[0]?.promotionPrice ?? 900
+                  product.productId.product_details[0]?.prices[0]
+                    ?.promotionPrice ?? 900
                 )
               }}
             </p>
             <p class="sell-price">
               {{
                 formatPrice(
-                  product.product_details[0]?.prices[0]?.sellingPrice ?? 1000
+                  product.productId.product_details[0]?.prices[0]
+                    ?.sellingPrice ?? 1000
                 )
               }}
             </p>
@@ -61,10 +63,16 @@
       </div>
     </div>
   </div>
-  <p-paginator
+  <!-- <p-paginator
     [totalRecords]="totalRecords"
     [rows]="rowsPerPage"
     [rowsPerPageOptions]="[10, 20, 30]"
+    (onPageChange)="onPageChange($event)"
+  >
+  </p-paginator> -->
+  <p-paginator
+    [totalRecords]="totalRecords"
+    [rows]="rowsPerPage"
     (onPageChange)="onPageChange($event)"
   >
   </p-paginator>

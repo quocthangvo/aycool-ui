@@ -164,7 +164,11 @@
     </div>
 
     <div class="product-status" *ngIf="order">
-      <div class="product-content" *ngFor="let detail of order.order_details">
+      <div
+        class="product-content"
+        *ngFor="let detail of order.order_details"
+        (click)="navigateToProductDetail(order.order_details[0]?.product_id)"
+      >
         <img
           *ngIf="detail?.image_url && detail.image_url.length > 0; else noImage"
           [src]="

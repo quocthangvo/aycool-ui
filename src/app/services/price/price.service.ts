@@ -32,11 +32,23 @@ export class PriceService {
         return this.http.post(`${this.apiUrl}`, data, { headers: this.getAuthHeaders() });
     }
 
-    getAllPrices(page: number, limit: number, sortOrder: string): Observable<any> {
-        const params = { page: page.toString(), limit: limit.toString(), sortOrder: sortOrder };
+    getAllPrices(page: number, limit: number): Observable<any> {
+        const params = { page: page.toString(), limit: limit.toString() };
         const options = { headers: this.createHeaders(), params };
         return this.http.get(`${this.apiUrl}`, options);
     }
+    getAllPricesByFilter(page: number, limit: number, sort?: string, productDetailName?: string): Observable<any> {
+        const params = {
+            page: page.toString(),
+            limit: limit.toString(),
+            ...(sort ? { sort: sort } : {}),  // Nếu có giá trị sort thì thêm vào, nếu không có sẽ để trống.
+            ...(productDetailName ? { productDetailName: productDetailName } : {})  // Nếu có giá trị productDetailName thì thêm vào, nếu không có sẽ để trống.
+        };
+        const options = { headers: this.createHeaders(), params };
+        return this.http.get(`${this.apiUrl}`, options);
+    }
+
+
     getPriceById(id: number): Observable<PriceDTO> {
         return this.http.get<PriceDTO>(`${this.apiUrl}/${id}`);
     }

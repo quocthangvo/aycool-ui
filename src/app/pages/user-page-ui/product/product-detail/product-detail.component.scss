@@ -107,6 +107,10 @@
                     background-color: var(--blue-color);
                     color: #fff;
                   }
+                  .quantity{
+                    border: none;
+                   
+                  }
             }
 
             .order {
@@ -115,6 +119,11 @@
                 align-items: center;
                 margin-top: 20px;
                 cursor: pointer;
+                .gray-background {
+                   
+                    color: #999;
+                  }
+                  
                 .quantity {
                     display: flex;
                     justify-content: start;
@@ -125,6 +134,7 @@
                     p {
                         padding: 10px 20px;
                         margin: 0;
+                    
                     }
                     
                 }

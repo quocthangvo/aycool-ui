@@ -73,14 +73,36 @@
         <p>Sản phẩm</p>
       </div>
 
-      <div
-        class="list"
-        (click)="warehouseList()"
-        [class.selected]="selectedIndex === 11"
-      >
-        <i class="pi pi-warehouse"></i>
-        <p>Kho</p>
+      <div>
+        <div class="list" (click)="toggleDropdownWarehouse()">
+          <i class="pi pi-caret-down"></i>
+          <p>Quản lý kho</p>
+        </div>
+        <div class="dropdown-content" *ngIf="isDropdownWarehouse">
+          <button
+            class="list-warehouse"
+            (click)="warehouseList()"
+            [class.selected]="selectedIndex === 11"
+          >
+            <div class="warehouse">
+              <i class="pi pi-warehouse"></i>
+              <p>Kho</p>
+            </div>
+          </button>
+
+          <div
+            class="list-warehouse"
+            (click)="pruchaseList()"
+            [class.selected]="selectedIndex === 12"
+          >
+            <div class="warehouse">
+              <i class="pi pi-history"></i>
+              <p>Lịch sử nhập</p>
+            </div>
+          </div>
+        </div>
       </div>
+
       <div
         class="list"
         (click)="priceList()"

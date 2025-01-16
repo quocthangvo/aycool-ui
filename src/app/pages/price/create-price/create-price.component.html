@@ -1,119 +1,3 @@
-<!-- <div class="card">
-  <h1>Thêm Giá</h1>
-
-  <form [formGroup]="priceForm" (ngSubmit)="createPrice()" class="form">
-    <div class="card-form">
-      <div class="input-form">
-        <p>Sản phẩm</p>
-        <p-multiSelect
-          [options]="productList"
-          formControlName="selectedProductDetail"
-          placeholder="Chọn sản phẩm"
-          display="chip"
-          [showClear]="true"
-          optionLabel="sku_name"
-          optionValue="id"
-          (onChange)="onProductSelectChange($event)"
-        />
-        <p
-          class="validator"
-          *ngIf="
-            submit &&
-            priceForm.get('selectedProductDetail')?.hasError('required')
-          "
-        >
-          Cần chọn sản phẩm
-        </p>
-      </div>
-
-      <p-table [value]="selectedProductDetail">
-        <ng-template pTemplate="header">
-          <tr>
-            <th>Id</th>
-            <th>Hình ảnh</th>
-            <th>Tên sản phẩm</th>
-            <th>Giá bán</th>
-            <th>Giá khuyến mãi %</th>
-            <th>Ngày bắt đầu</th>
-            <th>Ngày kết thúc</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-detail let-i="rowIndex">
-          <tr>
-            <td>{{ i + 1 }}</td>
-            <td>
-              <ng-container
-                *ngIf="
-                  detail.product_id?.productImages?.length > 0;
-                  else noImage
-                "
-              >
-                <p-image
-                  [src]="
-                    'http://localhost:8080/uploads/' +
-                    detail.product_id?.productImages[0]?.imageUrl
-                  "
-                  alt="Ảnh sản phẩm"
-                  width="50px"
-                ></p-image>
-              </ng-container>
-              <ng-template #noImage>
-                <p-image
-                  src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
-                  alt="Ảnh không có"
-                  width="50px"
-                ></p-image>
-              </ng-template>
-            </td>
-
-            <td>{{ detail.sku_name }}</td>
-            <td>
-              <input pInputText formControlName="selling_price" />
-              <p
-                class="validator"
-                *ngIf="
-                  submit && priceForm.get('selling_price')?.hasError('required')
-                "
-              >
-                Nhập giá bán
-              </p>
-            </td>
-            <td>
-              <input pInputText formControlName="promotion_price" />
-            </td>
-            <td>
-              <input
-                type="date"
-                formControlName="start_date"
-                dateFormat="dd/mm/yy"
-                class="date-picker"
-              />
-            </td>
-            <td>
-              <input
-                type="date"
-                formControlName="end_date"
-                dateFormat="dd/mm/yy"
-                class="date-picker"
-              />
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </div>
-
-    <div class="button-create">
-      <p-button
-        label="Hủy"
-        (click)="cancel()"
-        [text]="true"
-        [plain]="true"
-      ></p-button>
-      <p-button label="Thêm" type="submit" class="submit"></p-button>
-    </div>
-  </form>
-</div> -->
-
 <div class="card">
   <h1>Thêm Giá</h1>
   <form [formGroup]="priceForm" (ngSubmit)="createPrice()" class="form">
@@ -151,8 +35,8 @@
               <th>Tên sản phẩm</th>
               <th>Giá bán</th>
               <th>Giá khuyến mãi %</th>
-              <th>Ngày bắt đầu</th>
-              <th>Ngày kết thúc</th>
+              <!-- <th>Ngày bắt đầu</th> -->
+              <!-- <th>Ngày kết thúc</th> -->
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-group let-i="rowIndex">
@@ -213,7 +97,7 @@
               <td>
                 <input pInputText formControlName="promotion_price" />
               </td>
-              <td>
+              <!-- <td>
                 <input
                   type="date"
                   formControlName="start_date"
@@ -239,14 +123,14 @@
                     Ngày bắt đầu phải lớn hơn hôm nay.
                   </p>
                 </div>
-              </td>
-              <td>
+              </td> -->
+              <!-- <td>
                 <input
                   type="date"
                   formControlName="end_date"
                   class="date-picker"
                 />
-              </td>
+              </td> -->
             </tr>
           </ng-template>
         </p-table>

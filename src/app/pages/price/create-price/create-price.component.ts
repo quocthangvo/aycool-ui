@@ -124,7 +124,7 @@ export class CreatePriceComponent implements OnInit {
           product_detail_id: [product.id],
           selling_price: ['', Validators.required],
           promotion_price: [0, [Validators.min(0), Validators.max(100)]],
-          start_date: [null, Validators.required],
+          start_date: [null],
           end_date: [null],
         })
       );
@@ -144,11 +144,12 @@ export class CreatePriceComponent implements OnInit {
       return;
     }
 
+
     const priceDTOs = this.prices.value.map((price: any) => ({
       product_detail_id: price.product_detail_id,
       selling_price: price.selling_price,
       promotion_price: price.promotion_price || 0,
-      start_date: this.datePipe.transform(price.start_date, 'yyyy-MM-dd'),
+      start_date: this.datePipe.transform(price.start_date, 'yyyy-MM-dd') || null,
       end_date: this.datePipe.transform(price.end_date, 'yyyy-MM-dd') || null,
     }));
 

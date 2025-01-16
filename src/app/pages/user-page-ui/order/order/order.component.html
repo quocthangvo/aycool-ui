@@ -1,3 +1,4 @@
+<p-confirmDialog />
 <div class="user">
   <div class="side-bar">
     <app-side-bar />
@@ -122,6 +123,13 @@
             label="Mua lại"
             [outlined]="true"
             severity="contrast"
+          ></p-button>
+          <!-- Hiển thị nút Hủy đơn hàng nếu trạng thái là 'PENDING' -->
+          <p-button
+            *ngIf="order.status === 'PENDING'"
+            label="Hủy"
+            severity="danger"
+            (click)="cancelOrder(order.id, $event)"
           ></p-button>
         </div>
       </div>

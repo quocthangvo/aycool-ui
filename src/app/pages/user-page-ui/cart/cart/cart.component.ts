@@ -543,15 +543,6 @@ export class CartComponent {
 
 
 
-
-
-
-
-
-
-
-
-
   getCouponDetails(couponId: number): void {
     this.couponService.getCouponById(couponId).subscribe({
       next: (coupon) => {

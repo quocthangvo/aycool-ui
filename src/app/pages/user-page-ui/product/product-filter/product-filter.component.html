@@ -3,14 +3,12 @@
     <!-- Color Filter -->
     <div class="color">
       <p>Màu sắc</p>
-      <div class="color-form">
-        <div class="color-item" *ngFor="let color of colors">
-          <p-radioButton
-            [formControlName]="'color'"
-            [value]="color.id"
-            label="{{ color.name }}"
-          ></p-radioButton>
-        </div>
+      <div class="color-item" *ngFor="let color of colors">
+        <p-checkbox
+          [formControlName]="'color'"
+          [value]="color.id"
+          label="{{ color.name }}"
+        ></p-checkbox>
       </div>
     </div>
 
@@ -29,12 +27,14 @@
     <!-- Material Filter -->
     <div class="material">
       <p>Chất liệu</p>
-      <div class="checkbox-group" *ngFor="let material of materials">
-        <p-checkbox
-          [formControlName]="'material'"
-          [value]="material.id"
-          label="{{ material.name }}"
-        ></p-checkbox>
+      <div class="material-form">
+        <div class="material-item" *ngFor="let material of materials">
+          <p-radioButton
+            [formControlName]="'material'"
+            [value]="material.id"
+            label="{{ material.name }}"
+          ></p-radioButton>
+        </div>
       </div>
     </div>
 
@@ -56,10 +56,6 @@
     </div>
 
     <div class="product">
-      <div class="filter">
-        <p>Sắp xếp theo</p>
-        <p-dropdown optionLabel="name" placeholder="Giá" />
-      </div>
       <div class="product-content">
         <div *ngIf="products.length === 0" class="no-product">
           <p>Không có sản phẩm nào</p>
@@ -67,16 +63,17 @@
         <div
           *ngFor="let product of products"
           class="product-item"
-          (click)="goToProductDetail(product.id)"
+          (click)="goToProductDetail(product.productId.id)"
         >
           <img
             *ngIf="
-              product.product_images && product.product_images[0]?.imageUrl;
+              product.productId.product_images &&
+                product.productId.product_images[0]?.imageUrl;
               else noImage
             "
             [src]="
               'http://localhost:8080/uploads/' +
-              product.product_images[0]?.imageUrl
+              product.productId.product_images[0]?.imageUrl
             "
             alt="Ảnh sản phẩm"
           />
@@ -87,21 +84,21 @@
             />
           </ng-template>
           <div class="content">
-            <p>{{ product.name }}</p>
+            <p>{{ product.productId.name }}</p>
             <div class="price">
               <p class="promotion-price">
                 {{
                   formatPrice(
-                    product.product_details[0]?.prices[0]?.promotionPrice ??
-                      120000
+                    product.productId.product_details[0]?.prices[0]
+                      ?.promotionPrice ?? 120000
                   )
                 }}
               </p>
               <p class="sell-price">
                 {{
                   formatPrice(
-                    product.product_details[0]?.prices[0]?.sellingPrice ??
-                      150000
+                    product.productId.product_details[0]?.prices[0]
+                      ?.sellingPrice ?? 150000
                   )
                 }}
               </p>

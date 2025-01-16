@@ -30,6 +30,11 @@ export class ProductComponent implements OnInit {
 
   purchase: any[] = [];
 
+  totalRecords: number = 0; // Tổng số đơn hàng
+  totalPages: number = 0; // Tổng số trang
+  rowsPerPage: number = 10; // Số đơn hàng mỗi trang
+  currentPage: number = 2; // Trang hiện tại
+
   constructor(private productService: ProductService,
     private route: ActivatedRoute,
     private viewportScroller: ViewportScroller,
@@ -48,8 +53,8 @@ export class ProductComponent implements OnInit {
   }
 
   loadWarehouse() {
-    this.warehouseService.getAllWarehouseByProduct().subscribe((res: any) => {
-      this.purchase = res.data;
+    this.warehouseService.getAllWarehouseByProduct(this.currentPage, this.rowsPerPage).subscribe((res: any) => {
+      this.purchase = res.data.warehouseGroupResponseList;
     });
   }
   topProduct() {
@@ -100,15 +105,50 @@ export class ProductComponent implements OnInit {
     return price ? price.toLocaleString('vi-VN') + 'đ' : '';
   }
 
-  loadProductsByCategory(categoryId: number) {
-    this.productService.getProductByCategory(0, 10, categoryId).subscribe((res: any) => {
-      if (categoryId === 1) {
-        this.productShirts = res.data.productResponseList; // Áo Nam
-      } else if (categoryId === 2) {
-        this.productPants = res.data.productResponseList; // Quần Nam
-      } else if (categoryId === 3) {
-        this.productAccessories = res.data.productResponseList; // Phụ Kiện
+  loadProductsByCategory(category_id: number) {
+    this.warehouseService.getProductByCategory(0, 10, category_id).subscribe((res: any) => {
+      if (category_id === 1) {
+        this.productShirts = res.data.warehouseGroupResponseList; // Áo Nam
+      } else if (category_id === 2) {
+        this.productPants = res.data.warehouseGroupResponseList; // Quần Nam
+      } else if (category_id === 3) {
+        this.productAccessories = res.data.warehouseGroupResponseList; // Phụ Kiện
       }
     });
   }
+
+  searchTerm: string = '';
+  all() {
+    this.router.navigate(['/product-search']);
+    this.scrollToTop();
+  }
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  // giá mới nhất
+  getLatestPriceByCreatedAt(prices: any[]) {
+    // Sắp xếp danh sách giá theo thời gian tạo (createdAt) giảm dần
+    const sortedPrices = prices.sort((a: any, b: any) =>
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+
+    // Lấy giá mới nhất (theo createdAt)
+    const latestPrice = sortedPrices[0]; // Giá đầu tiên sau khi sắp xếp
+
+    return latestPrice;
+  }
+
+  formatPriceByCreatedAt(product: any) {
+    const latestPrice = this.getLatestPriceByCreatedAt(product?.productId?.product_details[0]?.prices) || {};
+
+    const promotionPrice = latestPrice.promotionPrice ?? null;
+    const sellingPrice = latestPrice.sellingPrice ?? null;
+
+    return {
+      promotionPrice: this.formatPrice(promotionPrice),
+      sellingPrice: this.formatPrice(sellingPrice)
+    };
+  }
+
+
 }

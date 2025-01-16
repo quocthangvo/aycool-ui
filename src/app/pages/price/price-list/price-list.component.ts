@@ -39,6 +39,8 @@ export class PriceListComponent implements OnInit {
   currentPage: number = 0; // Trang hiện tại
 
   sortOrder: string = ""; // Sắp xếp theo ngày tạo
+  search: string = '';  // Biến lưu giá trị tìm kiếm
+
   // Các tùy chọn sắp xếp
   sortOptions: any[] = [
     { label: 'Giá: Mặc định', value: '' },
@@ -56,25 +58,41 @@ export class PriceListComponent implements OnInit {
     this.loadPrices(this.currentPage, this.rowsPerPage);
   }
 
-  loadPrices(page: number, limit: number) {
-    this.priceService.getAllPrices(page, limit, this.sortOrder).subscribe((res: any) => {
-      this.priceList = res.data.priceResponseList;
-      this.totalRecords = res.data.totalRecords;
-      this.totalPages = res.data.totalPages;
-    })
+  loadPrices(page: number, limit: number, sort?: string, productDetailName?: string) {
+    this.priceService.getAllPricesByFilter(page, limit, sort, productDetailName).subscribe((res: any) => {
+      this.priceList = res.data.priceResponseList || [];
+      this.totalRecords = res.data.totalRecords || 0;
+      this.totalPages = res.data.totalPages || 0;
+    });
   }
 
   onPageChange(event: any): void {
-    this.currentPage = event.page; // Cập nhật trang hiện tại
-    this.rowsPerPage = event.rows; // Cập nhật số dòng mỗi trang
-    this.loadPrices(this.currentPage, this.rowsPerPage);
+    this.currentPage = event.page;
+    this.rowsPerPage = event.rows;
+    this.loadPrices(this.currentPage, this.rowsPerPage, this.sortOrder, this.search);
   }
 
+
   onSortOrderChange(event: any): void {
-    // const selectElement = event.target as HTMLSelectElement;
-    // this.sortOrder = selectElement.value;  // Cập nhật giá trị sortOrder
-    this.loadPrices(this.currentPage, this.rowsPerPage);
+    this.sortOrder = event.value;
+    this.currentPage = 0; // Reset về trang đầu tiên khi sắp xếp thay đổi
+    this.loadPrices(this.currentPage, this.rowsPerPage, this.sortOrder, this.search);
   }
+
+
+  onSearch(): void {
+    this.currentPage = 0; // Reset về trang đầu tiên khi tìm kiếm
+    this.loadPrices(this.currentPage, this.rowsPerPage, this.sortOrder, this.search.trim());
+  }
+
+  onClear(): void {
+    this.search = ''; // Xóa từ khóa tìm kiếm
+    this.sortOrder = ''; // Reset sắp xếp về mặc định
+    this.currentPage = 0; // Reset về trang đầu tiên
+    this.loadPrices(this.currentPage, this.rowsPerPage); // Tải lại dữ liệu
+  }
+
+
   formatPrice(price: number): string {
     return price ? price.toLocaleString('vi-VN') + 'đ' : '';
   }

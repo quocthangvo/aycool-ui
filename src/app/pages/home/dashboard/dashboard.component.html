@@ -1,24 +1,74 @@
 <div class="dashboard">
   <div class="card-total">
-    <div class="card">
-      <i class="pi pi-receipt" style="color: blue"></i>
-      <div>
-        <p>Đơn hàng hôm nay</p>
-        <p class="total" style="color: blue">{{ paidOrder }} đơn hàng</p>
+    <div class="card-top">
+      <div class="card">
+        <i class="pi pi-receipt" style="color: blue"></i>
+        <div>
+          <p>Đơn hàng hôm nay</p>
+          <p class="total" style="color: blue">{{ paidOrder }} đơn hàng</p>
+        </div>
+      </div>
+      <!-- <div class="card">
+        <i class="pi pi-dollar" style="color: orange"></i>
+        <div>
+          <p>Doanh thu hôm nay</p>
+          <p class="total" style="color: orange">{{ formatPrice(money) || 0 }}</p>
+        </div>
+      </div> -->
+      <div class="card">
+        <i class="pi pi-money-bill" style="color: green"></i>
+        <div>
+          <p>Tổng doanh thu</p>
+          <p class="total" style="color: green">
+            {{ formatPrice(totalMoney) }}
+          </p>
+        </div>
       </div>
     </div>
-    <div class="card">
-      <i class="pi pi-dollar" style="color: orange"></i>
-      <div>
-        <p>Doanh thu hôm nay</p>
-        <p class="total" style="color: orange">{{ formatPrice(money) }}</p>
-      </div>
-    </div>
-    <div class="card">
-      <i class="pi pi-money-bill" style="color: green"></i>
-      <div>
-        <p>Tổng doanh thu</p>
-        <p class="total" style="color: green">{{ formatPrice(totalMoney) }}</p>
+
+    <div class="card-bottom">
+      <h3>Sản phẩm bán chạy</h3>
+      <app-product-chart></app-product-chart>
+
+      <div class="list-shirt">
+        <table>
+          <thead class="top-sell">
+            <tr>
+              <th>Id</th>
+              <th>Ảnh sản phẩm</th>
+              <th style="text-align: start">Tên sản phẩm</th>
+              <th>Số lượng bán</th>
+              <!-- <th>Giá bán</th>
+              <th>Giá khuyến mãi</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of topProducts; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>
+                <img
+                  *ngIf="product.imageUrl"
+                  [src]="'http://localhost:8080/uploads/' + product.imageUrl"
+                  alt="Ảnh sản phẩm"
+                  width="50px"
+                />
+
+                <ng-template #noImage>
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
+                    alt="Không có ảnh"
+                  />
+                </ng-template>
+              </td>
+              <td>{{ product.product_name }}</td>
+              <td style="text-align: center">{{ product.quantity_sold }}</td>
+              <!-- <td>{{ formatPrice(product.price?.sellingPrice ?? 150000) }}</td>
+              <td>
+                {{ formatPrice(product.price?.promotionPrice ?? 120000) }}
+              </td> -->
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -26,10 +76,10 @@
     <div class="revenue">
       <div class="option">
         <h2>DOANH THU</h2>
-        <select name="time" id="time" class="time">
+        <!-- <select name="time" id="time" class="time">
           <option value="Ngày">Ngày</option>
           <option value="Hôm nay">Hôm nay</option>
-        </select>
+        </select> -->
       </div>
       <div>
         <div class="total-money-order">
@@ -37,6 +87,7 @@
           <p>{{ totalOrders }} đơn hàng</p>
         </div>
       </div>
+      <app-order-chart></app-order-chart>
     </div>
   </div>
 </div>

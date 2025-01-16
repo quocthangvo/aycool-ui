@@ -34,19 +34,38 @@ export class PurchaseService {
         return this.http.post<any>(`${this.apiUrl}`, data, { headers: this.getAuthHeaders() })
     }
 
-    getAllPurchase(page: number, limit: number): Observable<any> {
-        const params = { page: page.toString(), limit: limit.toString() };
-        const options = { headers: this.createHeaders(), params };
+    getAllPurchase(page: number, limit: number,
+        productName: string = '', subCategoryId: number | undefined): Observable<any> {
+        const params: any = {
+            page: page.toString(),
+            limit: limit.toString()
+        };
 
+        // Thêm tham số `productName` nếu có
+        if (productName) {
+            params.productName = productName;
+        }
+
+        // Thêm tham số `subCategoryId` nếu có
+        if (subCategoryId) {
+            params.subCategoryId = subCategoryId;
+        }
+
+        const options = { headers: this.createHeaders(), params };
         return this.http.get(`${this.apiUrl}`, options);
     }
 
-    getPurchaseyId(id: number): Observable<any> {
+
+    getPurchaseId(id: number): Observable<any> {
         return this.http.get(`${this.apiUrl}/${id}`);
     }
 
     deletePurchaseId(id: number) {
         return this.http.delete(`${this.apiUrl}/delete/${id}`, { headers: this.getAuthHeaders() });
+    }
+
+    updatePurchaseId(id: number, data: any): Observable<any> {
+        return this.http.put(`${this.apiUrl}/update/${id}`, data, { headers: this.getAuthHeaders() });
     }
 
 }

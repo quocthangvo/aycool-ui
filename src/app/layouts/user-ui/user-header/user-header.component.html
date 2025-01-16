@@ -54,7 +54,7 @@
             pInputText
             [(ngModel)]="searchTerm"
           />
-          <p-button icon="pi pi-search" (click)="onSearch()"></p-button>
+          <i class="pi pi-search search-icon" (click)="onSearch()"></i>
         </div>
 
         <i class="pi pi-user" style="font-size: 1.5rem"></i>
@@ -107,22 +107,25 @@
                   {{ items.product_detail_id.color.name }} /
                   {{ items.product_detail_id.size.name }}
                 </p>
-                <div class="flex justify-content-start align-items-center">
+                <div class="price">
                   <p class="promotion-price">
                     {{
                       formatPrice(
-                        items.product_detail_id.prices[0]?.sellingPrice || 0
+                        getLatestPrice(items.product_detail_id.prices)
+                          ?.promotionPrice || 0
                       )
                     }}
                   </p>
                   <p class="sell-price">
                     {{
                       formatPrice(
-                        items.product_detail_id.prices[0]?.promotionPrice || 0
+                        getLatestPrice(items.product_detail_id.prices)
+                          ?.sellingPrice || 0
                       )
                     }}
                   </p>
                 </div>
+
                 <p class="quantity">x{{ items.quantity }}</p>
               </div>
 

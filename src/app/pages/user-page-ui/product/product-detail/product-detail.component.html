@@ -51,9 +51,11 @@
 
         <div class="prices">
           <p class="sell-price" *ngIf="promotionPrice !== null">
-            <span style="text-decoration: line-through">
-              {{ formatPrice(price) }}
-            </span>
+            <span *ngIf="price">
+              <span style="text-decoration: line-through">
+                {{ formatPrice(price) }}
+              </span></span
+            >
           </p>
 
           <p class="promotion-price" *ngIf="promotionPrice !== null">
@@ -77,6 +79,7 @@
             </p>
           </div>
         </div>
+
         <div>
           <p>Kích thước:</p>
           <div class="attribute">
@@ -87,23 +90,23 @@
             >
               {{ size }}
             </p>
+
+            <div>
+              <p *ngIf="quantityAvailable !== null" class="quantity">
+                {{ quantityAvailable }} sản phẩm
+              </p>
+            </div>
           </div>
         </div>
 
-        <!-- <div>
-          <p>Số lượng còn lại:</p>
-          <div class="">
-            <p *ngIf="quantityAvailable !== null">
-              {{ quantityAvailable }}
-            </p>
-          </div>
-        </div> -->
-
         <div class="order">
-          <div class="quantity">
-            <p (click)="decreaseQuantity()">-</p>
+          <div
+            [ngClass]="{ 'gray-background': !selectedColor || !selectedSize }"
+            class="quantity"
+          >
+            <p (click)="decreaseQuantity()" style="font-size: 1.5rem">-</p>
             <p>{{ quantity }}</p>
-            <p (click)="increaseQuantity()">+</p>
+            <p (click)="increaseQuantity()" style="font-size: 1.5rem">+</p>
           </div>
 
           <button class="add-cart" (click)="addToCart()">

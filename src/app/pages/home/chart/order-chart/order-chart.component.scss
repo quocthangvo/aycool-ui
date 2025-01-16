@@ -1,0 +1,30 @@
+// .chart-container {
+//   width: 100%;
+//   height: 400px; // Set default height
+//   position: relative; // Required for responsive behavior
+// }
+
+// .period-buttons {
+//   margin-top: 1rem;
+//   button {
+//     margin-right: 0.5rem;
+//     padding: 0.5rem 1rem;
+//     border: none;
+//     background-color: #f0f0f0;
+//     cursor: pointer;
+
+//     &.active {
+//       background-color: #007bff;
+//       color: #fff;
+//     }
+//   }
+// }
+
+.order-chart{
+  button{
+    padding: 10px 20px;
+    margin-right: 10px;
+    border-radius: 10px;
+   
+  }
+}

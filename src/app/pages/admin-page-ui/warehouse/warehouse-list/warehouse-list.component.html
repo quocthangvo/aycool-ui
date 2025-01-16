@@ -10,6 +10,44 @@
       <div class="caption">
         <h1>Kho</h1>
 
+        <div style="margin-bottom: 10px">
+          <select
+            [(ngModel)]="materialId"
+            (change)="onSearch()"
+            class="select-sub-category"
+          >
+            <option [value]="undefined" disabled>Chất liệu</option>
+            <option *ngFor="let material of materials" [value]="material.id">
+              {{ material.name }}
+            </option>
+          </select>
+          <select
+            [(ngModel)]="subCategoryId"
+            (change)="onSearch()"
+            class="select-sub-category"
+          >
+            <option [value]="undefined" disabled>Danh mục</option>
+            <option
+              *ngFor="let subCategory of subCategories"
+              [value]="subCategory.id"
+            >
+              {{ subCategory.name }}
+            </option>
+          </select>
+          <input
+            type="text"
+            pInputText
+            [(ngModel)]="searchName"
+            placeholder="Tìm kiếm"
+          />
+          <p-button icon="pi pi-search" (onClick)="onSearch()"></p-button>
+          <p-button
+            severity="secondary"
+            (onClick)="clearSearch()"
+            class="filter-slash"
+            ><i class="pi pi-filter-slash"></i
+          ></p-button>
+        </div>
         <p-button severity="contrast" routerLink="/admin/create-warehouse">
           <i
             class="pi pi-plus"
@@ -67,5 +105,11 @@
     </ng-template>
   </p-table>
 
-  <p-paginator> </p-paginator>
+  <p-paginator
+    [totalRecords]="totalRecords"
+    [rows]="rowsPerPage"
+    [rowsPerPageOptions]="[10, 20, 30]"
+    (onPageChange)="onPageChange($event)"
+  >
+  </p-paginator>
 </div>

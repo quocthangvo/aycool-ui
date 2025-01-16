@@ -86,19 +86,24 @@ export class ProductDetailComponent implements OnInit {
     return [];
   }
 
+  quantityAvailable: number | null = null; // Số lượng của sản phẩm theo lựa chọn
 
   quantity: number = 1; // Initial quantity
   maxQuantity: number = 99;
   selectedColor: string | null = null; // To store the selected color
   selectedSize: string | null = null; // To store the selected size
 
-  increaseQuantity() {
-    if (this.quantity < this.maxQuantity) {
+  isDisabled(): boolean {
+    return !(this.selectedColor && this.selectedSize); // Trả về true nếu chưa chọn màu sắc hoặc kích thước
+  }
+
+  increaseQuantity() { // tăng số lượng
+    if (this.quantityAvailable !== null && this.quantity < this.quantityAvailable) {  // Kiểm tra số lượng kho có đủ để tăng không
       this.quantity++;
     }
   }
 
-  decreaseQuantity() {
+  decreaseQuantity() { //giảm số lượng
     if (this.quantity > 1) {
       this.quantity--;
     }
@@ -117,7 +122,6 @@ export class ProductDetailComponent implements OnInit {
 
   price: number = 120000; // Giá bán hoặc giá khuyến mãi
   promotionPrice: number | null = 150000; // Lưu giá khuyến mãi
-  // quantityAvailable: number | null = null; // Số lượng của sản phẩm theo lựa chọn
 
   updatePrice() {
     if (this.selectedColor && this.selectedSize) {
@@ -127,8 +131,15 @@ export class ProductDetailComponent implements OnInit {
       );
 
       if (selectedProductDetail) {
-        // Cập nhật số lượng
-        // this.quantityAvailable = selectedProductDetail.quantity;
+
+        // Lấy số lượng còn lại từ kho (remainingQuantity)
+        if (selectedProductDetail.warehouses && selectedProductDetail.warehouses.length > 0) {
+          const warehouse = selectedProductDetail.warehouses[0]; // Giả định lấy warehouse đầu tiên
+          this.quantityAvailable = warehouse.remainingQuantity; // Số lượng còn lại
+        } else {
+          this.quantityAvailable = 0; // Không có dữ liệu kho
+        }
+
         // Sắp xếp danh sách giá theo createdAt giảm dần
         const sortedPrices = selectedProductDetail.prices.sort(
           (a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
@@ -137,9 +148,17 @@ export class ProductDetailComponent implements OnInit {
         // Lấy giá mới nhất từ danh sách đã sắp xếp
         if (sortedPrices.length > 0) {
           const latestPrice = sortedPrices[0];
-          this.promotionPrice = latestPrice.promotionPrice ?? null; // Giá khuyến mãi
-          this.price = latestPrice.sellingPrice; // Giá bán
+          this.promotionPrice = latestPrice.promotionPrice ?? null;
+          this.price = latestPrice.sellingPrice;
+        } else {
+          this.promotionPrice = null;
         }
+        // Lấy giá mới nhất từ danh sách đã sắp xếp
+        // if (sortedPrices.length > 0) {
+        //   const latestPrice = sortedPrices[0];
+        //   this.promotionPrice = latestPrice.promotionPrice ?? null; // Giá khuyến mãi
+        //   this.price = latestPrice.sellingPrice; // Giá bán
+        // }
       }
     }
   }

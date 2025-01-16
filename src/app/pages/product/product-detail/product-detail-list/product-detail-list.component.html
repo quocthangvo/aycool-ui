@@ -36,7 +36,7 @@
           <th>Mã SKU</th>
           <th>Màu sắc</th>
           <th>Kích thước</th>
-          <th>Số lượng</th>
+          <!-- <th>Số lượng</th> -->
           <th>Giá bán</th>
           <th>Giá khuyến mãi</th>
           <th></th>
@@ -78,11 +78,11 @@
           <td>{{ product_details?.sku_version }}</td>
           <td>{{ product_details?.color_id.name }}</td>
           <td>{{ product_details?.size_id.name }}</td>
-          <td>{{ product_details?.quantity }}</td>
+          <!-- <td>{{ product_details?.quantity }}</td> -->
           <td>
             <!-- Giá bán: nếu không có giá thì để trống nhưng không thay đổi vị trí -->
             <ng-container *ngIf="product_details?.price_id?.length > 0">
-              {{ product_details?.price_id[0].sellingPrice || "" }}đ
+              {{ formatPrice(product_details?.price_id[0].sellingPrice) || "" }}
             </ng-container>
             <ng-container *ngIf="product_details?.price_id?.length === 0">
               <!-- Không có giá, giữ khoảng trống -->
@@ -92,7 +92,9 @@
           <td>
             <!-- Giá khuyến mãi: nếu không có giá thì để trống nhưng không thay đổi vị trí -->
             <ng-container *ngIf="product_details?.price_id?.length > 0">
-              {{ product_details?.price_id[0].promotionPrice || "" }}đ
+              {{
+                formatPrice(product_details?.price_id[0].promotionPrice) || ""
+              }}
             </ng-container>
             <ng-container *ngIf="product_details?.price_id?.length === 0">
               <!-- Không có giá, giữ khoảng trống -->

@@ -18,6 +18,7 @@
     // box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
     background-color: #1E293B;
     color: white;
+
     & .sidebar-list {
         margin-top: 40px;
 
@@ -27,12 +28,14 @@
             align-items: center;
             cursor: pointer;
             transition: background-color 0.5s;
-            padding:0 10px;
+            padding: 0 10px;
             border-radius: 5px;
+
             & p {
                 margin-left: 1rem;
             }
-            & i{
+
+            & i {
                 font-size: 1.2rem;
             }
         }
@@ -41,20 +44,56 @@
             cursor: pointer;
             background-color: #0089ff;
         }
+
         //dropdown
-       & .dropdown-content {
+        & .dropdown-content {
             // position: absolute;
-            background-color: #f9f9f9;
+            // background-color: #f9f9f9;
             width: 100%;
             // border-radius: 0 0 5px 5px;
             z-index: 1;
             margin-bottom: 10px;
-            animation: slideDown 0.4s ease-out; 
-        
+            animation: slideDown 0.4s ease-out;
 
+            .list-warehouse {
+                color: white;
+               
+                padding: 2px 0 2px 3rem;
+                text-decoration: none;
+                display: block;
+                border: none;
+                width: 100%;
+                background-color: #1E293B;
+                border-radius: 0;
+                text-align: start;
+                font-size: 1rem;
+            }
+
+            .warehouse {
+                padding:  0;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+
+                i {
+                    margin-right: 10px;
+                }
+
+                p {
+                    margin: 10px 0;
+                }
+            }
+
+            .list-warehouse.selected {
+                background-color: #0089ff;
+            }
+
+            .list-warehouse:hover {
+                background-color: #0089ff;
+            }
         }
-        
-        & .dropdown-content button {
+
+        & .dropdown-content .list {
             color: white;
             padding: 12px 46px;
             text-decoration: none;
@@ -67,13 +106,15 @@
             font-size: 1rem;
 
         }
-        
-      
 
-       & .list.selected{
-        background-color: #0089ff;
+        .list:hover {
+            background-color: #0089ff;
         }
-          
+
+        & .list.selected {
+            background-color: #0089ff;
+        }
+
     }
 
 }
@@ -81,6 +122,7 @@
 .content {
     width: 85%;
     background-color: #fff;
+
     & .header-top {
         display: flex;
         justify-content: end;
@@ -88,36 +130,44 @@
         border-bottom: 2px solid white;
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         padding: 1rem;
+
         & .avatar {
             margin-right: 40px;
             text-align: end;
             cursor: pointer;
             position: relative;
-          .p-avatar{
-            width: 40px;
-            height: 40px;
-          }
+
+            .p-avatar {
+                width: 40px;
+                height: 40px;
+            }
         }
     }
 
     & .content-form {
-        margin:0 40px;
+        margin: 0 40px;
 
     }
 }
+
 // chỉnh dropdown logout
-.ng-trigger-overlayAnimation{
-    left: -170px !important; 
+.ng-trigger-overlayAnimation {
+    left: -170px !important;
     top: 40px !important;
 }
 
 @keyframes slideDown {
     0% {
-        transform: translateY(-20px); /* Bắt đầu từ trên, dịch chuyển lên -20px */
-        opacity: 0; /* Ban đầu mờ */
+        transform: translateY(-20px);
+        /* Bắt đầu từ trên, dịch chuyển lên -20px */
+        opacity: 0;
+        /* Ban đầu mờ */
     }
+
     100% {
-        transform: translateY(0); /* Kết thúc tại vị trí ban đầu */
-        opacity: 1; /* Hiện đầy đủ */
+        transform: translateY(0);
+        /* Kết thúc tại vị trí ban đầu */
+        opacity: 1;
+        /* Hiện đầy đủ */
     }
 }

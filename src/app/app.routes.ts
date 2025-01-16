@@ -38,6 +38,11 @@ import { CreateCouponComponent } from './pages/coupon/create-coupon/create-coupo
 import { UpdateCouponComponent } from './pages/coupon/update-coupon/update-coupon.component';
 import { WarehouseListComponent } from './pages/admin-page-ui/warehouse/warehouse-list/warehouse-list.component';
 import { CreateWarehouseComponent } from './pages/admin-page-ui/warehouse/create-warehouse/create-warehouse.component';
+import { PurchaseListComponent } from './pages/admin-page-ui/purchase/purchase-list/purchase-list.component';
+import { ProductChartComponent } from './pages/home/chart/product-chart/product-chart.component';
+import { OrderChartComponent } from './pages/home/chart/order-chart/order-chart.component';
+import { CategoryChartComponent } from './pages/home/chart/category-chart/category-chart.component';
+
 
 
 
@@ -143,7 +148,24 @@ export const routes: Routes = [
             {
                 path: 'create-warehouse',
                 component: CreateWarehouseComponent
+            },
+            {
+                path: 'purchase',
+                component: PurchaseListComponent
+            },
+            {
+                path: 'chart-product',
+                component: ProductChartComponent
+            },
+            {
+                path: 'chart-order',
+                component: OrderChartComponent
+            },
+            {
+                path: 'chart-category',
+                component: CategoryChartComponent
             }
+
         ]
     },
     {

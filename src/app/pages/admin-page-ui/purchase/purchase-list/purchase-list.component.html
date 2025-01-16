@@ -1,0 +1,153 @@
+<p-confirmDialog />
+<div class="table">
+  <p-table
+    [value]="purchaseList"
+    responsiveLayout="stack"
+    [breakpoint]="'960px'"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="caption">
+      <div class="caption">
+        <h1>Lịch sử</h1>
+
+        <div style="margin-bottom: 10px">
+          <!-- <select
+            [(ngModel)]="materialId"
+            (change)="onSearch()"
+            class="select-sub-category"
+          >
+            <option [value]="undefined" disabled>Chất liệu</option>
+            <option *ngFor="let material of materials" [value]="material.id">
+              {{ material.name }}
+            </option>
+          </select> -->
+          <select
+            [(ngModel)]="subCategoryId"
+            (change)="onSearch()"
+            class="select-sub-category"
+          >
+            <option [value]="undefined" disabled>Danh mục</option>
+            <option
+              *ngFor="let subCategory of subCategories"
+              [value]="subCategory.id"
+            >
+              {{ subCategory.name }}
+            </option>
+          </select>
+          <input
+            type="text"
+            pInputText
+            [(ngModel)]="productName"
+            placeholder="Tìm kiếm"
+          />
+          <p-button icon="pi pi-search" (onClick)="onSearch()"></p-button>
+          <p-button
+            severity="secondary"
+            (onClick)="clearSearch()"
+            class="filter-slash"
+            ><i class="pi pi-filter-slash"></i
+          ></p-button>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Id</th>
+        <th>Hình ảnh</th>
+        <th>Tên</th>
+        <th>Giá nhập</th>
+        <th>Số lượng</th>
+
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-purchase let-i="rowIndex">
+      <tr>
+        <td>{{ i + 1 }}</td>
+        <td>
+          <p-image
+            *ngIf="
+              purchase.image_url?.length > 0 && purchase.image_url[0]?.imageUrl;
+              else noImage
+            "
+            [src]="
+              'http://localhost:8080/uploads/' + purchase.image_url[0].imageUrl
+            "
+            alt="Ảnh sản phẩm"
+            width="50px"
+          ></p-image>
+          <ng-template #noImage>
+            <p-image
+              src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
+              alt="Ảnh"
+              width="50px"
+            />
+          </ng-template>
+        </td>
+
+        <td>{{ purchase.product_detail.skuName }}</td>
+        <td>{{ formatPrice(purchase.price) }}</td>
+        <td>{{ purchase.quantity }}</td>
+        <td>
+          <div class="actions">
+            <i
+              class="pi pi-trash"
+              style="font-size: 1.5rem; color: red"
+              (click)="onDelete(purchase.id, $event)"
+            >
+            </i>
+            <i
+              class="pi pi-pencil"
+              style="font-size: 1.5rem"
+              (click)="onModelUpdate(purchase)"
+            >
+            </i>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-paginator
+    [totalRecords]="totalRecords"
+    [rows]="rowsPerPage"
+    [rowsPerPageOptions]="[10, 20, 30]"
+    (onPageChange)="onPageChange($event)"
+  >
+  </p-paginator>
+</div>
+<p-dialog
+  header="Cập nhật"
+  [(visible)]="displayDialog"
+  [modal]="true"
+  [closable]="false"
+>
+  <div class="p-fluid">
+    <div class="p-field">
+      <p>Số luọng</p>
+      <input pInputText [(ngModel)]="selectedPurchase.quantity" />
+    </div>
+    <div class="p-field">
+      <p>Giá nhập</p>
+      <input pInputText [(ngModel)]="selectedPurchase.price" />
+    </div>
+  </div>
+
+  <p-footer>
+    <button
+      pButton
+      label="Hủy"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="cancelUpdate()"
+    ></button>
+    <button
+      pButton
+      label="Lưu"
+      icon="pi pi-check"
+      class="p-button-primary"
+      (click)="save()"
+    ></button>
+  </p-footer>
+</p-dialog>

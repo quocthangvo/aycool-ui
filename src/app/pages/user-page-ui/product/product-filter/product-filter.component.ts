@@ -14,6 +14,7 @@ import { Category } from '../../../../models/category/category.model';
 import { CategoryService } from '../../../../services/category/category.service';
 import { PaginatorModule } from 'primeng/paginator';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { WarehouseService } from '../../../../services/warehouse/warehouse.service';
 
 @Component({
   selector: 'app-product-filter',
@@ -40,7 +41,7 @@ export class ProductFilterComponent implements OnInit, OnDestroy {
 
   totalRecords: number = 100; // Tổng số đơn hàng
   // totalPages: number = 0; // Tổng số trang
-  rowsPerPage: number = 30; // Số đơn hàng mỗi trang
+  rowsPerPage: number = 10; // Số đơn hàng mỗi trang
   currentPage: number = 0; // Trang hiện tại
 
 
@@ -53,6 +54,7 @@ export class ProductFilterComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private categoryService: CategoryService,
     private router: Router,
+    private warehouseService: WarehouseService
   ) {
     this.filterForm = this.fb.group({
       color: [null],
@@ -107,48 +109,89 @@ export class ProductFilterComponent implements OnInit, OnDestroy {
 
 
   // Chỉnh sửa phương thức loadProducts để không tải lại theo subCategoryId
+  // loadProducts() {
+  //   if (!this.subCategoryId) return;
+
+  //   // Cập nhật URL khi có thay đổi bộ lọc
+  //   const colorId: number = this.filterForm.value.color;
+  //   const sizeIds: number[] = this.filterForm.value.size || [];  // Đảm bảo sizeIds là một mảng số
+  //   const materialIds: number[] = this.filterForm.value.material || [];  // Đảm bảo materialIds là mảng số
+
+  //   // Lấy tên tương ứng với ID
+  //   const colorName = this.colors.find(color => color.id === colorId)?.name || '';
+  //   const sizeNames = sizeIds.map(sizeId => this.sizes.find(size => size.id === sizeId)?.name || '').join(',');
+  //   const materialNames = materialIds.map(materialId => this.materials.find(material => material.id === materialId)?.name || '').join(',');
+
+  //   // Cập nhật URL với tên thay vì ID
+  //   this.router.navigate([], {
+  //     relativeTo: this.route,
+  //     queryParams: {
+  //       color_id: colorName || null,
+  //       size_ids: sizeNames || null,
+  //       material_ids: materialNames || null
+  //     },
+  //     queryParamsHandling: 'merge'  // Giữ lại các tham số khác trong URL
+  //   });
+
+  //   // Gọi API với ID (vì API vẫn cần ID để lọc)
+  //   this.productService.getProductBySubCategory(
+  //     this.currentPage,
+  //     this.rowsPerPage,
+  //     this.subCategoryId,
+  //     colorId,
+  //     sizeIds,
+  //     materialIds
+  //   ).subscribe(response => {
+  //     this.products = response?.data?.productResponseList || [];
+  //     this.category = this.products.length > 0 ? this.products[0].category : ''; // lấy category
+  //     this.sub_category_name = this.products.length > 0 ? this.products[0].sub_category_name : ''; // lấy subcategory
+
+
+  //     this.totalRecords = response?.data?.totalRecords || 0;  // Cập nhật tổng số sản phẩm
+  //   });
+
+  // }
   loadProducts() {
     if (!this.subCategoryId) return;
 
     // Cập nhật URL khi có thay đổi bộ lọc
-    const colorId: number = this.filterForm.value.color;
+    const colorIds: number[] = this.filterForm.value.color || [];
     const sizeIds: number[] = this.filterForm.value.size || [];  // Đảm bảo sizeIds là một mảng số
-    const materialIds: number[] = this.filterForm.value.material || [];  // Đảm bảo materialIds là mảng số
+    const materialId: number = this.filterForm.value.material;
 
-    // Lấy tên tương ứng với ID
-    const colorName = this.colors.find(color => color.id === colorId)?.name || '';
-    const sizeNames = sizeIds.map(sizeId => this.sizes.find(size => size.id === sizeId)?.name || '').join(',');
-    const materialNames = materialIds.map(materialId => this.materials.find(material => material.id === materialId)?.name || '').join(',');
+    // Lấy tên tương ứng với ID, đảm bảo không có chữ 's' trong colorIds
+    const colorNames = colorIds.map(colorId => this.colors.find(color => color.id === colorId)?.name || '').filter(Boolean).join(',');  // Lọc giá trị không rỗng
+    const sizeNames = sizeIds.map(sizeId => this.sizes.find(size => size.id === sizeId)?.name || '').filter(Boolean).join(',');  // Lọc giá trị không rỗng
+    const materialName = this.materials.find(material => material.id === materialId)?.name || '';
 
     // Cập nhật URL với tên thay vì ID
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: {
-        color_id: colorName || null,
+        color_ids: colorNames || null,
         size_ids: sizeNames || null,
-        material_ids: materialNames || null
+        material_id: materialName || null
       },
       queryParamsHandling: 'merge'  // Giữ lại các tham số khác trong URL
     });
 
     // Gọi API với ID (vì API vẫn cần ID để lọc)
-    this.productService.getProductBySubCategory(
-      this.currentPage,
-      this.rowsPerPage,
+    this.warehouseService.getAllWarehouseBySubCategory(
       this.subCategoryId,
-      colorId,
-      sizeIds,
-      materialIds
+      colorIds.length > 0 ? colorIds : null,  // Không gửi colorIds nếu nó rỗng
+      sizeIds.length > 0 ? sizeIds : null,  // Không gửi sizeIds nếu mảng rỗng
+      materialId !== null ? materialId : null,
+      this.currentPage,
+      this.rowsPerPage
     ).subscribe(response => {
-      this.products = response?.data?.productResponseList || [];
-      this.category = this.products.length > 0 ? this.products[0].category : ''; // lấy category
-      this.sub_category_name = this.products.length > 0 ? this.products[0].sub_category_name : ''; // lấy subcategory
-
+      this.products = response?.data?.warehouseGroupResponseList || [];
+      this.category = this.products.length > 0 ? this.products[0].productId.category : '';  // Lấy category
+      this.sub_category_name = this.products.length > 0 ? this.products[0].productId.sub_category_name : '';  // Lấy subcategory
 
       this.totalRecords = response?.data?.totalRecords || 0;  // Cập nhật tổng số sản phẩm
     });
-
   }
+
 
 
 

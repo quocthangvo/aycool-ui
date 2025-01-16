@@ -31,6 +31,28 @@ export class OrderService {
         });
     }
 
+    //doanh thu
+    getTotalRevenueByPeriod(period: string, startDate: string, endDate: string) {
+        // Convert startDate to LocalDate: 2025-01-09T00:00:00
+        const startDateObj = new Date(startDate);
+        startDateObj.setHours(0, 0, 0, 0);  // Đặt giờ thành 00:00:00
+        const startDateTime = startDateObj.toISOString().split('T')[0] + 'T00:00:00';  // Lấy chỉ ngày
+
+        // Convert endDate to LocalDate: 2025-01-16T23:59:59
+        const endDateObj = new Date(endDate);
+        endDateObj.setHours(23, 59, 59, 999);  // Đặt giờ thành 23:59:59
+        const endDateTime = endDateObj.toISOString().split('T')[0] + 'T23:59:59';  // Lấy chỉ ngày
+
+        const params = {
+            startDate: startDateTime,
+            endDate: endDateTime
+        };
+
+        return this.http.get<any>(`${this.apiUrl}/revenue/${period}`, { params });
+    }
+
+
+
 
     createOrder(data: OrderDTO): Observable<OrderDTO> {
         return this.http.post<OrderDTO>(`${this.apiUrl}`, data, { headers: this.getAuthHeaders() })
@@ -102,4 +124,6 @@ export class OrderService {
     getTotalPaidOrderByDate() {
         return this.http.get(`${this.apiUrl}/date-order`, { headers: this.getAuthHeaders() });
     }
+
+
 }

@@ -21,7 +21,7 @@ export class MaterialService {
     }
 
 
-    getAllMaterials() {
+    getAllMaterials(): Observable<any> {
         return this.http.get(this.apiUrl)
     }
     getMaterialById(id: number): Observable<Material> {

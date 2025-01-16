@@ -86,7 +86,7 @@ export class ProductDetailListComponent implements OnChanges {
             this.messageService.add({
               severity: 'error',
               summary: 'Lỗi',
-              detail: '' + error.error.message
+              detail: 'Không thể xóa chi tiết sản phẩm khi đã có trong kho'
             });
           }
         );
@@ -109,6 +109,8 @@ export class ProductDetailListComponent implements OnChanges {
   cancel() {
     this.close.emit(); // Phát sự kiện đóng dialog
   }
-
+  formatPrice(price: number): string {
+    return price ? price.toLocaleString('vi-VN') + 'đ' : '';
+  }
 
 }

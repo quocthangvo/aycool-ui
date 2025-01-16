@@ -1,12 +1,13 @@
-.page{
+.page {
 
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 110px;
-    // min-height: 100vh; // Đảm bảo chiều cao tối thiểu cho toàn trang
-  & .site-header{
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 110px;
+
+  // min-height: 100vh; // Đảm bảo chiều cao tối thiểu cho toàn trang
+  & .site-header {
     flex: 1;
-   
+
   }
 }
 
@@ -102,7 +103,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 80px;
-  
+
   & .p-image {
 
     width: 100%;
@@ -124,7 +125,7 @@
       position: relative;
       display: inline-block;
 
-     
+
       .cart-count {
         position: absolute;
         top: 20px;
@@ -139,6 +140,7 @@
         justify-content: center;
         font-size: 12px;
       }
+
       /* Dropdown menu ẩn theo mặc định */
       .dropdown {
         display: none;
@@ -155,31 +157,34 @@
         border-radius: 5px;
         width: 350px;
         z-index: 10;
-        max-height: 350px; /* Chiều cao tối đa cho phần cuộn */
+        max-height: 350px;
+        /* Chiều cao tối đa cho phần cuộn */
         overflow-y: auto;
 
-        
-        .title{
+
+        .title {
           display: flex;
           justify-content: space-between;
           align-items: center;
           color: #000;
           padding: 10px 10px 0 10px;
+
           // padding: 10px 20px;
-          .total{
+          .total {
             color: var(--blue-color);
             cursor: pointer;
-           }
+          }
         }
-      
-       
 
-        .dropdown-item{
+
+
+        .dropdown-item {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin:10px ;
+          margin: 10px;
         }
+
         .image {
           img {
             height: 100px;
@@ -187,40 +192,46 @@
             border-radius: 10px;
           }
         }
-    
+
         .content {
           color: #000;
           margin-left: 10px;
-        
-          .sell-price{
+          width: 200px;
+          .price{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+          .sell-price {
             text-decoration: line-through;
             color: #999;
           }
+
           p {
             margin: 5px;
           }
-    
+
           .promotion-price {
             font-size: 18px;
             font-weight: bold;
           }
-    
+
           .quantity {
             font-size: 13px;
           }
         }
-  
-        .remove-btn{
+
+        .remove-btn {
           color: #000;
           padding: 10px;
         }
       }
-     
+
       /* Hiển thị dropdown khi hover vào icon */
       &:hover .dropdown {
         display: block;
-      } 
-  
+      }
+
     }
   }
 
@@ -290,28 +301,16 @@
   position: relative;
   background-color: white;
   border-radius: 10px;
+
   & .p-inputtext {
     padding-left: 2rem;
     min-width: 550px;
     border: none;
-
   }
 
-  // & .p-button {
-  //   position: absolute;
-  //   right: 10px;
-  //   top: 50%;
-  //   transform: translateY(-50%);
-  //   pointer-events: none;
-  //   cursor: pointer;
-  //   border: none;
-  //   pointer-events: all;
-  //   padding: 20px;
-  //   color: black;
-  // }
-  .p-button{
-    border: none; 
-    background-color: transparent;
+  & .search-icon {
+    padding-right: 1rem !important;
+
   }
 }
 
@@ -321,10 +320,11 @@
   left: 0;
   right: 0;
   width: 100%;
-  z-index: 1000; /* Đảm bảo header luôn nằm trên cùng */
-  background-color: #fff; /* Màu nền header */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ cho header */
+  z-index: 1000;
+  /* Đảm bảo header luôn nằm trên cùng */
+  background-color: #fff;
+  /* Màu nền header */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* Thêm bóng đổ cho header */
   margin-bottom: 100px;
 }
-
-

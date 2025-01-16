@@ -1,0 +1,12 @@
+<div class="chart-container">
+  <p-dropdown
+    [options]="timeRanges"
+    [(ngModel)]="selectedRange"
+    (onChange)="onRangeChange($event.value)"
+  >
+  </p-dropdown>
+
+  <div class="chart">
+    <p-chart type="line" [data]="data" [options]="options"></p-chart>
+  </div>
+</div>
